@@ -1,8 +1,8 @@
 {
-    "app_title": "INTERAKTYWNA INSTRUKCJA",
-    "app_subtitle": "Interaktywna Instrukcja",
-    "hero_title": "INTERAKTYWNA INSTRUKCJA",
-    "hero_desc": "Wybierz funkcję pomiarową, aby zobaczyć szczegółową instrukcję krok po kroku dla miernika Sonel MPI-530.",
+    "app_title": "PORADNIK UŻYTKOWNIKA",
+    "app_subtitle": "Niezależny Poradnik",
+    "hero_title": "NIEZALEŻNY PORADNIK",
+    "hero_desc": "Wybierz funkcję pomiarową, aby zobaczyć szczegółową instrukcję krok po kroku dla miernika MPI-530.",
     "search_placeholder": "Szukaj instrukcji, procedur, FAQ...",
     "search_results": "Wyniki wyszukiwania",
     "no_results": "Brak wyników dla",
@@ -192,5 +192,7 @@
     "protocols_templates_section_desc": "Wymagane pomiary dla różnych typów badań instalacji elektrycznych.",
     "protocols_download_link": "Pobierz ze strony Sonel",
     "protocols_reports_desc": "Bezpłatne oprogramowanie do tworzenia dokumentacji pomiarowej.",
-    "protocols_measurement_count": "Pomiary"
+    "protocols_measurement_count": "Pomiary",
+    "legal_disclaimer": "Niniejsza aplikacja stanowi niezależne opracowanie edukacyjne. Nie jest oficjalnym produktem ani instrukcją producenta miernika. Nazwy handlowe, w tym Sonel oraz MPI-530, są znakami towarowymi ich właścicieli i zostały użyte wyłącznie w celach informacyjnych.",
+    "legal_title": "Informacja prawna"
 }

@@ -1,8 +1,8 @@
 {
-    "app_title": "INTERAKTIVE ANLEITUNG",
-    "app_subtitle": "Interaktive Anleitung",
-    "hero_title": "INTERAKTIVE ANLEITUNG",
-    "hero_desc": "Wählen Sie eine Messfunktion, um eine detaillierte Schritt-für-Schritt-Anleitung für das Sonel MPI-530 Messgerät anzuzeigen.",
+    "app_title": "BENUTZERHANDBUCH",
+    "app_subtitle": "Unabhängiger Leitfaden",
+    "hero_title": "UNABHÄNGIGER LEITFADEN",
+    "hero_desc": "Wählen Sie eine Messfunktion, um eine detaillierte Schritt-für-Schritt-Anleitung für das MPI-530 Messgerät anzuzeigen.",
     "search_placeholder": "Anleitungen, Verfahren, FAQ suchen...",
     "search_results": "Suchergebnisse",
     "no_results": "Keine Ergebnisse für",
@@ -192,5 +192,7 @@
     "protocols_templates_section_desc": "Erforderliche Messungen für verschiedene Arten von Elektroinstallationsprüfungen.",
     "protocols_download_link": "Von der Sonel-Website herunterladen",
     "protocols_reports_desc": "Kostenlose Software zur Erstellung von Messdokumentation.",
-    "protocols_measurement_count": "Messungen"
+    "protocols_measurement_count": "Messungen",
+    "legal_disclaimer": "Diese Anwendung ist ein unabhängiges Bildungswerk. Sie ist kein offizielles Produkt und keine Bedienungsanleitung des Messgeräteherstellers. Handelsnamen, einschließlich Sonel und MPI-530, sind Marken ihrer jeweiligen Inhaber und werden hierin ausschließlich zu Informationszwecken verwendet.",
+    "legal_title": "Rechtlicher Hinweis"
 }

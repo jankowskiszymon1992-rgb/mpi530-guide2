@@ -1,8 +1,8 @@
 {
-    "app_title": "INTERACTIVE GUIDE",
-    "app_subtitle": "Interactive Guide",
-    "hero_title": "INTERACTIVE GUIDE",
-    "hero_desc": "Select a measurement function to see detailed step-by-step instructions for the Sonel MPI-530 meter.",
+    "app_title": "USER GUIDE",
+    "app_subtitle": "Independent Guide",
+    "hero_title": "INDEPENDENT GUIDE",
+    "hero_desc": "Select a measurement function to see detailed step-by-step instructions for the MPI-530 meter.",
     "search_placeholder": "Search instructions, procedures, FAQ...",
     "search_results": "Search results",
     "no_results": "No results for",
@@ -192,5 +192,7 @@
     "protocols_templates_section_desc": "Required measurements for various types of electrical installation tests.",
     "protocols_download_link": "Download from Sonel website",
     "protocols_reports_desc": "Free software for creating measurement documentation.",
-    "protocols_measurement_count": "Measurements"
+    "protocols_measurement_count": "Measurements",
+    "legal_disclaimer": "This application is an independent educational resource. It is not an official product or instruction manual of the meter manufacturer. Trade names, including Sonel and MPI-530, are trademarks of their respective owners and are used herein solely for informational purposes.",
+    "legal_title": "Legal notice"
 }
