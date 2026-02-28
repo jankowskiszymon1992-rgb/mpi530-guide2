@@ -627,7 +627,7 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
 };
 
 // Protocol Guide Card
-const ProtocolGuideCard = ({ guide, onClick }) => {
+const ProtocolGuideCard = ({ guide, onClick, t }) => {
     const IconComponent = iconMap[guide.icon] || FileText;
     
     return (
