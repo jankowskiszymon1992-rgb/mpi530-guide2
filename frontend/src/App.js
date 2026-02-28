@@ -566,19 +566,19 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-xl flex items-center gap-2">
                         <ClipboardList className="h-6 w-6 text-blue-500" />
-                        Protokoły Pomiarowe
+                        {t('section_protocols')}
                     </h3>
                     <Button 
                         onClick={onShowProtocols}
                         className="bg-blue-500 text-white hover:bg-blue-600"
                         data-testid="show-protocols-btn"
                     >
-                        Zobacz instrukcje
+                        {t('show_instructions')}
                         <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
                 </div>
                 <p className="text-muted-foreground mb-4">
-                    Jak tworzyć protokoły pomiarowe w programie <strong>Sonel Reports Plus</strong> - od projektu po wydruk.
+                    {t('section_protocols_desc')}
                 </p>
                 <div className="grid md:grid-cols-4 gap-4 text-sm">
                     <div className="flex items-center gap-2 text-muted-foreground">
