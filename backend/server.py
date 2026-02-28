@@ -1688,6 +1688,146 @@ async def get_connection_diagram(diagram_id: str):
             return diagram
     raise HTTPException(status_code=404, detail=f"Schemat '{diagram_id}' nie znaleziony")
 
+# ============================================
+# NOWE API - Kalkulator przewodów, Checklista, Quiz
+# ============================================
+
+@api_router.get("/tools/cable-calculator")
+async def calculate_cable_section(
+    power_kw: float,
+    voltage: float = 230,
+    length_m: float = 10,
+    max_drop_percent: float = 3,
+    phases: int = 1,
+    cable_type: str = "cu_pvc"
+):
+    """Kalkulator doboru przekroju przewodu"""
+    if cable_type not in CABLE_SECTIONS:
+        raise HTTPException(status_code=400, detail="Nieznany typ przewodu")
+    
+    # Oblicz prąd
+    if phases == 1:
+        current = (power_kw * 1000) / voltage
+    else:
+        current = (power_kw * 1000) / (voltage * 1.732)
+    
+    # Oblicz maksymalną rezystancję dla spadku napięcia
+    max_voltage_drop = voltage * (max_drop_percent / 100)
+    max_resistance = max_voltage_drop / current
+    
+    # Dla przewodu 2-żyłowego (tam i z powrotem)
+    max_r_per_km = (max_resistance * 1000) / (2 * length_m)
+    
+    # Znajdź odpowiedni przekrój
+    cable_data = CABLE_SECTIONS[cable_type]
+    recommended = None
+    for section in cable_data["sections"]:
+        if section["Iz_A"] >= current and section["R_ohm_km"] <= max_r_per_km:
+            if recommended is None or section["mm2"] < recommended["mm2"]:
+                recommended = section
+    
+    # Jeśli nie znaleziono dla spadku napięcia, znajdź dla obciążalności
+    if recommended is None:
+        for section in cable_data["sections"]:
+            if section["Iz_A"] >= current:
+                recommended = section
+                break
+    
+    # Oblicz rzeczywisty spadek napięcia
+    actual_drop = None
+    actual_drop_percent = None
+    if recommended:
+        resistance = 2 * length_m * recommended["R_ohm_km"] / 1000
+        actual_drop = current * resistance
+        actual_drop_percent = (actual_drop / voltage) * 100
+    
+    return {
+        "input": {
+            "power_kw": power_kw,
+            "voltage": voltage,
+            "length_m": length_m,
+            "max_drop_percent": max_drop_percent,
+            "phases": phases,
+            "cable_type": cable_type
+        },
+        "calculated": {
+            "current_A": round(current, 2),
+            "max_resistance_ohm": round(max_resistance, 4)
+        },
+        "recommended": {
+            "section_mm2": recommended["mm2"] if recommended else None,
+            "Iz_A": recommended["Iz_A"] if recommended else None,
+            "actual_drop_V": round(actual_drop, 2) if actual_drop else None,
+            "actual_drop_percent": round(actual_drop_percent, 2) if actual_drop_percent else None
+        },
+        "all_suitable": [s for s in cable_data["sections"] if s["Iz_A"] >= current]
+    }
+
+@api_router.get("/tools/cable-sections")
+async def get_cable_sections():
+    """Pobierz tabele przekrojów przewodów"""
+    return CABLE_SECTIONS
+
+@api_router.get("/tools/checklists")
+async def get_all_checklists():
+    """Pobierz wszystkie checklisty bezpieczeństwa"""
+    return SAFETY_CHECKLISTS
+
+@api_router.get("/tools/checklists/{checklist_id}")
+async def get_checklist(checklist_id: str):
+    """Pobierz konkretną checklistę"""
+    if checklist_id in SAFETY_CHECKLISTS:
+        return SAFETY_CHECKLISTS[checklist_id]
+    raise HTTPException(status_code=404, detail=f"Checklista '{checklist_id}' nie znaleziona")
+
+@api_router.get("/quiz/questions")
+async def get_quiz_questions():
+    """Pobierz pytania quizu"""
+    # Zwróć pytania bez poprawnych odpowiedzi
+    questions = []
+    for q in QUIZ_QUESTIONS:
+        questions.append({
+            "id": q["id"],
+            "question": q["question"],
+            "options": q["options"]
+        })
+    return questions
+
+@api_router.post("/quiz/check")
+async def check_quiz_answers(answers: Dict[int, int]):
+    """Sprawdź odpowiedzi quizu"""
+    results = []
+    correct_count = 0
+    
+    for q in QUIZ_QUESTIONS:
+        user_answer = answers.get(q["id"])
+        is_correct = user_answer == q["correct"]
+        if is_correct:
+            correct_count += 1
+        results.append({
+            "id": q["id"],
+            "question": q["question"],
+            "user_answer": user_answer,
+            "correct_answer": q["correct"],
+            "is_correct": is_correct,
+            "explanation": q["explanation"]
+        })
+    
+    total = len(QUIZ_QUESTIONS)
+    percentage = (correct_count / total) * 100
+    passed = percentage >= 70
+    
+    return {
+        "results": results,
+        "summary": {
+            "correct": correct_count,
+            "total": total,
+            "percentage": round(percentage, 1),
+            "passed": passed,
+            "grade": "ZDANY" if passed else "NIEZDANY"
+        }
+    }
+
 @api_router.get("/search")
 async def search_instructions(q: str):
     """Wyszukaj w instrukcjach"""
