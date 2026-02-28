@@ -653,7 +653,7 @@ const ProtocolGuideCard = ({ guide, onClick, t }) => {
                 </div>
             </div>
             <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                <span className="uppercase tracking-wider">{guide.steps.length} kroków</span>
+                <span className="uppercase tracking-wider">{guide.steps.length} {t('steps_count')}</span>
                 <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-150" style={{ color: guide.color }} />
             </div>
         </button>
