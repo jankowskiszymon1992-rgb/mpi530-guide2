@@ -172,7 +172,7 @@ export const SafetyChecklistTab = () => {
     useEffect(() => {
         axios.get(`${API}/tools/checklists`)
             .then(res => setChecklists(res.data))
-            .catch(err => console.error(err));
+            .catch(() => {});
     }, []);
 
     const handleCheck = (itemId) => {
