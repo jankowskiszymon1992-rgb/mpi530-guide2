@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Query
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -10,6 +10,12 @@ from typing import List, Optional, Dict
 import uuid
 from datetime import datetime, timezone
 import math
+import copy
+from translations import (
+    get_functions_translations, get_faq_translations,
+    get_error_codes_translations, get_quiz_translations,
+    get_checklists_translations
+)
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
