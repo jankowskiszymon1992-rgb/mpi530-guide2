@@ -937,7 +937,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack }) => {
 };
 
 // Tools View Component
-const ToolsView = ({ onBack }) => {
+const ToolsView = ({ onBack, t, lang }) => {
     const [activeTab, setActiveTab] = useState('calculator');
     const [zsInput, setZsInput] = useState('');
     const [voltageInput, setVoltageInput] = useState('230');
