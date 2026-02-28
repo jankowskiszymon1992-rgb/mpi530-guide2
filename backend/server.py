@@ -473,6 +473,8 @@ FAQ_DATA: List[FAQ] = [
     FAQ(id="6", question="Jak mierzyć impedancję pętli za RCD bez wyzwalania?", answer="Użyj funkcji Zs RCD (bez wyzwalania) lub wykonaj szybki pomiar L-L (między fazami).", category="loop"),
     FAQ(id="7", question="Jakie są kategorie pomiarowe miernika MPI-530?", answer="MPI-530 spełnia wymagania CAT III 600V i CAT IV 300V zgodnie z normą EN 61010.", category="ogolne"),
     FAQ(id="8", question="Jak rozładować pojemność kabla po pomiarze izolacji?", answer="Miernik MPI-530 automatycznie rozładowuje pojemność po zwolnieniu przycisku START. Poczekaj na sygnał zakończenia.", category="insulation"),
+    FAQ(id="9", question="Jak naprawić nieprawidłową kolejność faz?", answer="Zamień dowolne dwie fazy miejscami (np. L1 z L2 lub L2 z L3). Po zamianie ponownie sprawdź kolejność miernikiem.", category="phase_sequence"),
+    FAQ(id="10", question="Jak zmienić kierunek obrotów silnika trójfazowego?", answer="Zamień dowolne dwie fazy zasilania silnika miejscami. Spowoduje to zmianę kierunku obrotów na przeciwny.", category="motor_rotation"),
 ]
 
 # API Routes
