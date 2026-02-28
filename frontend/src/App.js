@@ -39,7 +39,13 @@ const iconMap = {
 };
 
 // Header Component
-const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack }) => {
+const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack, lang, switchLang, t }) => {
+    const [langOpen, setLangOpen] = useState(false);
+    const langs = [
+        { code: 'pl', label: 'PL', flag: '🇵🇱' },
+        { code: 'en', label: 'EN', flag: '🇬🇧' },
+        { code: 'de', label: 'DE', flag: '🇩🇪' },
+    ];
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +57,7 @@ const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack }) 
                                 size="icon"
                                 onClick={onBack}
                                 data-testid="back-button"
-                                aria-label="Wróć"
+                                aria-label={t('back')}
                             >
                                 <ArrowLeft className="h-5 w-5" />
                             </Button>
@@ -73,17 +79,45 @@ const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack }) 
                             </div>
                             <div>
                                 <h1 className="text-lg font-bold tracking-tight">SONEL MPI-530</h1>
-                                <p className="text-xs text-muted-foreground uppercase tracking-wider">Interaktywna Instrukcja</p>
+                                <p className="text-xs text-muted-foreground uppercase tracking-wider">{t('app_subtitle')}</p>
                             </div>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
+                        {/* Language Switcher */}
+                        <div className="relative" data-testid="language-switcher">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setLangOpen(!langOpen)}
+                                className="flex items-center gap-1.5 px-2"
+                                data-testid="language-toggle"
+                            >
+                                <Globe className="h-4 w-4" />
+                                <span className="text-xs font-bold">{lang.toUpperCase()}</span>
+                            </Button>
+                            {langOpen && (
+                                <div className="absolute right-0 top-full mt-1 bg-popover border border-border rounded-md shadow-lg py-1 min-w-[100px] z-50">
+                                    {langs.map(l => (
+                                        <button
+                                            key={l.code}
+                                            onClick={() => { switchLang(l.code); setLangOpen(false); }}
+                                            className={`w-full text-left px-3 py-1.5 text-sm hover:bg-accent flex items-center gap-2 ${lang === l.code ? 'bg-accent font-bold' : ''}`}
+                                            data-testid={`lang-${l.code}`}
+                                        >
+                                            <span>{l.flag}</span>
+                                            <span>{l.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => setDarkMode(!darkMode)}
                             data-testid="dark-mode-toggle"
-                            aria-label={darkMode ? "Tryb jasny" : "Tryb ciemny"}
+                            aria-label={darkMode ? t('light_mode') : t('dark_mode')}
                         >
                             {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                         </Button>
