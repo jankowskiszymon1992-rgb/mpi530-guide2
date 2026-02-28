@@ -794,22 +794,21 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
         const fetchData = async () => {
             try {
                 const [guidesRes, templatesRes, examplesRes] = await Promise.all([
-                    axios.get(`${API}/protocols/guides`),
-                    axios.get(`${API}/protocols/templates`),
-                    axios.get(`${API}/protocols/examples`)
+                    axios.get(`${API}/protocols/guides`, { params: { lang } }),
+                    axios.get(`${API}/protocols/templates`, { params: { lang } }),
+                    axios.get(`${API}/protocols/examples`, { params: { lang } })
                 ]);
                 setGuides(guidesRes.data);
                 setTemplates(templatesRes.data);
                 setExamples(examplesRes.data);
             } catch (error) {
-                console.error("Błąd ładowania protokołów:", error);
-                toast.error("Błąd ładowania danych protokołów");
+                toast.error(t('error_loading_protocols'));
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [lang, t]);
 
     if (loading) {
         return (
@@ -818,7 +817,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                     <div className="w-12 h-12 bg-blue-500 mx-auto mb-4 flex items-center justify-center animate-pulse">
                         <FileText className="h-6 w-6 text-white" />
                     </div>
-                    <p className="text-muted-foreground">Ładowanie...</p>
+                    <p className="text-muted-foreground">{t('loading')}</p>
                 </div>
             </div>
         );
@@ -832,7 +831,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                     <span className="gradient-text">{t('section_protocols')}</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl">
-                    Instrukcje tworzenia protokołów w programie <strong>Sonel Reports Plus</strong> - od projektu po wydruk dokumentacji.
+                    {t('section_protocols_desc')}
                 </p>
             </div>
 
