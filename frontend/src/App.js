@@ -1405,7 +1405,7 @@ function App() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [currentView, setCurrentView] = useState('home'); // 'home', 'protocols', 'protocol-detail', 'example-detail'
+    const [currentView, setCurrentView] = useState('home'); // 'home', 'protocols', 'protocol-detail', 'example-detail', 'tools'
     const [selectedGuide, setSelectedGuide] = useState(null);
     const [selectedExample, setSelectedExample] = useState(null);
 
