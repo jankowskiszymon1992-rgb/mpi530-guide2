@@ -972,10 +972,15 @@ const ToolsView = ({ onBack }) => {
             {/* Tabs */}
             <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
                 {[
-                    { id: 'calculator', icon: Calculator, label: 'Kalkulator', color: 'green' },
+                    { id: 'calculator', icon: Calculator, label: 'Kalkulator Zs', color: 'green' },
+                    { id: 'cable', icon: Zap, label: 'Dobór przewodu', color: 'yellow' },
                     { id: 'norms', icon: Table2, label: 'Tabele norm', color: 'blue' },
                     { id: 'errors', icon: AlertOctagon, label: 'Kody błędów', color: 'red' },
                     { id: 'diagrams', icon: Cable, label: 'Schematy', color: 'purple' },
+                    { id: 'checklist', icon: ClipboardCheck, label: 'Checklista', color: 'orange' },
+                    { id: 'pdf', icon: FileText, label: 'Generator PDF', color: 'blue' },
+                    { id: 'quiz', icon: Award, label: 'Quiz', color: 'green' },
+                    { id: 'notes', icon: StickyNote, label: 'Notatki', color: 'blue' },
                 ].map(tab => (
                     <Button
                         key={tab.id}
