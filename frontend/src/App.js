@@ -1583,7 +1583,7 @@ function App() {
     // Render current view
     const renderMainContent = () => {
         if (selectedFunction) {
-            return <DetailView func={selectedFunction} onBack={handleBack} />;
+            return <DetailView func={selectedFunction} onBack={handleBack} t={t} />;
         }
         
         switch (currentView) {
