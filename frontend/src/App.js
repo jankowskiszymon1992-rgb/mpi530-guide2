@@ -518,6 +518,7 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                         key={func.id} 
                         func={func} 
                         onClick={onSelectFunction}
+                        t={t}
                     />
                 ))}
             </div>
