@@ -7,7 +7,8 @@ import {
     Search, Moon, Sun, Menu, X, ChevronRight, 
     AlertTriangle, Lightbulb, CheckCircle2, ArrowLeft,
     BookOpen, HelpCircle, ImageIcon, RotateCw, RefreshCw, Circle,
-    FileText, Download, Printer, FolderSync, ClipboardList
+    FileText, Download, Printer, FolderSync, ClipboardList,
+    Calculator, Table2, AlertOctagon, Cable, Wrench
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
