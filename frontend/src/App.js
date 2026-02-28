@@ -1286,6 +1286,21 @@ const ToolsView = ({ onBack }) => {
                     ))}
                 </div>
             )}
+
+            {/* Cable Calculator Tab */}
+            {activeTab === 'cable' && <CableCalculatorTab />}
+
+            {/* Safety Checklist Tab */}
+            {activeTab === 'checklist' && <SafetyChecklistTab />}
+
+            {/* PDF Generator Tab */}
+            {activeTab === 'pdf' && <PDFGeneratorTab />}
+
+            {/* Quiz Tab */}
+            {activeTab === 'quiz' && <QuizTab />}
+
+            {/* Notes Tab */}
+            {activeTab === 'notes' && <NotesHistoryTab />}
         </div>
     );
 };
