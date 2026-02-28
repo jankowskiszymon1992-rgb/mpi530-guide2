@@ -1536,6 +1536,8 @@ function App() {
                 return selectedGuide ? <ProtocolGuideDetailView guide={selectedGuide} onBack={handleBack} /> : null;
             case 'example-detail':
                 return selectedExample ? <ExampleProtocolDetailView example={selectedExample} onBack={handleBack} /> : null;
+            case 'tools':
+                return <ToolsView onBack={handleBack} />;
             default:
                 return (
                     <HomeView 
@@ -1546,6 +1548,7 @@ function App() {
                         searchResults={searchResults}
                         onSearch={handleSearch}
                         onShowProtocols={handleShowProtocols}
+                        onShowTools={handleShowTools}
                     />
                 );
         }
