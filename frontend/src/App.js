@@ -1489,20 +1489,26 @@ function App() {
         }
     };
 
+    // Show tools
+    const handleShowTools = () => {
+        setSelectedFunction(null);
+        setCurrentView('tools');
+    };
+
     // Back handler
     const handleBack = () => {
         if (currentView === 'protocol-detail' || currentView === 'example-detail') {
             setSelectedGuide(null);
             setSelectedExample(null);
             setCurrentView('protocols');
-        } else if (currentView === 'protocols') {
+        } else if (currentView === 'protocols' || currentView === 'tools') {
             setCurrentView('home');
         } else {
             setSelectedFunction(null);
         }
     };
 
-    const showBackButton = selectedFunction || currentView === 'protocols' || currentView === 'protocol-detail' || currentView === 'example-detail';
+    const showBackButton = selectedFunction || currentView === 'protocols' || currentView === 'protocol-detail' || currentView === 'example-detail' || currentView === 'tools';
 
     if (loading) {
         return (
