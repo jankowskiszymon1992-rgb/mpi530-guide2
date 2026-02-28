@@ -1341,7 +1341,7 @@ const ToolsView = ({ onBack, t, lang }) => {
 };
 
 // Example Protocol Detail View
-const ExampleProtocolDetailView = ({ example, onBack }) => {
+const ExampleProtocolDetailView = ({ example, onBack, t }) => {
     const isPositive = example.conclusion.includes('POZYTYWNA');
     
     return (
