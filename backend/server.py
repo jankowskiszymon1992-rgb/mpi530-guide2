@@ -892,6 +892,32 @@ async def get_faq_by_category(category: str):
     """Pobierz FAQ dla danej kategorii"""
     return [faq for faq in FAQ_DATA if faq.category == category]
 
+@api_router.get("/protocols/guides", response_model=List[ProtocolGuide])
+async def get_protocol_guides():
+    """Pobierz instrukcje tworzenia protokołów w Sonel Reports Plus"""
+    return PROTOCOL_GUIDES
+
+@api_router.get("/protocols/guides/{guide_id}", response_model=ProtocolGuide)
+async def get_protocol_guide(guide_id: str):
+    """Pobierz konkretną instrukcję protokołu"""
+    for guide in PROTOCOL_GUIDES:
+        if guide.id == guide_id:
+            return guide
+    raise HTTPException(status_code=404, detail=f"Instrukcja {guide_id} nie znaleziona")
+
+@api_router.get("/protocols/templates", response_model=List[ProtocolTemplate])
+async def get_protocol_templates():
+    """Pobierz szablony protokołów pomiarowych"""
+    return PROTOCOL_TEMPLATES
+
+@api_router.get("/protocols/templates/{template_id}", response_model=ProtocolTemplate)
+async def get_protocol_template(template_id: str):
+    """Pobierz konkretny szablon protokołu"""
+    for template in PROTOCOL_TEMPLATES:
+        if template.id == template_id:
+            return template
+    raise HTTPException(status_code=404, detail=f"Szablon {template_id} nie znaleziony")
+
 @api_router.get("/search")
 async def search_instructions(q: str):
     """Wyszukaj w instrukcjach"""
