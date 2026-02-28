@@ -1568,14 +1568,18 @@ async def get_categories():
         })
     return list(categories.values())
 
-@api_router.get("/faq", response_model=List[FAQ])
-async def get_faq():
-    """Pobierz wszystkie pytania FAQ"""
+@api_router.get("/faq")
+async def get_faq(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_faq_translations(lang)
+    if tr:
+        return [FAQ(**item) for item in tr]
     return FAQ_DATA
 
 @api_router.get("/faq/{category}")
-async def get_faq_by_category(category: str):
-    """Pobierz FAQ dla danej kategorii"""
+async def get_faq_by_category(category: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_faq_translations(lang)
+    if tr:
+        return [FAQ(**item) for item in tr if item["category"] == category]
     return [faq for faq in FAQ_DATA if faq.category == category]
 
 @api_router.get("/protocols/guides", response_model=List[ProtocolGuide])
