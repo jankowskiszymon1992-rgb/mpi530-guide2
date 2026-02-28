@@ -922,10 +922,10 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
             {/* Templates */}
             <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-primary" />
-                Szablony protokołów
+                {t('protocols_templates_section')}
             </h3>
             <p className="text-muted-foreground mb-6">
-                Wymagane pomiary dla różnych typów badań instalacji elektrycznych.
+                {t('protocols_templates_section_desc')}
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {templates.map((template) => (
