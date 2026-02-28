@@ -828,7 +828,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
             {/* Header */}
             <div className="mb-10">
                 <h2 className="text-4xl font-black mb-4 tracking-tight">
-                    <span className="gradient-text">Protokoły Pomiarowe</span>
+                    <span className="gradient-text">{t('section_protocols')}</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl">
                     Instrukcje tworzenia protokołów w programie <strong>Sonel Reports Plus</strong> - od projektu po wydruk dokumentacji.
