@@ -1621,6 +1621,9 @@ function App() {
                 onMenuClick={() => setSidebarOpen(true)}
                 showBackButton={showBackButton}
                 onBack={handleBack}
+                lang={lang}
+                switchLang={switchLang}
+                t={t}
             />
 
             <div className="flex flex-1">
