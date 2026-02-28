@@ -1697,9 +1697,9 @@ async def get_all_norms():
     }
 
 @api_router.get("/tools/error-codes")
-async def get_error_codes():
-    """Pobierz listę kodów błędów miernika MPI-530"""
-    return ERROR_CODES
+async def get_error_codes(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_error_codes_translations(lang)
+    return tr if tr else ERROR_CODES
 
 @api_router.get("/tools/error-codes/{code}")
 async def get_error_code(code: str):
