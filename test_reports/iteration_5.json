@@ -1,0 +1,80 @@
+{
+  "summary": "Testing iteration 5 - Protocol translations (guides, templates, examples) for EN/DE. Backend API tests: 17/17 passed. Found and fixed 2 frontend bugs: (1) handleSelectGuide and handleSelectExample were not passing lang parameter, (2) ExampleProtocolDetailView had hardcoded Polish strings and status check only for 'OK' not 'PASS'.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "passed_tests": [
+    "Backend: /api/protocols/guides returns 4 Polish guides by default",
+    "Backend: /api/protocols/guides?lang=en returns 4 English guide names",
+    "Backend: /api/protocols/guides?lang=de returns 4 German guide names",
+    "Backend: /api/protocols/guides/reports_plus_basics?lang=en returns English steps",
+    "Backend: /api/protocols/guides/generate_protocol?lang=de returns German steps",
+    "Backend: /api/protocols/templates returns 5 Polish templates by default",
+    "Backend: /api/protocols/templates?lang=en returns 5 English templates with translated measurements",
+    "Backend: /api/protocols/templates?lang=de returns 5 German templates",
+    "Backend: /api/protocols/examples returns 5 Polish examples by default",
+    "Backend: /api/protocols/examples?lang=en returns 5 English examples with POSITIVE/NEGATIVE",
+    "Backend: /api/protocols/examples?lang=de returns 5 German examples with POSITIV/NEGATIV",
+    "Backend: /api/protocols/examples/example_reception?lang=en returns English example with Living room, Kitchen",
+    "Backend: /api/protocols/examples/example_periodic?lang=de returns German example with Büro, Hauptverteilung",
+    "Backend: Invalid lang=fr returns 422 validation error",
+    "Backend: Non-existent guide/example returns 404",
+    "Frontend EN: Protocols view shows English guide titles",
+    "Frontend EN: Guide detail shows English step-by-step instructions (Software installation, Creating a new project)",
+    "Frontend EN: Example protocol shows English content (Living room, Kitchen, Bathroom)",
+    "Frontend EN: Example shows POSITIVE assessment and 'Pass' status",
+    "Frontend EN: Table headers translated (Measurements table, Point, Circuit, Protection, Value, Limit, Status, Notes)",
+    "Frontend EN: Recommendations section header translated",
+    "Frontend DE: Protocols view shows German guide titles (Grundlagen, Ergebnisse herunterladen, Protokoll erstellen)",
+    "Frontend DE: Section headers show SCHRITT-FÜR-SCHRITT-ANLEITUNGEN, BEISPIEL AUSGEFÜLLTER PROTOKOLLE",
+    "Frontend DE: Example names show German (Wohnungsabnahmeprotokoll, Periodisches Prüfprotokoll)",
+    "No runtime errors in any language"
+  ],
+  "bugs_fixed": [
+    {
+      "component": "App.js - handleSelectGuide",
+      "issue": "Guide detail API call did not pass lang parameter, always returning Polish content",
+      "fix": "Added { params: { lang } } to axios.get for /api/protocols/guides/{guideId}"
+    },
+    {
+      "component": "App.js - handleSelectExample",
+      "issue": "Example detail API call did not pass lang parameter, always returning Polish content",
+      "fix": "Added { params: { lang } } to axios.get for /api/protocols/examples/{exampleId}"
+    },
+    {
+      "component": "App.js - ExampleProtocolDetailView",
+      "issue": "Hardcoded Polish strings for table headers and section titles (Wyniki pomiarów, Punkt, Obwód, etc.)",
+      "fix": "Replaced with t() translation function calls using existing i18n keys"
+    },
+    {
+      "component": "App.js - ExampleProtocolDetailView",
+      "issue": "Status check only checked for 'OK' but translated data uses 'PASS'",
+      "fix": "Added isStatusPass() helper function that checks for 'OK', 'PASS', or 'BESTANDEN'"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_protocols_i18n.py",
+    "/app/test_reports/pytest/pytest_protocols_i18n.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/frontend/src/App.js",
+    "/app/backend/tests/test_protocols_i18n.py"
+  ],
+  "success_rate": {
+    "backend": "100% (17/17 protocol i18n tests passed)",
+    "frontend": "100% (All protocol translation features verified after bug fixes)"
+  },
+  "seed_data_creation": "No new seed data - All protocol translations already in translations.py (GUIDES_EN, GUIDES_DE, TEMPLATES_EN, TEMPLATES_DE, EXAMPLES_EN, EXAMPLES_DE)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Protocol section i18n now fully working. Fixed 2 bugs: (1) API calls for guide/example detail now pass lang parameter, (2) ExampleProtocolDetailView now uses t() translations and handles PASS/OK/BESTANDEN status values. All backend endpoints: /api/protocols/guides, /api/protocols/templates, /api/protocols/examples support ?lang=pl|en|de parameter.",
+  "mocked_api_note": "ALL protocol translations are hardcoded in translations.py (EN/DE) and server.py (PL default) - this is by design"
+}
