@@ -432,7 +432,7 @@ const SearchResults = ({ results, onSelect, onClose }) => {
 };
 
 // Home View Component
-const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch, onShowProtocols }) => {
+const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch, onShowProtocols, onShowTools }) => {
     const [showResults, setShowResults] = useState(false);
 
     return (
@@ -485,8 +485,47 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                 ))}
             </div>
 
+            {/* Tools Section - NEW */}
+            <div className="mt-12 p-6 bg-green-500/5 border border-green-500/20 rounded-sm">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-xl flex items-center gap-2">
+                        <Wrench className="h-6 w-6 text-green-500" />
+                        Narzędzia
+                    </h3>
+                    <Button 
+                        onClick={onShowTools}
+                        className="bg-green-500 text-white hover:bg-green-600"
+                        data-testid="show-tools-btn"
+                    >
+                        Otwórz narzędzia
+                        <ChevronRight className="h-4 w-4 ml-2" />
+                    </Button>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                    Kalkulator, tabele norm, kody błędów i schematy podłączeń.
+                </p>
+                <div className="grid md:grid-cols-4 gap-4 text-sm">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Calculator className="h-4 w-4 text-green-500" />
+                        <span>Kalkulator Zs → Ik</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Table2 className="h-4 w-4 text-blue-500" />
+                        <span>Tabele norm</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <AlertOctagon className="h-4 w-4 text-red-500" />
+                        <span>Kody błędów</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Cable className="h-4 w-4 text-purple-500" />
+                        <span>Schematy podłączeń</span>
+                    </div>
+                </div>
+            </div>
+
             {/* Protocols Section */}
-            <div className="mt-12 p-6 bg-blue-500/5 border border-blue-500/20 rounded-sm">
+            <div className="mt-8 p-6 bg-blue-500/5 border border-blue-500/20 rounded-sm">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-xl flex items-center gap-2">
                         <ClipboardList className="h-6 w-6 text-blue-500" />
