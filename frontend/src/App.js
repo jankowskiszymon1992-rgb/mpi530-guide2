@@ -6,7 +6,7 @@ import {
     Shield, Repeat, Layers, Zap, Activity, Link, 
     Search, Moon, Sun, Menu, X, ChevronRight, 
     AlertTriangle, Lightbulb, CheckCircle2, ArrowLeft,
-    BookOpen, HelpCircle, Home
+    BookOpen, HelpCircle, ImageIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ const iconMap = {
 };
 
 // Header Component
-const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack, currentView }) => {
+const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack }) => {
     return (
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,7 +60,7 @@ const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack, cu
                             </div>
                             <div>
                                 <h1 className="text-lg font-bold tracking-tight">SONEL MPI-530</h1>
-                                <p className="text-xs text-muted-foreground uppercase tracking-wider">Interaktywny Przewodnik</p>
+                                <p className="text-xs text-muted-foreground uppercase tracking-wider">Interaktywna Instrukcja</p>
                             </div>
                         </div>
                     </div>
@@ -121,13 +121,12 @@ const Sidebar = ({ functions, selectedId, onSelect, isOpen, onClose }) => {
                                         ${isActive ? 'active' : ''}
                                     `}
                                     data-testid={`nav-${func.id}`}
-                                    style={{ '--accent-color': func.color }}
                                 >
                                     <IconComponent 
                                         className="h-5 w-5 flex-shrink-0" 
                                         style={{ color: func.color }}
                                     />
-                                    <span className="text-sm font-medium truncate">{func.name_en}</span>
+                                    <span className="text-sm font-medium truncate">{func.name}</span>
                                 </button>
                             );
                         })}
@@ -147,7 +146,6 @@ const FunctionCard = ({ func, onClick }) => {
             onClick={() => onClick(func.id)}
             className="function-card card-industrial text-left group"
             data-testid={`function-card-${func.id}`}
-            style={{ '--card-accent': func.color }}
         >
             <div className="flex items-start gap-4">
                 <div 
@@ -158,7 +156,7 @@ const FunctionCard = ({ func, onClick }) => {
                 </div>
                 <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors duration-150">
-                        {func.name_en}
+                        {func.name}
                     </h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">
                         {func.description}
@@ -173,11 +171,12 @@ const FunctionCard = ({ func, onClick }) => {
     );
 };
 
-// Step Component
+// Step Component with Image
 const StepComponent = ({ step, stepIndex, currentStep, totalSteps }) => {
     const isActive = stepIndex === currentStep;
     const isCompleted = stepIndex < currentStep;
     const isPending = stepIndex > currentStep;
+    const [imageError, setImageError] = useState(false);
 
     return (
         <div 
@@ -206,16 +205,28 @@ const StepComponent = ({ step, stepIndex, currentStep, totalSteps }) => {
                     <h4 className="font-bold text-lg mb-2">{step.title}</h4>
                     <p className="text-muted-foreground mb-3">{step.description}</p>
                     
+                    {/* Zdjęcie kroku */}
+                    {step.image && !imageError && isActive && (
+                        <div className="my-4 rounded-sm overflow-hidden border border-border bg-muted/30">
+                            <img 
+                                src={step.image} 
+                                alt={`Krok ${step.step_number}: ${step.title}`}
+                                className="w-full h-auto max-h-64 object-contain"
+                                onError={() => setImageError(true)}
+                            />
+                        </div>
+                    )}
+                    
                     {step.warning && (
                         <div className="warning-box flex items-start gap-3 mb-3">
-                            <AlertTriangle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                            <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
                             <p>{step.warning}</p>
                         </div>
                     )}
                     
                     {step.tip && (
                         <div className="tip-box flex items-start gap-3">
-                            <Lightbulb className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
+                            <Lightbulb className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
                             <p>{step.tip}</p>
                         </div>
                     )}
@@ -233,8 +244,8 @@ const LCDDisplay = ({ func }) => {
             <div className="text-2xl font-mono font-bold mb-4">{func.expected_results}</div>
             <div className="border-t border-green-900/50 pt-4 mt-4">
                 <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Parametry</div>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                    {func.parameters.slice(0, 4).map((param, idx) => (
+                <div className="grid grid-cols-1 gap-2 text-sm">
+                    {func.parameters.map((param, idx) => (
                         <div key={idx} className="opacity-80">{param}</div>
                     ))}
                 </div>
@@ -246,19 +257,41 @@ const LCDDisplay = ({ func }) => {
 // Safety Notes Component
 const SafetyNotes = ({ notes }) => {
     return (
-        <div className="bg-destructive/5 border border-destructive/20 p-4 rounded-sm" data-testid="safety-notes">
+        <div className="bg-red-500/5 border border-red-500/20 p-4 rounded-sm" data-testid="safety-notes">
             <h4 className="font-bold uppercase tracking-wider text-sm mb-3 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-destructive" />
+                <AlertTriangle className="h-4 w-4 text-red-500" />
                 Zasady Bezpieczeństwa
             </h4>
             <ul className="space-y-2">
                 {notes.map((note, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-destructive">•</span>
+                        <span className="text-red-500">•</span>
                         {note}
                     </li>
                 ))}
             </ul>
+        </div>
+    );
+};
+
+// Meter Image Gallery
+const MeterImageGallery = ({ mainImage, funcName }) => {
+    const [imageError, setImageError] = useState(false);
+    
+    if (imageError || !mainImage) return null;
+    
+    return (
+        <div className="mb-6 rounded-sm overflow-hidden border border-border bg-card" data-testid="meter-image">
+            <div className="p-2 bg-muted/50 border-b border-border flex items-center gap-2">
+                <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                <span className="text-xs uppercase tracking-wider text-muted-foreground">Sonel MPI-530</span>
+            </div>
+            <img 
+                src={mainImage} 
+                alt={`Sonel MPI-530 - ${funcName}`}
+                className="w-full h-auto max-h-80 object-contain bg-white p-4"
+                onError={() => setImageError(true)}
+            />
         </div>
     );
 };
@@ -343,8 +376,9 @@ const DetailView = ({ func, onBack }) => {
                     </div>
                 </div>
 
-                {/* Right: Results & Safety */}
+                {/* Right: Image, Results & Safety */}
                 <div className="space-y-6">
+                    <MeterImageGallery mainImage={func.main_image} funcName={func.name} />
                     <LCDDisplay func={func} />
                     <SafetyNotes notes={func.safety_notes} />
                 </div>
@@ -370,8 +404,8 @@ const SearchResults = ({ results, onSelect, onClose }) => {
                         className="w-full text-left px-4 py-3 hover:bg-muted transition-colors duration-150 flex items-center gap-3"
                     >
                         {result.type === 'function' && <BookOpen className="h-4 w-4 text-primary" />}
-                        {result.type === 'step' && <ChevronRight className="h-4 w-4 text-accent" />}
-                        {result.type === 'faq' && <HelpCircle className="h-4 w-4 text-warning" />}
+                        {result.type === 'step' && <ChevronRight className="h-4 w-4 text-blue-500" />}
+                        {result.type === 'faq' && <HelpCircle className="h-4 w-4 text-yellow-500" />}
                         <div>
                             <p className="font-medium text-sm">
                                 {result.name || result.step_title || result.question}
@@ -458,7 +492,7 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                     </div>
                     <div className="flex items-start gap-2">
                         <span className="text-primary font-bold">03</span>
-                        <p>Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami producenta</p>
+                        <p>Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami Sonel</p>
                     </div>
                 </div>
             </div>
@@ -483,7 +517,7 @@ function App() {
                 const response = await axios.get(`${API}/functions`);
                 setFunctions(response.data);
             } catch (error) {
-                console.error("Error fetching functions:", error);
+                console.error("Błąd ładowania danych:", error);
                 toast.error("Błąd ładowania danych");
             } finally {
                 setLoading(false);
@@ -511,7 +545,7 @@ function App() {
             const response = await axios.get(`${API}/search`, { params: { q: query } });
             setSearchResults(response.data);
         } catch (error) {
-            console.error("Search error:", error);
+            console.error("Błąd wyszukiwania:", error);
         }
     }, []);
 
@@ -553,7 +587,6 @@ function App() {
                 onMenuClick={() => setSidebarOpen(true)}
                 showBackButton={!!selectedFunction}
                 onBack={handleBack}
-                currentView={selectedFunction ? 'detail' : 'home'}
             />
 
             <div className="flex flex-1">
