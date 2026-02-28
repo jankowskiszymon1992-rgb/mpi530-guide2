@@ -1574,7 +1574,7 @@ function App() {
                     <div className="w-16 h-16 bg-primary mx-auto mb-4 flex items-center justify-center animate-pulse">
                         <span className="text-primary-foreground font-bold font-mono">MPI</span>
                     </div>
-                    <p className="text-muted-foreground uppercase tracking-wider text-sm">Ładowanie...</p>
+                    <p className="text-muted-foreground uppercase tracking-wider text-sm">{t('loading')}</p>
                 </div>
             </div>
         );
