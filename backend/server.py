@@ -52,6 +52,29 @@ class FAQ(BaseModel):
     answer: str
     category: str
 
+class ProtocolStep(BaseModel):
+    step_number: int
+    title: str
+    description: str
+    tip: Optional[str] = None
+    image: Optional[str] = None
+
+class ProtocolGuide(BaseModel):
+    id: str
+    name: str
+    description: str
+    icon: str
+    color: str
+    steps: List[ProtocolStep]
+    tips: List[str]
+
+class ProtocolTemplate(BaseModel):
+    id: str
+    name: str
+    description: str
+    measurements: List[str]
+    image: Optional[str] = None
+
 # Oficjalne zdjęcia Sonel MPI-530 z CDN producenta
 METER_IMAGES = {
     "main": "https://cdn.sonel.com/Zdjecia/Mierniki/MPI/MPI-530/image-thumb__32614__img-product-thumb/MPI-530_L_EN_logger_01_u%20-pim.webp",
