@@ -508,7 +508,7 @@ export const QuizTab = ({ lang, t }) => {
 };
 
 // Notes/History Component (uses localStorage)
-export const NotesHistoryTab = () => {
+export const NotesHistoryTab = ({ t }) => {
     const [notes, setNotes] = useState([]);
     const [newNote, setNewNote] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('general');
