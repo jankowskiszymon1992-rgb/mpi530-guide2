@@ -6,7 +6,7 @@ import {
     Shield, Repeat, Layers, Zap, Activity, Link, 
     Search, Moon, Sun, Menu, X, ChevronRight, 
     AlertTriangle, Lightbulb, CheckCircle2, ArrowLeft,
-    BookOpen, HelpCircle, ImageIcon, RotateCw, RefreshCw
+    BookOpen, HelpCircle, ImageIcon, RotateCw, RefreshCw, Circle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,9 @@ const iconMap = {
     Activity: Activity,
     Link: Link,
     RotateCw: RotateCw,
-    RefreshCw: RefreshCw
+    RefreshCw: RefreshCw,
+    Sun: Sun,
+    Circle: Circle
 };
 
 // Header Component
