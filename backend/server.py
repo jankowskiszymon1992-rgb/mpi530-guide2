@@ -608,6 +608,243 @@ FAQ_DATA: List[FAQ] = [
     FAQ(id="13", question="Dlaczego metoda cęgowa daje zaniżony wynik?", answer="Metoda 2-cęgowa mierzy rezystancję uziomu w połączeniu równoległym z innymi uziomami. Rzeczywista rezystancja pojedynczego uziomu jest wyższa.", category="earthing_clamp"),
 ]
 
+# Zdjęcia protokołów i oprogramowania
+PROTOCOL_IMAGES = {
+    "reports_plus_box": "https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+Reports+PLUS/image-thumb__36489__img-product-thumb/blank-box-reports-plus_mHqcbIA.webp",
+    "reports_plus_screen": "https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+Reports+PLUS/image-thumb__36489__img-product-thumb/blank-box-reports-plus_mHqcbIA.webp",
+    "pe6_protocol": "https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+PE+6/pe6-screen.png",
+}
+
+# Instrukcje protokołów - Sonel Reports Plus
+PROTOCOL_GUIDES: List[ProtocolGuide] = [
+    ProtocolGuide(
+        id="reports_plus_basics",
+        name="Sonel Reports Plus - Podstawy",
+        description="Jak rozpocząć pracę z programem Sonel Reports Plus do tworzenia protokołów",
+        icon="FileText",
+        color="#3B82F6",
+        steps=[
+            ProtocolStep(
+                step_number=1,
+                title="Instalacja programu",
+                description="Pobierz Sonel Reports Plus ze strony sonel.pl (sekcja Oprogramowanie). Zainstaluj na komputerze z Windows 10/11. Program jest bezpłatny dla użytkowników mierników Sonel.",
+                tip="Wymagany system: Windows 10 lub Windows 11.",
+                image=PROTOCOL_IMAGES["reports_plus_box"]
+            ),
+            ProtocolStep(
+                step_number=2,
+                title="Utworzenie nowego projektu",
+                description="Uruchom program i wybierz 'Nowy projekt'. Wprowadź dane: nazwa obiektu, adres, inwestor, wykonawca pomiarów, data.",
+                tip="Możesz zapisać szablon danych wykonawcy do ponownego użycia."
+            ),
+            ProtocolStep(
+                step_number=3,
+                title="Struktura drzewa obiektu",
+                description="Zbuduj strukturę budynku: dodaj piętra, pomieszczenia, rozdzielnice. Dla każdego pomieszczenia możesz dodać obwody i punkty pomiarowe.",
+                tip="Struktura drzewiasta pozwala na czytelną organizację wyników."
+            ),
+            ProtocolStep(
+                step_number=4,
+                title="Dodawanie punktów pomiarowych",
+                description="W każdym pomieszczeniu dodaj punkty pomiarowe: gniazdka, oświetlenie, urządzenia stałe. Określ typ zabezpieczenia (bezpiecznik, wyłącznik).",
+                tip="Program zawiera bibliotekę bezpieczników i zabezpieczeń."
+            ),
+            ProtocolStep(
+                step_number=5,
+                title="Transfer struktury do miernika",
+                description="Podłącz miernik MPI-530 przez USB. Wybierz 'Wyślij strukturę do miernika'. Struktura zostanie załadowana do pamięci miernika.",
+                tip="Dzięki temu wyniki pomiarów będą automatycznie przypisane do punktów."
+            )
+        ],
+        tips=[
+            "Zawsze twórz kopię zapasową projektu przed wysłaniem do miernika",
+            "Struktura może zawierać zdjęcia schematów instalacji",
+            "Program automatycznie ocenia wyniki wg norm"
+        ]
+    ),
+    ProtocolGuide(
+        id="download_results",
+        name="Pobieranie wyników z miernika",
+        description="Jak pobrać wyniki pomiarów z MPI-530 do programu Sonel Reports Plus",
+        icon="Download",
+        color="#10B981",
+        steps=[
+            ProtocolStep(
+                step_number=1,
+                title="Podłączenie miernika",
+                description="Podłącz miernik MPI-530 do komputera kablem USB. Włącz miernik. Program automatycznie wykryje urządzenie.",
+                tip="Użyj oryginalnego kabla USB dołączonego do miernika."
+            ),
+            ProtocolStep(
+                step_number=2,
+                title="Wybór danych do pobrania",
+                description="W programie wybierz 'Pobierz dane z miernika'. Wybierz zakres: cała pamięć lub wybrane pomiary.",
+                tip="Możesz pobrać tylko nowe pomiary od ostatniego transferu."
+            ),
+            ProtocolStep(
+                step_number=3,
+                title="Przypisanie do struktury",
+                description="Wyniki zostaną automatycznie przypisane do punktów pomiarowych zgodnie ze strukturą wysłaną wcześniej do miernika.",
+                tip="Pomiary wykonane bez struktury można ręcznie przypisać do punktów."
+            ),
+            ProtocolStep(
+                step_number=4,
+                title="Weryfikacja wyników",
+                description="Program automatycznie oceni wyniki: POZYTYWNY (zielony) lub NEGATYWNY (czerwony) wg norm i ustawień zabezpieczeń.",
+                tip="Kliknij na wynik aby zobaczyć szczegóły i warunki oceny."
+            )
+        ],
+        tips=[
+            "Regularnie pobieraj wyniki - pamięć miernika jest ograniczona",
+            "Wyniki są oceniane automatycznie wg norm PN-HD 60364",
+            "Możesz zmienić kryteria oceny w ustawieniach projektu"
+        ]
+    ),
+    ProtocolGuide(
+        id="generate_protocol",
+        name="Generowanie protokołu",
+        description="Jak wygenerować gotowy protokół pomiarowy do wydruku lub PDF",
+        icon="Printer",
+        color="#F39200",
+        steps=[
+            ProtocolStep(
+                step_number=1,
+                title="Sprawdzenie kompletności",
+                description="Przed generowaniem protokołu sprawdź czy wszystkie wymagane pomiary są wykonane. Program oznaczy brakujące pomiary.",
+                tip="Wymagane minimum: ciągłość PE, izolacja, RCD (jeśli jest), pętla zwarcia."
+            ),
+            ProtocolStep(
+                step_number=2,
+                title="Wybór szablonu protokołu",
+                description="Wybierz 'Generuj protokół'. Wybierz szablon: protokół odbiorczy, protokół okresowy, lub własny szablon.",
+                tip="Możesz stworzyć własne szablony protokołów."
+            ),
+            ProtocolStep(
+                step_number=3,
+                title="Uzupełnienie danych nagłówka",
+                description="Uzupełnij dane: numer protokołu, data, dane zleceniodawcy, cel badania (odbiór/przegląd okresowy).",
+                tip="Dane wykonawcy i uprawnień zapisz w profilu do ponownego użycia."
+            ),
+            ProtocolStep(
+                step_number=4,
+                title="Podgląd i edycja",
+                description="Przejrzyj podgląd protokołu. Możesz dodać uwagi, zalecenia, lub edytować opisy.",
+                tip="Dodaj zdjęcia rozdzielnic lub problemów znalezionych podczas pomiarów."
+            ),
+            ProtocolStep(
+                step_number=5,
+                title="Eksport i wydruk",
+                description="Eksportuj protokół do PDF lub wydrukuj bezpośrednio. Możesz też wydrukować etykiety na punkty pomiarowe.",
+                tip="PDF zawiera podpis cyfrowy z datą wygenerowania."
+            )
+        ],
+        tips=[
+            "Protokół powinien zawierać: dane obiektu, zakres pomiarów, wyniki, ocenę, zalecenia",
+            "Przechowuj protokoły min. 5 lat zgodnie z przepisami",
+            "Możesz wysłać protokół emailem bezpośrednio z programu"
+        ]
+    ),
+    ProtocolGuide(
+        id="pe6_migration",
+        name="Migracja z Sonel PE6",
+        description="Jak przenieść dane ze starego programu PE6 do Sonel Reports Plus",
+        icon="FolderSync",
+        color="#8B5CF6",
+        steps=[
+            ProtocolStep(
+                step_number=1,
+                title="Eksport z PE6",
+                description="W programie Sonel PE6 otwórz projekt. Wybierz 'Eksportuj' i zapisz plik w formacie .pe6 lub .xml.",
+                tip="PE6 to starsze oprogramowanie - Sonel Reports Plus ma więcej funkcji."
+            ),
+            ProtocolStep(
+                step_number=2,
+                title="Import do Reports Plus",
+                description="W Sonel Reports Plus wybierz 'Importuj projekt'. Wskaż plik wyeksportowany z PE6.",
+                tip="Import zachowuje strukturę i wyniki pomiarów."
+            ),
+            ProtocolStep(
+                step_number=3,
+                title="Weryfikacja danych",
+                description="Sprawdź zaimportowane dane. Uzupełnij brakujące informacje (np. zdjęcia, schematy).",
+                tip="Niektóre funkcje PE6 mogą wymagać ręcznej konwersji."
+            )
+        ],
+        tips=[
+            "Sonel Reports Plus zastępuje PE6 i PE5",
+            "Reports Plus ma lepszą integrację z nowymi miernikami",
+            "Zachowaj kopię oryginalnych plików PE6 na wszelki wypadek"
+        ]
+    )
+]
+
+# Przykładowe szablony protokołów
+PROTOCOL_TEMPLATES: List[ProtocolTemplate] = [
+    ProtocolTemplate(
+        id="reception",
+        name="Protokół odbioru instalacji elektrycznej",
+        description="Pełny protokół pomiarów odbiorczych nowej instalacji zgodny z normą PN-HD 60364",
+        measurements=[
+            "Oględziny instalacji",
+            "Ciągłość przewodów ochronnych (PE)",
+            "Rezystancja izolacji",
+            "Ochrona przed dotykiem pośrednim (Zs)",
+            "Badanie wyłączników RCD",
+            "Sprawdzenie kolejności faz",
+            "Pomiar rezystancji uziemienia"
+        ]
+    ),
+    ProtocolTemplate(
+        id="periodic",
+        name="Protokół przeglądu okresowego",
+        description="Protokół pomiarów okresowych instalacji eksploatowanej (co 5 lat lub częściej)",
+        measurements=[
+            "Oględziny instalacji - stan techniczny",
+            "Ciągłość przewodów ochronnych",
+            "Rezystancja izolacji (min. 0.5 MΩ)",
+            "Skuteczność ochrony przeciwporażeniowej",
+            "Badanie wyłączników RCD",
+            "Sprawdzenie zabezpieczeń"
+        ]
+    ),
+    ProtocolTemplate(
+        id="rcd_only",
+        name="Protokół badania wyłączników RCD",
+        description="Skrócony protokół badania samych wyłączników różnicowoprądowych",
+        measurements=[
+            "Test RCD przy 0.5x IΔn",
+            "Test RCD przy 1x IΔn (czas i napięcie dotykowe)",
+            "Test RCD przy 2x IΔn",
+            "Test RCD przy 5x IΔn",
+            "Test przycisku TEST"
+        ]
+    ),
+    ProtocolTemplate(
+        id="earthing",
+        name="Protokół pomiaru uziemień",
+        description="Protokół pomiarów rezystancji uziemień ochronnych i roboczych",
+        measurements=[
+            "Oględziny instalacji uziemiającej",
+            "Pomiar rezystancji uziemienia metodą techniczną",
+            "Pomiar rezystywności gruntu (opcjonalnie)",
+            "Sprawdzenie połączeń wyrównawczych",
+            "Ocena stanu uziomów"
+        ]
+    ),
+    ProtocolTemplate(
+        id="lighting",
+        name="Protokół pomiaru oświetlenia",
+        description="Protokół pomiarów natężenia oświetlenia stanowisk pracy wg PN-EN 12464-1",
+        measurements=[
+            "Identyfikacja stanowisk pracy",
+            "Pomiar natężenia oświetlenia [lx]",
+            "Pomiar równomierności oświetlenia",
+            "Ocena olśnienia (UGR)",
+            "Porównanie z wymaganiami normy"
+        ]
+    )
+]
+
 # API Routes
 @api_router.get("/")
 async def root():
