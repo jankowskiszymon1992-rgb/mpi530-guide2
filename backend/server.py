@@ -63,7 +63,11 @@ METER_IMAGES = {
     "probes": "https://cdn.sonel.com/Zdjecia/Akcesoria/Sondy/Sondy+ostrzowe/WASONREOGB1/image-thumb__22243__img-product-thumb/WASONREOGB1.webp",
     "earth_probe": "https://cdn.sonel.com/Zdjecia/Akcesoria/Sondy/Sondy+gruntowe/WASONG30/image-thumb__22228__img-product-thumb/WASONG30.webp",
     "crocodile": "https://cdn.sonel.com/Zdjecia/Akcesoria/Krokodylki+i+zaciski/Krokodylki/WAKRORE20K02/image-thumb__21720__img-product-thumb/WAKRORE20K02.webp",
-    "test_lead": "https://cdn.sonel.com/Zdjecia/Akcesoria/Przewody/Przewody+pomiarowe/WAPRZ1X2REBB/image-thumb__22077__img-product-thumb/WAPRZ1X2REBB-9318.webp"
+    "test_lead": "https://cdn.sonel.com/Zdjecia/Akcesoria/Przewody/Przewody+pomiarowe/WAPRZ1X2REBB/image-thumb__22077__img-product-thumb/WAPRZ1X2REBB-9318.webp",
+    "lux_probe": "https://cdn.sonel.com/Zdjecia/Akcesoria/Sondy/Sondy+luksomierza/WAADALP10BKPL/image-thumb__21338__img-product-thumb/WAADALP10BKPL.webp",
+    "clamp_c3": "https://cdn.sonel.com/Zdjecia/Akcesoria/C%C4%99gi/C%C4%99gi+z+twardym+rdzeniem/WACEGC3OKR/image-thumb__21552__img-product-thumb/WACEGC3OKR.webp",
+    "clamp_n1": "https://cdn.sonel.com/Zdjecia/Akcesoria/C%C4%99gi/C%C4%99gi+nadawcze/WACEGN1BB/image-thumb__21600__img-product-thumb/WACEGN1BB.webp",
+    "clamp_set": "https://cdn.sonel.com/Zdjecia/Akcesoria/C%C4%99gi/C%C4%99gi+z+twardym+rdzeniem/WAKPLC3N1/image-thumb__38771__img-product-thumb/WAKPLC3N1.webp"
 }
 
 # Static data for MPI-530 measurement functions - PO POLSKU
