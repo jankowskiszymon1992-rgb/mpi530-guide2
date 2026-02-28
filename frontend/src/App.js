@@ -1342,7 +1342,7 @@ const ToolsView = ({ onBack, t, lang }) => {
 
 // Example Protocol Detail View
 const ExampleProtocolDetailView = ({ example, onBack, t }) => {
-    const isPositive = example.conclusion.includes('POZYTYWNA');
+    const isPositive = example.conclusion.includes('POZYTYWNA') || example.conclusion.includes('POSITIVE') || example.conclusion.includes('POSITIV');
     
     return (
         <div className="animate-fade-in" data-testid="example-protocol-detail">
@@ -1368,15 +1368,15 @@ const ExampleProtocolDetailView = ({ example, onBack, t }) => {
             {/* Protocol Info */}
             <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className="card-industrial">
-                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">Dane obiektu</h3>
+                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">{t('protocols_object')}</h3>
                     <div className="space-y-2 text-sm">
-                        <p><span className="text-muted-foreground">Obiekt:</span> {example.object_name}</p>
-                        <p><span className="text-muted-foreground">Adres:</span> {example.object_address}</p>
-                        <p><span className="text-muted-foreground">Data pomiaru:</span> {example.date}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_object')}:</span> {example.object_name}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_notes')}:</span> {example.object_address}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_date')}:</span> {example.date}</p>
                     </div>
                 </div>
                 <div className="card-industrial">
-                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">Dane wykonawcy</h3>
+                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">{t('protocols_inspector')}</h3>
                     <div className="space-y-2 text-sm">
                         <p><span className="text-muted-foreground">Wykonawca:</span> {example.inspector}</p>
                         <p><span className="text-muted-foreground">Uprawnienia:</span> {example.inspector_cert}</p>
