@@ -385,7 +385,7 @@ const DetailView = ({ func, onBack, t }) => {
                 <div>
                     <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                         <BookOpen className="h-5 w-5 text-primary" />
-                        Instrukcja Krok Po Kroku
+                        {t('step_by_step')}
                     </h3>
                     <div className="space-y-2">
                         {func.steps.map((step, idx) => (
