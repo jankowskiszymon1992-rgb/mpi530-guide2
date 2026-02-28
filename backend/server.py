@@ -1583,44 +1583,62 @@ async def get_faq_by_category(category: str, lang: str = Query("pl", regex="^(pl
         return [FAQ(**item) for item in tr if item["category"] == category]
     return [faq for faq in FAQ_DATA if faq.category == category]
 
-@api_router.get("/protocols/guides", response_model=List[ProtocolGuide])
-async def get_protocol_guides():
-    """Pobierz instrukcje tworzenia protokołów w Sonel Reports Plus"""
+@api_router.get("/protocols/guides")
+async def get_protocol_guides(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_guides_translations(lang)
+    if tr:
+        return tr
     return PROTOCOL_GUIDES
 
-@api_router.get("/protocols/guides/{guide_id}", response_model=ProtocolGuide)
-async def get_protocol_guide(guide_id: str):
-    """Pobierz konkretną instrukcję protokołu"""
+@api_router.get("/protocols/guides/{guide_id}")
+async def get_protocol_guide(guide_id: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_guides_translations(lang)
+    if tr:
+        for g in tr:
+            if g["id"] == guide_id:
+                return g
     for guide in PROTOCOL_GUIDES:
         if guide.id == guide_id:
             return guide
-    raise HTTPException(status_code=404, detail=f"Instrukcja {guide_id} nie znaleziona")
+    raise HTTPException(status_code=404, detail=f"Guide {guide_id} not found")
 
-@api_router.get("/protocols/templates", response_model=List[ProtocolTemplate])
-async def get_protocol_templates():
-    """Pobierz szablony protokołów pomiarowych"""
+@api_router.get("/protocols/templates")
+async def get_protocol_templates(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_templates_translations(lang)
+    if tr:
+        return tr
     return PROTOCOL_TEMPLATES
 
-@api_router.get("/protocols/templates/{template_id}", response_model=ProtocolTemplate)
-async def get_protocol_template(template_id: str):
-    """Pobierz konkretny szablon protokołu"""
+@api_router.get("/protocols/templates/{template_id}")
+async def get_protocol_template(template_id: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_templates_translations(lang)
+    if tr:
+        for t in tr:
+            if t["id"] == template_id:
+                return t
     for template in PROTOCOL_TEMPLATES:
         if template.id == template_id:
             return template
-    raise HTTPException(status_code=404, detail=f"Szablon {template_id} nie znaleziony")
+    raise HTTPException(status_code=404, detail=f"Template {template_id} not found")
 
-@api_router.get("/protocols/examples", response_model=List[ExampleProtocol])
-async def get_example_protocols():
-    """Pobierz przykładowe wypełnione protokoły"""
+@api_router.get("/protocols/examples")
+async def get_example_protocols(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_examples_translations(lang)
+    if tr:
+        return tr
     return EXAMPLE_PROTOCOLS
 
-@api_router.get("/protocols/examples/{example_id}", response_model=ExampleProtocol)
-async def get_example_protocol(example_id: str):
-    """Pobierz konkretny przykładowy protokół"""
+@api_router.get("/protocols/examples/{example_id}")
+async def get_example_protocol(example_id: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_examples_translations(lang)
+    if tr:
+        for e in tr:
+            if e["id"] == example_id:
+                return e
     for example in EXAMPLE_PROTOCOLS:
         if example.id == example_id:
             return example
-    raise HTTPException(status_code=404, detail=f"Przykład {example_id} nie znaleziony")
+    raise HTTPException(status_code=404, detail=f"Example {example_id} not found")
 
 # ============================================
 # NARZĘDZIA API
