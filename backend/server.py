@@ -1537,7 +1537,7 @@ def translate_function(func, lang):
 
 @api_router.get("/")
 async def root():
-    return {"message": "Sonel MPI-530 Interactive Guide API", "version": "1.1"}
+    return {"message": "MPI-530 Independent User Guide API", "version": "1.1"}
 
 @api_router.get("/functions", response_model=List[MeasurementFunction])
 async def get_all_functions(lang: str = Query("pl", regex="^(pl|en|de)$")):
