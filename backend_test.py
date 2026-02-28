@@ -221,7 +221,7 @@ def main():
     print("\n📍 Testing FAQ API...")
     tester.test_faq_api()
     
-    # Test 6: Categories API (bonus)
+    # Test 7: Categories API (bonus)
     print("\n📍 Testing Categories API...")
     tester.test_categories_api()
     
