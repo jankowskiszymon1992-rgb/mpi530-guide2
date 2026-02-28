@@ -981,8 +981,9 @@ function App() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [currentView, setCurrentView] = useState('home'); // 'home', 'protocols', 'protocol-detail'
+    const [currentView, setCurrentView] = useState('home'); // 'home', 'protocols', 'protocol-detail', 'example-detail'
     const [selectedGuide, setSelectedGuide] = useState(null);
+    const [selectedExample, setSelectedExample] = useState(null);
 
     // Fetch functions on mount
     useEffect(() => {
@@ -1052,10 +1053,23 @@ function App() {
         }
     };
 
+    // Select example handler
+    const handleSelectExample = async (exampleId) => {
+        try {
+            const response = await axios.get(`${API}/protocols/examples/${exampleId}`);
+            setSelectedExample(response.data);
+            setCurrentView('example-detail');
+        } catch (error) {
+            console.error("Błąd ładowania przykładu:", error);
+            toast.error("Błąd ładowania przykładu");
+        }
+    };
+
     // Back handler
     const handleBack = () => {
-        if (currentView === 'protocol-detail') {
+        if (currentView === 'protocol-detail' || currentView === 'example-detail') {
             setSelectedGuide(null);
+            setSelectedExample(null);
             setCurrentView('protocols');
         } else if (currentView === 'protocols') {
             setCurrentView('home');
@@ -1064,7 +1078,7 @@ function App() {
         }
     };
 
-    const showBackButton = selectedFunction || currentView === 'protocols' || currentView === 'protocol-detail';
+    const showBackButton = selectedFunction || currentView === 'protocols' || currentView === 'protocol-detail' || currentView === 'example-detail';
 
     if (loading) {
         return (
@@ -1087,9 +1101,11 @@ function App() {
         
         switch (currentView) {
             case 'protocols':
-                return <ProtocolsView onSelectGuide={handleSelectGuide} onBack={handleBack} />;
+                return <ProtocolsView onSelectGuide={handleSelectGuide} onSelectExample={handleSelectExample} onBack={handleBack} />;
             case 'protocol-detail':
                 return selectedGuide ? <ProtocolGuideDetailView guide={selectedGuide} onBack={handleBack} /> : null;
+            case 'example-detail':
+                return selectedExample ? <ExampleProtocolDetailView example={selectedExample} onBack={handleBack} /> : null;
             default:
                 return (
                     <HomeView 
