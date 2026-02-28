@@ -464,6 +464,107 @@ MEASUREMENT_FUNCTIONS: List[MeasurementFunction] = [
             "Po teście odłącz zasilanie przed odłączeniem przewodów"
         ],
         expected_results="Kierunek PRAWY lub LEWY - zależnie od podłączenia faz"
+    ),
+    MeasurementFunction(
+        id="lux",
+        name="Pomiar Natężenia Oświetlenia",
+        icon="Sun",
+        description="Pomiar natężenia oświetlenia w luksach (lx) za pomocą zewnętrznej sondy LP-1 lub LP-10",
+        category="dodatkowe",
+        color="#FBBF24",
+        main_image=METER_IMAGES["lux_probe"],
+        steps=[
+            InstructionStep(
+                step_number=1,
+                title="Podłączenie sondy",
+                description="Podłącz sondę luksomierza LP-1, LP-10A lub LP-10B do gniazda miniDIN-4P miernika. Użyj adaptera WS-06 jeśli wymagany.",
+                tip="Sonda LP-10B ma rozszerzony zakres pomiarowy do 400 klx.",
+                image=METER_IMAGES["lux_probe"]
+            ),
+            InstructionStep(
+                step_number=2,
+                title="Wybór funkcji",
+                description="Ustaw pokrętło na pozycję LUX. Miernik automatycznie wykryje podłączoną sondę.",
+                tip="Przed pomiarem odczekaj ok. 1 minutę na stabilizację sondy.",
+                image=METER_IMAGES["main"]
+            ),
+            InstructionStep(
+                step_number=3,
+                title="Ustawienie sondy",
+                description="Umieść sondę w miejscu pomiaru. Fotokomórka powinna być skierowana w stronę źródła światła lub powierzchni roboczej.",
+                tip="Dla pomiaru oświetlenia stanowiska pracy, sondę umieść na wysokości blatu (85 cm).",
+                image=METER_IMAGES["lux_probe"]
+            ),
+            InstructionStep(
+                step_number=4,
+                title="Odczyt wyniku",
+                description="Odczytaj natężenie oświetlenia w luksach [lx] lub foot-candles [fc]. Wartość stabilizuje się po kilku sekundach.",
+                tip="Norma PN-EN 12464-1 określa minimalne wartości dla różnych stanowisk pracy.",
+                image=METER_IMAGES["lcd"]
+            )
+        ],
+        parameters=["Zakres: 0-400 klx", "Rozdzielczość: od 0.001 lx", "Jednostki: lx lub fc", "Sondy: LP-1, LP-10A, LP-10B"],
+        safety_notes=[
+            "Nie narażaj sondy na bezpośrednie światło słoneczne przez dłuższy czas",
+            "Unikaj dotykania fotokomórki palcami",
+            "Przechowuj sondę w etui ochronnym",
+            "Kalibruj sondę co 12 miesięcy"
+        ],
+        expected_results="Biuro: 500 lx, Produkcja: 300-500 lx, Magazyn: 100-200 lx, Korytarz: 100 lx"
+    ),
+    MeasurementFunction(
+        id="earthing_clamp",
+        name="Uziemienie Metodą Cęgową",
+        icon="Circle",
+        description="Pomiar rezystancji uziemienia metodą dwóch cęgów (2-clamp) bez wbijania elektrod pomocniczych",
+        category="uziemienie",
+        color="#14B8A6",
+        main_image=METER_IMAGES["clamp_set"],
+        steps=[
+            InstructionStep(
+                step_number=1,
+                title="Przygotowanie cęgów",
+                description="Przygotuj zestaw cęgów: cęgi pomiarowe C-3 oraz cęgi nadawcze N-1. Podłącz je do odpowiednich gniazd miernika.",
+                tip="Metoda cęgowa nie wymaga wbijania elektrod - idealna dla utwardzonych powierzchni.",
+                image=METER_IMAGES["clamp_set"]
+            ),
+            InstructionStep(
+                step_number=2,
+                title="Wybór funkcji",
+                description="Ustaw pokrętło na pozycję RE i wybierz metodę 2-cęgową (2C lub 2-clamp). Miernik przejdzie w tryb pomiaru cęgowego.",
+                warning="Metoda wymaga, aby uziemienie było częścią zamkniętego obwodu (np. połączone z innymi uziomami).",
+                image=METER_IMAGES["main"]
+            ),
+            InstructionStep(
+                step_number=3,
+                title="Założenie cęgów",
+                description="Załóż cęgi nadawcze N-1 na przewód uziemiający. W odległości min. 30 cm załóż cęgi pomiarowe C-3 na ten sam przewód.",
+                tip="Cęgi muszą objąć tylko przewód uziemiający, nie inne przewody równolegle.",
+                image=METER_IMAGES["clamp_c3"]
+            ),
+            InstructionStep(
+                step_number=4,
+                title="Pomiar",
+                description="Naciśnij START. Miernik wymusi prąd przez cęgi nadawcze i zmierzy napięcie na cęgach pomiarowych.",
+                tip="Wynik obejmuje rezystancję badanego uziomu oraz równoległe połączenie pozostałych uziomów.",
+                image=METER_IMAGES["lcd"]
+            ),
+            InstructionStep(
+                step_number=5,
+                title="Interpretacja wyniku",
+                description="Odczytaj rezystancję RE [Ω]. Pamiętaj, że wynik to rezystancja badanego uziomu w układzie z innymi uziomami.",
+                warning="Metoda cęgowa daje wynik zaniżony jeśli uziomy są połączone równolegle!",
+                image=METER_IMAGES["lcd"]
+            )
+        ],
+        parameters=["Zakres: 0.00-99.9 kΩ", "Rozdzielczość: od 0.01 Ω", "Cęgi: C-3 + N-1", "Nie wymaga elektrod pomocniczych"],
+        safety_notes=[
+            "Metoda wymaga zamkniętego obwodu uziemienia",
+            "Cęgi zakładaj tylko na przewód uziemiający",
+            "Zachowaj min. 30 cm odstępu między cęgami",
+            "Wynik może być zaniżony przy równoległych uziomach"
+        ],
+        expected_results="<10 Ω dla uziemienia ochronnego (uwzględnij wpływ równoległych uziomów)"
     )
 ]
 
