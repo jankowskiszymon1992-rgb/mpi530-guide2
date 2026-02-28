@@ -78,7 +78,7 @@ const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack, la
                                 <span className="text-primary-foreground font-bold text-sm font-mono">MPI</span>
                             </div>
                             <div>
-                                <h1 className="text-lg font-bold tracking-tight">SONEL MPI-530</h1>
+                                <h1 className="text-lg font-bold tracking-tight">MPI-530</h1>
                                 <p className="text-xs text-muted-foreground uppercase tracking-wider">{t('app_subtitle')}</p>
                             </div>
                         </div>
