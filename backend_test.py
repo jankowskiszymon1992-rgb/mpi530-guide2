@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 class SonelAPITester:
-    def __init__(self, base_url="https://sonel-meter-guide-1.preview.emergentagent.com"):
+    def __init__(self, base_url="https://meter-pro-tools.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
