@@ -1,0 +1,34 @@
+{
+  "short_name": "MPI-530",
+  "name": "Sonel MPI-530 Interaktywna Instrukcja",
+  "description": "Instrukcje pomiarów, kalkulator, normy i protokoły dla miernika Sonel MPI-530",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#F39200",
+  "background_color": "#0F172A",
+  "orientation": "portrait-primary",
+  "categories": ["education", "utilities", "productivity"],
+  "lang": "pl",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
