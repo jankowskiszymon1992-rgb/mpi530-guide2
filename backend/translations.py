@@ -512,3 +512,322 @@ def get_checklists_translations(lang):
     elif lang == "de":
         return CHECKLISTS_DE
     return None
+
+
+# ============================================
+# PROTOCOL GUIDES TRANSLATIONS
+# ============================================
+
+GUIDES_EN = [
+    {
+        "id": "reports_plus_basics",
+        "name": "Sonel Reports Plus - Basics",
+        "description": "How to get started with Sonel Reports Plus for creating measurement protocols",
+        "icon": "FileText", "color": "#3B82F6",
+        "steps": [
+            {"step_number": 1, "title": "Software installation", "description": "Download Sonel Reports Plus from sonel.pl (Software section). Install on a computer with Windows 10/11. The software is free for Sonel meter users.", "tip": "Required system: Windows 10 or Windows 11.", "image": "https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+Reports+PLUS/image-thumb__36489__img-product-thumb/blank-box-reports-plus_mHqcbIA.webp"},
+            {"step_number": 2, "title": "Creating a new project", "description": "Launch the program and select 'New project'. Enter data: object name, address, investor, measurement contractor, date.", "tip": "You can save contractor data template for reuse."},
+            {"step_number": 3, "title": "Object tree structure", "description": "Build the building structure: add floors, rooms, distribution boards. For each room you can add circuits and measurement points.", "tip": "Tree structure allows for clear organization of results."},
+            {"step_number": 4, "title": "Adding measurement points", "description": "In each room add measurement points: sockets, lighting, fixed equipment. Specify protection type (fuse, circuit breaker).", "tip": "The program contains a library of fuses and protection devices."},
+            {"step_number": 5, "title": "Transfer structure to meter", "description": "Connect MPI-530 meter via USB. Select 'Send structure to meter'. The structure will be loaded into meter memory.", "tip": "This way measurement results will be automatically assigned to points."}
+        ],
+        "tips": ["Sonel Reports Plus supports MPI-530, MPI-525, MPI-520 and other meters", "The program allows creating own report templates", "Regular software updates add new functions and meters"]
+    },
+    {
+        "id": "download_results",
+        "name": "Downloading results from the meter",
+        "description": "How to transfer measurement results from MPI-530 to computer",
+        "icon": "Download", "color": "#10B981",
+        "steps": [
+            {"step_number": 1, "title": "USB connection", "description": "Connect MPI-530 to computer using the included USB cable. Turn on the meter.", "tip": "Use original Sonel cable for best connection stability."},
+            {"step_number": 2, "title": "Communication in Reports Plus", "description": "In Sonel Reports Plus select 'Meter' -> 'Download results'. The program will automatically detect the meter.", "tip": "If meter is not detected - install Sonel USB drivers."},
+            {"step_number": 3, "title": "Selecting results to download", "description": "Select which results to download: all or only selected. You can filter by date or measurement type.", "tip": "If you sent the structure - results will be automatically matched to points."},
+            {"step_number": 4, "title": "Verification and assignment", "description": "Check downloaded results. Assign unmatched results to appropriate measurement points.", "tip": "The program marks PASS/FAIL results based on norms."}
+        ],
+        "tips": ["Download results after each measurement session", "Before downloading, ensure the meter is fully charged", "You can also export results directly to CSV or Excel"]
+    },
+    {
+        "id": "generate_protocol",
+        "name": "Generating a protocol",
+        "description": "How to create a professional measurement protocol from results",
+        "icon": "Printer", "color": "#F59E0B",
+        "steps": [
+            {"step_number": 1, "title": "Checking result completeness", "description": "Before generating a protocol, make sure all measurements are complete and results are assigned to points.", "tip": "Missing results are marked in red."},
+            {"step_number": 2, "title": "Template selection", "description": "Select 'Generate protocol'. Choose a template: reception protocol, periodic protocol, or custom template.", "tip": "You can create your own protocol templates."},
+            {"step_number": 3, "title": "Completing header data", "description": "Complete data: protocol number, date, client details, purpose of examination (reception/periodic review).", "tip": "Save contractor and qualification data in profile for reuse."},
+            {"step_number": 4, "title": "Preview and editing", "description": "Review protocol preview. You can add notes, recommendations, or edit descriptions.", "tip": "Add photos of distribution boards or problems found during measurements."},
+            {"step_number": 5, "title": "Export and printing", "description": "Export protocol to PDF or print directly. You can also print labels for measurement points.", "tip": "PDF contains digital signature with generation date."}
+        ],
+        "tips": ["Protocol should contain: object data, measurement scope, results, assessment, recommendations", "Store protocols for at least 5 years as per regulations", "You can email protocol directly from the program"]
+    },
+    {
+        "id": "pe6_migration",
+        "name": "Migration from Sonel PE6",
+        "description": "How to transfer data from old PE6 software to Sonel Reports Plus",
+        "icon": "FolderSync", "color": "#8B5CF6",
+        "steps": [
+            {"step_number": 1, "title": "Export from PE6", "description": "In Sonel PE6 open the project. Select 'Export' and save file in .pe6 or .xml format.", "tip": "PE6 is older software - Sonel Reports Plus has more features."},
+            {"step_number": 2, "title": "Import to Reports Plus", "description": "In Sonel Reports Plus select 'Import project'. Point to the file exported from PE6.", "tip": "Import preserves structure and measurement results."},
+            {"step_number": 3, "title": "Data verification", "description": "Check imported data. Complete missing information (e.g., photos, diagrams).", "tip": "Some PE6 functions may require manual conversion."}
+        ],
+        "tips": ["Sonel Reports Plus replaces PE6 and PE5", "Reports Plus has better integration with new meters", "Keep a copy of original PE6 files just in case"]
+    }
+]
+
+GUIDES_DE = [
+    {
+        "id": "reports_plus_basics",
+        "name": "Sonel Reports Plus - Grundlagen",
+        "description": "Erste Schritte mit Sonel Reports Plus zur Protokollerstellung",
+        "icon": "FileText", "color": "#3B82F6",
+        "steps": [
+            {"step_number": 1, "title": "Software-Installation", "description": "Laden Sie Sonel Reports Plus von sonel.pl herunter (Bereich Software). Installieren Sie es auf einem Computer mit Windows 10/11. Die Software ist kostenlos für Sonel-Messgerätebenutzer.", "tip": "Erforderliches System: Windows 10 oder Windows 11.", "image": "https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+Reports+PLUS/image-thumb__36489__img-product-thumb/blank-box-reports-plus_mHqcbIA.webp"},
+            {"step_number": 2, "title": "Neues Projekt erstellen", "description": "Starten Sie das Programm und wählen Sie 'Neues Projekt'. Geben Sie Daten ein: Objektname, Adresse, Auftraggeber, Prüfer, Datum.", "tip": "Sie können eine Vorlage für Prüferdaten zur Wiederverwendung speichern."},
+            {"step_number": 3, "title": "Objektbaumstruktur", "description": "Erstellen Sie die Gebäudestruktur: Etagen, Räume, Verteilungen hinzufügen. Für jeden Raum können Sie Stromkreise und Messpunkte anlegen.", "tip": "Die Baumstruktur ermöglicht eine übersichtliche Organisation der Ergebnisse."},
+            {"step_number": 4, "title": "Messpunkte hinzufügen", "description": "Fügen Sie in jedem Raum Messpunkte hinzu: Steckdosen, Beleuchtung, fest installierte Geräte. Schutztyp angeben (Sicherung, Leitungsschutzschalter).", "tip": "Das Programm enthält eine Bibliothek von Sicherungen und Schutzgeräten."},
+            {"step_number": 5, "title": "Struktur zum Messgerät übertragen", "description": "MPI-530 per USB anschließen. 'Struktur an Messgerät senden' wählen. Die Struktur wird in den Messgerätspeicher geladen.", "tip": "So werden Messergebnisse automatisch den Punkten zugeordnet."}
+        ],
+        "tips": ["Sonel Reports Plus unterstützt MPI-530, MPI-525, MPI-520 und andere Messgeräte", "Das Programm ermöglicht die Erstellung eigener Berichtsvorlagen", "Regelmäßige Software-Updates fügen neue Funktionen hinzu"]
+    },
+    {
+        "id": "download_results",
+        "name": "Ergebnisse vom Messgerät herunterladen",
+        "description": "Wie man Messergebnisse vom MPI-530 auf den Computer überträgt",
+        "icon": "Download", "color": "#10B981",
+        "steps": [
+            {"step_number": 1, "title": "USB-Verbindung", "description": "MPI-530 mit dem mitgelieferten USB-Kabel an den Computer anschließen. Messgerät einschalten.", "tip": "Original-Sonel-Kabel für beste Verbindungsstabilität verwenden."},
+            {"step_number": 2, "title": "Kommunikation in Reports Plus", "description": "In Sonel Reports Plus 'Messgerät' -> 'Ergebnisse herunterladen' wählen. Das Programm erkennt das Messgerät automatisch.", "tip": "Falls Messgerät nicht erkannt wird - Sonel USB-Treiber installieren."},
+            {"step_number": 3, "title": "Ergebnisse zum Download auswählen", "description": "Wählen Sie welche Ergebnisse heruntergeladen werden: alle oder nur ausgewählte. Nach Datum oder Messtyp filtern.", "tip": "Bei gesendeter Struktur werden Ergebnisse automatisch zugeordnet."},
+            {"step_number": 4, "title": "Überprüfung und Zuordnung", "description": "Heruntergeladene Ergebnisse prüfen. Nicht zugeordnete Ergebnisse den entsprechenden Messpunkten zuweisen.", "tip": "Das Programm kennzeichnet BESTANDEN/NICHT BESTANDEN basierend auf Normen."}
+        ],
+        "tips": ["Ergebnisse nach jeder Messsitzung herunterladen", "Vor dem Download sicherstellen, dass das Messgerät vollständig geladen ist", "Sie können Ergebnisse auch direkt nach CSV oder Excel exportieren"]
+    },
+    {
+        "id": "generate_protocol",
+        "name": "Protokoll erstellen",
+        "description": "Wie man ein professionelles Messprotokoll aus Ergebnissen erstellt",
+        "icon": "Printer", "color": "#F59E0B",
+        "steps": [
+            {"step_number": 1, "title": "Ergebnisvollständigkeit prüfen", "description": "Vor der Protokollerstellung sicherstellen, dass alle Messungen abgeschlossen und Ergebnisse zugeordnet sind.", "tip": "Fehlende Ergebnisse sind rot markiert."},
+            {"step_number": 2, "title": "Vorlagenauswahl", "description": "'Protokoll erstellen' wählen. Vorlage wählen: Abnahmeprotokoll, periodisches Protokoll oder eigene Vorlage.", "tip": "Sie können eigene Protokollvorlagen erstellen."},
+            {"step_number": 3, "title": "Kopfdaten ergänzen", "description": "Daten ergänzen: Protokollnummer, Datum, Auftraggeberdaten, Prüfungszweck (Abnahme/periodische Prüfung).", "tip": "Prüfer- und Qualifikationsdaten im Profil zur Wiederverwendung speichern."},
+            {"step_number": 4, "title": "Vorschau und Bearbeitung", "description": "Protokollvorschau durchsehen. Anmerkungen, Empfehlungen hinzufügen oder Beschreibungen bearbeiten.", "tip": "Fotos von Verteilungen oder bei der Messung gefundenen Problemen hinzufügen."},
+            {"step_number": 5, "title": "Export und Druck", "description": "Protokoll nach PDF exportieren oder direkt drucken. Auch Etiketten für Messpunkte können gedruckt werden.", "tip": "PDF enthält digitale Signatur mit Erstellungsdatum."}
+        ],
+        "tips": ["Protokoll sollte enthalten: Objektdaten, Messumfang, Ergebnisse, Bewertung, Empfehlungen", "Protokolle mindestens 5 Jahre gemäß Vorschriften aufbewahren", "Sie können das Protokoll direkt aus dem Programm per E-Mail versenden"]
+    },
+    {
+        "id": "pe6_migration",
+        "name": "Migration von Sonel PE6",
+        "description": "Wie man Daten von der alten PE6-Software zu Sonel Reports Plus überträgt",
+        "icon": "FolderSync", "color": "#8B5CF6",
+        "steps": [
+            {"step_number": 1, "title": "Export aus PE6", "description": "In Sonel PE6 Projekt öffnen. 'Exportieren' wählen und Datei im .pe6- oder .xml-Format speichern.", "tip": "PE6 ist ältere Software - Sonel Reports Plus hat mehr Funktionen."},
+            {"step_number": 2, "title": "Import in Reports Plus", "description": "In Sonel Reports Plus 'Projekt importieren' wählen. Auf die aus PE6 exportierte Datei verweisen.", "tip": "Import behält Struktur und Messergebnisse bei."},
+            {"step_number": 3, "title": "Datenüberprüfung", "description": "Importierte Daten prüfen. Fehlende Informationen ergänzen (z.B. Fotos, Schaltpläne).", "tip": "Einige PE6-Funktionen erfordern möglicherweise manuelle Konvertierung."}
+        ],
+        "tips": ["Sonel Reports Plus ersetzt PE6 und PE5", "Reports Plus hat bessere Integration mit neuen Messgeräten", "Kopie der Original-PE6-Dateien sicherheitshalber aufbewahren"]
+    }
+]
+
+# ============================================
+# PROTOCOL TEMPLATES TRANSLATIONS
+# ============================================
+
+TEMPLATES_EN = [
+    {"id": "reception", "name": "Electrical installation acceptance protocol", "description": "Full acceptance measurement protocol for new installation per PN-HD 60364", "measurements": ["Installation visual inspection", "Protective conductor (PE) continuity", "Insulation resistance", "Indirect contact protection (Zs)", "RCD testing", "Phase sequence verification", "Earth resistance measurement"]},
+    {"id": "periodic", "name": "Periodic inspection protocol", "description": "Periodic measurement protocol for existing installation (every 5 years or more frequently)", "measurements": ["Installation visual inspection - technical condition", "Protective conductor continuity", "Insulation resistance (min. 0.5 MΩ)", "Shock protection effectiveness", "RCD testing", "Protection device verification"]},
+    {"id": "rcd_only", "name": "RCD testing protocol", "description": "Shortened protocol for residual current device testing only", "measurements": ["RCD test at 0.5x IΔn", "RCD test at 1x IΔn (time and touch voltage)", "RCD test at 2x IΔn", "RCD test at 5x IΔn", "TEST button test"]},
+    {"id": "earthing", "name": "Earth resistance measurement protocol", "description": "Protocol for protective and functional earth resistance measurements", "measurements": ["Earthing installation visual inspection", "Earth resistance measurement - technical method", "Soil resistivity measurement (optional)", "Bonding connection verification", "Earth electrode condition assessment"]},
+    {"id": "lighting", "name": "Illumination measurement protocol", "description": "Workplace illumination measurement protocol per PN-EN 12464-1", "measurements": ["Workstation identification", "Illumination measurement at task area level", "Illumination measurement in surrounding area", "Uniformity assessment", "Comparison with PN-EN 12464-1 requirements"]}
+]
+
+TEMPLATES_DE = [
+    {"id": "reception", "name": "Abnahmeprotokoll Elektroinstallation", "description": "Vollständiges Abnahmeprotokoll für neue Installation nach PN-HD 60364", "measurements": ["Sichtprüfung der Anlage", "Durchgängigkeit der Schutzleiter (PE)", "Isolationswiderstand", "Schutz bei indirektem Berühren (Zs)", "RCD-Prüfung", "Drehfeldprüfung", "Erdungswiderstandsmessung"]},
+    {"id": "periodic", "name": "Protokoll der periodischen Prüfung", "description": "Periodisches Messprotokoll für bestehende Anlagen (alle 5 Jahre oder häufiger)", "measurements": ["Sichtprüfung - technischer Zustand", "Schutzleiterdurchgängigkeit", "Isolationswiderstand (min. 0.5 MΩ)", "Wirksamkeit des Fehlerschutzes", "RCD-Prüfung", "Überprüfung der Schutzeinrichtungen"]},
+    {"id": "rcd_only", "name": "RCD-Prüfprotokoll", "description": "Verkürztes Protokoll nur für Fehlerstromschutzschalter-Prüfung", "measurements": ["RCD-Test bei 0.5x IΔn", "RCD-Test bei 1x IΔn (Zeit und Berührungsspannung)", "RCD-Test bei 2x IΔn", "RCD-Test bei 5x IΔn", "TEST-Taste-Prüfung"]},
+    {"id": "earthing", "name": "Erdungswiderstand-Messprotokoll", "description": "Protokoll für Schutz- und Betriebserdungsmessungen", "measurements": ["Sichtprüfung der Erdungsanlage", "Erdungswiderstandsmessung - technische Methode", "Spezifischer Bodenwiderstand (optional)", "Potentialausgleichsverbindungen prüfen", "Erderzustandsbewertung"]},
+    {"id": "lighting", "name": "Beleuchtungsmessprotokoll", "description": "Messprotokoll für Arbeitsplatzbeleuchtung nach PN-EN 12464-1", "measurements": ["Arbeitsplatzidentifizierung", "Beleuchtungsmessung auf Aufgabenbereichsniveau", "Beleuchtungsmessung im Umgebungsbereich", "Gleichmäßigkeitsbewertung", "Vergleich mit PN-EN 12464-1 Anforderungen"]}
+]
+
+# ============================================
+# EXAMPLE PROTOCOLS TRANSLATIONS
+# ============================================
+
+EXAMPLES_EN = [
+    {
+        "id": "example_reception", "name": "Example: Apartment acceptance protocol",
+        "object_name": "Apartment no. 15, Building B", "object_address": "ul. Słoneczna 10, 00-001 Warsaw",
+        "date": "2024-01-15", "inspector": "Jan Kowalski", "inspector_cert": "E-1234/2023",
+        "meter_serial": "MPI-530 S/N: 12345678", "meter_calibration": "2024-06-15",
+        "measurements": [
+            {"point": "Living room", "circuit": "1", "protection": "B16", "value": "0.45", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Living room", "circuit": "1", "protection": "-", "value": "150", "unit": "MΩ", "limit": "1", "status": "PASS", "notes": ""},
+            {"point": "Kitchen", "circuit": "2", "protection": "B16", "value": "0.52", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Kitchen RCD", "circuit": "2", "protection": "30mA", "value": "22", "unit": "ms", "limit": "300", "status": "PASS", "notes": "Type A"},
+            {"point": "Bathroom", "circuit": "3", "protection": "B10", "value": "0.38", "unit": "Ω", "limit": "4.60", "status": "PASS", "notes": ""},
+            {"point": "Bathroom RCD", "circuit": "3", "protection": "30mA", "value": "18", "unit": "ms", "limit": "300", "status": "PASS", "notes": "Type A"}
+        ],
+        "conclusion": "POSITIVE - Installation meets PN-HD 60364 requirements",
+        "recommendations": ["Periodic inspection recommended in 5 years", "All circuits correctly protected"]
+    },
+    {
+        "id": "example_periodic", "name": "Example: Periodic inspection protocol",
+        "object_name": "Office building 'Centrum'", "object_address": "ul. Główna 5, 00-002 Warsaw",
+        "date": "2024-02-20", "inspector": "Anna Nowak", "inspector_cert": "E-5678/2022",
+        "meter_serial": "MPI-530 S/N: 87654321", "meter_calibration": "2024-03-01",
+        "measurements": [
+            {"point": "Main board", "circuit": "PEN", "protection": "-", "value": "0.12", "unit": "Ω", "limit": "1", "status": "PASS", "notes": "PE continuity"},
+            {"point": "Office 1", "circuit": "5", "protection": "B16", "value": "0.68", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Office 2", "circuit": "7", "protection": "B16", "value": "3.15", "unit": "Ω", "limit": "2.88", "status": "FAIL", "notes": "Zs exceeded!"},
+            {"point": "Server room", "circuit": "10", "protection": "C32", "value": "0.95", "unit": "Ω", "limit": "1.44", "status": "PASS", "notes": ""},
+            {"point": "Corridor", "circuit": "12", "protection": "B10", "value": "1.85", "unit": "Ω", "limit": "4.60", "status": "PASS", "notes": ""}
+        ],
+        "conclusion": "NEGATIVE - Irregularities found requiring correction",
+        "recommendations": ["Office 2, circuit 7: Loop impedance Zs=3.15 Ω exceeds limit 2.88 Ω for B16 protection", "Required: Check wiring and connection condition in circuit 7", "Re-inspection after correction within 30 days"]
+    },
+    {
+        "id": "example_rcd", "name": "Example: RCD testing protocol",
+        "object_name": "Single-family house", "object_address": "ul. Ogrodowa 22, 00-003 Warsaw",
+        "date": "2024-03-10", "inspector": "Piotr Wiśniewski", "inspector_cert": "E-9012/2021",
+        "meter_serial": "MPI-530 S/N: 11223344", "meter_calibration": "2024-05-20",
+        "measurements": [
+            {"point": "RCD F1", "circuit": "Main", "protection": "30mA AC", "value": "22", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"},
+            {"point": "RCD F1", "circuit": "Main", "protection": "30mA AC", "value": "15", "unit": "ms", "limit": "150", "status": "PASS", "notes": "2x IΔn"},
+            {"point": "RCD F1", "circuit": "Main", "protection": "30mA AC", "value": "8", "unit": "ms", "limit": "40", "status": "PASS", "notes": "5x IΔn"},
+            {"point": "RCD F2", "circuit": "Kitchen", "protection": "30mA A", "value": "28", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"},
+            {"point": "RCD F3", "circuit": "Bathroom", "protection": "30mA A", "value": "20", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"}
+        ],
+        "conclusion": "POSITIVE - All RCDs operate correctly",
+        "recommendations": ["All RCDs meet EN 61008 requirements", "Next RCD test recommended in 12 months"]
+    },
+    {
+        "id": "example_earthing", "name": "Example: Earth resistance protocol",
+        "object_name": "Transformer station TR-15", "object_address": "ul. Przemysłowa 8, 00-004 Warsaw",
+        "date": "2024-04-05", "inspector": "Marek Zieliński", "inspector_cert": "E-3456/2020",
+        "meter_serial": "MPI-530 S/N: 55667788", "meter_calibration": "2024-07-10",
+        "measurements": [
+            {"point": "Main earth E1", "circuit": "-", "protection": "-", "value": "2.8", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-wire method"},
+            {"point": "Earth E2", "circuit": "-", "protection": "-", "value": "4.2", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-wire method"},
+            {"point": "Equipment earth", "circuit": "-", "protection": "-", "value": "1.5", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "4-wire method"},
+            {"point": "Lightning rod earth", "circuit": "-", "protection": "-", "value": "8.5", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-wire method"}
+        ],
+        "conclusion": "POSITIVE - All earths meet requirements",
+        "recommendations": ["All earth resistances below 10 Ω", "Next earth resistance measurement in 12 months", "Check bonding connections annually"]
+    },
+    {
+        "id": "example_lighting", "name": "Example: Illumination measurement protocol",
+        "object_name": "Open-plan office 'TechHub'", "object_address": "ul. Nowoczesna 15, p. 3, 00-005 Warsaw",
+        "date": "2024-05-12", "inspector": "Katarzyna Lewandowska", "inspector_cert": "E-7890/2023",
+        "meter_serial": "MPI-530 S/N: 99887766", "meter_calibration": "2024-08-01",
+        "measurements": [
+            {"point": "Desk A1", "circuit": "-", "protection": "-", "value": "520", "unit": "lx", "limit": "500", "status": "PASS", "notes": "Office work"},
+            {"point": "Desk A2", "circuit": "-", "protection": "-", "value": "485", "unit": "lx", "limit": "500", "status": "FAIL", "notes": "Below norm!"},
+            {"point": "Desk B1", "circuit": "-", "protection": "-", "value": "550", "unit": "lx", "limit": "500", "status": "PASS", "notes": "Office work"},
+            {"point": "Corridor", "circuit": "-", "protection": "-", "value": "115", "unit": "lx", "limit": "100", "status": "PASS", "notes": "Passage"},
+            {"point": "Kitchen", "circuit": "-", "protection": "-", "value": "310", "unit": "lx", "limit": "200", "status": "PASS", "notes": "Social room"}
+        ],
+        "conclusion": "NEGATIVE - Irregularities found",
+        "recommendations": ["Desk A2: Illumination 485 lx below minimum 500 lx for office work", "Recommended: Add additional lighting fixture or replace bulb with higher output", "Re-measurement after correction"]
+    }
+]
+
+EXAMPLES_DE = [
+    {
+        "id": "example_reception", "name": "Beispiel: Wohnungsabnahmeprotokoll",
+        "object_name": "Wohnung Nr. 15, Gebäude B", "object_address": "ul. Słoneczna 10, 00-001 Warschau",
+        "date": "2024-01-15", "inspector": "Jan Kowalski", "inspector_cert": "E-1234/2023",
+        "meter_serial": "MPI-530 S/N: 12345678", "meter_calibration": "2024-06-15",
+        "measurements": [
+            {"point": "Wohnzimmer", "circuit": "1", "protection": "B16", "value": "0.45", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Wohnzimmer", "circuit": "1", "protection": "-", "value": "150", "unit": "MΩ", "limit": "1", "status": "PASS", "notes": ""},
+            {"point": "Küche", "circuit": "2", "protection": "B16", "value": "0.52", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Küche RCD", "circuit": "2", "protection": "30mA", "value": "22", "unit": "ms", "limit": "300", "status": "PASS", "notes": "Typ A"},
+            {"point": "Badezimmer", "circuit": "3", "protection": "B10", "value": "0.38", "unit": "Ω", "limit": "4.60", "status": "PASS", "notes": ""},
+            {"point": "Badezimmer RCD", "circuit": "3", "protection": "30mA", "value": "18", "unit": "ms", "limit": "300", "status": "PASS", "notes": "Typ A"}
+        ],
+        "conclusion": "POSITIV - Anlage erfüllt PN-HD 60364 Anforderungen",
+        "recommendations": ["Periodische Prüfung in 5 Jahren empfohlen", "Alle Stromkreise korrekt geschützt"]
+    },
+    {
+        "id": "example_periodic", "name": "Beispiel: Periodisches Prüfprotokoll",
+        "object_name": "Bürogebäude 'Centrum'", "object_address": "ul. Główna 5, 00-002 Warschau",
+        "date": "2024-02-20", "inspector": "Anna Nowak", "inspector_cert": "E-5678/2022",
+        "meter_serial": "MPI-530 S/N: 87654321", "meter_calibration": "2024-03-01",
+        "measurements": [
+            {"point": "Hauptverteilung", "circuit": "PEN", "protection": "-", "value": "0.12", "unit": "Ω", "limit": "1", "status": "PASS", "notes": "PE-Durchgang"},
+            {"point": "Büro 1", "circuit": "5", "protection": "B16", "value": "0.68", "unit": "Ω", "limit": "2.88", "status": "PASS", "notes": ""},
+            {"point": "Büro 2", "circuit": "7", "protection": "B16", "value": "3.15", "unit": "Ω", "limit": "2.88", "status": "FAIL", "notes": "Zs überschritten!"},
+            {"point": "Serverraum", "circuit": "10", "protection": "C32", "value": "0.95", "unit": "Ω", "limit": "1.44", "status": "PASS", "notes": ""},
+            {"point": "Flur", "circuit": "12", "protection": "B10", "value": "1.85", "unit": "Ω", "limit": "4.60", "status": "PASS", "notes": ""}
+        ],
+        "conclusion": "NEGATIV - Unregelmäßigkeiten gefunden, Korrektur erforderlich",
+        "recommendations": ["Büro 2, Stromkreis 7: Schleifenimpedanz Zs=3.15 Ω überschreitet Grenzwert 2.88 Ω für B16", "Erforderlich: Leitungs- und Anschlusszustand in Stromkreis 7 prüfen", "Nachprüfung nach Korrektur innerhalb von 30 Tagen"]
+    },
+    {
+        "id": "example_rcd", "name": "Beispiel: RCD-Prüfprotokoll",
+        "object_name": "Einfamilienhaus", "object_address": "ul. Ogrodowa 22, 00-003 Warschau",
+        "date": "2024-03-10", "inspector": "Piotr Wiśniewski", "inspector_cert": "E-9012/2021",
+        "meter_serial": "MPI-530 S/N: 11223344", "meter_calibration": "2024-05-20",
+        "measurements": [
+            {"point": "RCD F1", "circuit": "Haupt", "protection": "30mA AC", "value": "22", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"},
+            {"point": "RCD F1", "circuit": "Haupt", "protection": "30mA AC", "value": "15", "unit": "ms", "limit": "150", "status": "PASS", "notes": "2x IΔn"},
+            {"point": "RCD F1", "circuit": "Haupt", "protection": "30mA AC", "value": "8", "unit": "ms", "limit": "40", "status": "PASS", "notes": "5x IΔn"},
+            {"point": "RCD F2", "circuit": "Küche", "protection": "30mA A", "value": "28", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"},
+            {"point": "RCD F3", "circuit": "Bad", "protection": "30mA A", "value": "20", "unit": "ms", "limit": "300", "status": "PASS", "notes": "1x IΔn"}
+        ],
+        "conclusion": "POSITIV - Alle RCDs funktionieren korrekt",
+        "recommendations": ["Alle RCDs erfüllen EN 61008 Anforderungen", "Nächster RCD-Test in 12 Monaten empfohlen"]
+    },
+    {
+        "id": "example_earthing", "name": "Beispiel: Erdungswiderstand-Protokoll",
+        "object_name": "Transformatorstation TR-15", "object_address": "ul. Przemysłowa 8, 00-004 Warschau",
+        "date": "2024-04-05", "inspector": "Marek Zieliński", "inspector_cert": "E-3456/2020",
+        "meter_serial": "MPI-530 S/N: 55667788", "meter_calibration": "2024-07-10",
+        "measurements": [
+            {"point": "Haupterder E1", "circuit": "-", "protection": "-", "value": "2.8", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-Leiter-Methode"},
+            {"point": "Erder E2", "circuit": "-", "protection": "-", "value": "4.2", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-Leiter-Methode"},
+            {"point": "Geräteerder", "circuit": "-", "protection": "-", "value": "1.5", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "4-Leiter-Methode"},
+            {"point": "Blitzschutzerder", "circuit": "-", "protection": "-", "value": "8.5", "unit": "Ω", "limit": "10", "status": "PASS", "notes": "3-Leiter-Methode"}
+        ],
+        "conclusion": "POSITIV - Alle Erdungen erfüllen Anforderungen",
+        "recommendations": ["Alle Erdungswiderstände unter 10 Ω", "Nächste Erdungsmessung in 12 Monaten", "Potentialausgleichsverbindungen jährlich prüfen"]
+    },
+    {
+        "id": "example_lighting", "name": "Beispiel: Beleuchtungsmessprotokoll",
+        "object_name": "Großraumbüro 'TechHub'", "object_address": "ul. Nowoczesna 15, Et. 3, 00-005 Warschau",
+        "date": "2024-05-12", "inspector": "Katarzyna Lewandowska", "inspector_cert": "E-7890/2023",
+        "meter_serial": "MPI-530 S/N: 99887766", "meter_calibration": "2024-08-01",
+        "measurements": [
+            {"point": "Schreibtisch A1", "circuit": "-", "protection": "-", "value": "520", "unit": "lx", "limit": "500", "status": "PASS", "notes": "Büroarbeit"},
+            {"point": "Schreibtisch A2", "circuit": "-", "protection": "-", "value": "485", "unit": "lx", "limit": "500", "status": "FAIL", "notes": "Unter Norm!"},
+            {"point": "Schreibtisch B1", "circuit": "-", "protection": "-", "value": "550", "unit": "lx", "limit": "500", "status": "PASS", "notes": "Büroarbeit"},
+            {"point": "Flur", "circuit": "-", "protection": "-", "value": "115", "unit": "lx", "limit": "100", "status": "PASS", "notes": "Durchgang"},
+            {"point": "Küche", "circuit": "-", "protection": "-", "value": "310", "unit": "lx", "limit": "200", "status": "PASS", "notes": "Sozialraum"}
+        ],
+        "conclusion": "NEGATIV - Unregelmäßigkeiten gefunden",
+        "recommendations": ["Schreibtisch A2: Beleuchtungsstärke 485 lx unter Minimum 500 lx für Büroarbeit", "Empfohlen: Zusätzliche Leuchte installieren oder Leuchtmittel mit höherer Leistung verwenden", "Nachmessung nach Korrektur"]
+    }
+]
+
+
+def get_guides_translations(lang):
+    if lang == "en":
+        return GUIDES_EN
+    elif lang == "de":
+        return GUIDES_DE
+    return None
+
+def get_templates_translations(lang):
+    if lang == "en":
+        return TEMPLATES_EN
+    elif lang == "de":
+        return TEMPLATES_DE
+    return None
+
+def get_examples_translations(lang):
+    if lang == "en":
+        return EXAMPLES_EN
+    elif lang == "de":
+        return EXAMPLES_DE
+    return None
