@@ -1816,50 +1816,38 @@ async def get_checklist(checklist_id: str, lang: str = Query("pl", regex="^(pl|e
     raise HTTPException(status_code=404, detail=f"Checklist '{checklist_id}' not found")
 
 @api_router.get("/quiz/questions")
-async def get_quiz_questions():
-    """Pobierz pytania quizu"""
-    # Zwróć pytania bez poprawnych odpowiedzi
-    questions = []
-    for q in QUIZ_QUESTIONS:
-        questions.append({
-            "id": q["id"],
-            "question": q["question"],
-            "options": q["options"]
-        })
-    return questions
+async def get_quiz_questions(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_quiz_translations(lang)
+    source = tr if tr else QUIZ_QUESTIONS
+    return [{"id": q["id"], "question": q["question"], "options": q["options"]} for q in source]
 
 @api_router.post("/quiz/check")
-async def check_quiz_answers(answers: Dict[int, int]):
-    """Sprawdź odpowiedzi quizu"""
+async def check_quiz_answers(answers: Dict[int, int], lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_quiz_translations(lang)
+    source = tr if tr else QUIZ_QUESTIONS
     results = []
     correct_count = 0
-    
-    for q in QUIZ_QUESTIONS:
+    for q in source:
         user_answer = answers.get(q["id"])
         is_correct = user_answer == q["correct"]
         if is_correct:
             correct_count += 1
         results.append({
-            "id": q["id"],
-            "question": q["question"],
-            "user_answer": user_answer,
-            "correct_answer": q["correct"],
-            "is_correct": is_correct,
-            "explanation": q["explanation"]
+            "id": q["id"], "question": q["question"],
+            "user_answer": user_answer, "correct_answer": q["correct"],
+            "is_correct": is_correct, "explanation": q["explanation"]
         })
-    
-    total = len(QUIZ_QUESTIONS)
+    total = len(source)
     percentage = (correct_count / total) * 100
     passed = percentage >= 70
-    
+    grade_map = {"pl": ("ZDANY", "NIEZDANY"), "en": ("PASSED", "FAILED"), "de": ("BESTANDEN", "NICHT BESTANDEN")}
+    grades = grade_map.get(lang, grade_map["pl"])
     return {
         "results": results,
         "summary": {
-            "correct": correct_count,
-            "total": total,
-            "percentage": round(percentage, 1),
-            "passed": passed,
-            "grade": "ZDANY" if passed else "NIEZDANY"
+            "correct": correct_count, "total": total,
+            "percentage": round(percentage, 1), "passed": passed,
+            "grade": grades[0] if passed else grades[1]
         }
     }
 
