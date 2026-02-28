@@ -426,8 +426,8 @@ const DetailView = ({ func, onBack, t }) => {
                 {/* Right: Image, Results & Safety */}
                 <div className="space-y-6">
                     <MeterImageGallery mainImage={func.main_image} funcName={func.name} />
-                    <LCDDisplay func={func} />
-                    <SafetyNotes notes={func.safety_notes} />
+                    <LCDDisplay func={func} t={t} />
+                    <SafetyNotes notes={func.safety_notes} t={t} />
                 </div>
             </div>
         </div>
