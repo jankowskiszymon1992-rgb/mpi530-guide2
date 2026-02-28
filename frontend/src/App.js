@@ -1036,15 +1036,15 @@ const ToolsView = ({ onBack, t, lang }) => {
                     <div className="card-industrial">
                         <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                             <Calculator className="h-5 w-5 text-green-500" />
-                            Kalkulator Zs → Ik
+                            {t('calc_title')}
                         </h3>
                         <p className="text-muted-foreground mb-6">
-                            Oblicz prąd zwarciowy na podstawie impedancji pętli zwarcia.
+                            {t('calc_desc')}
                         </p>
                         
                         <div className="grid md:grid-cols-3 gap-4 mb-6">
                             <div>
-                                <label className="block text-sm font-bold mb-2">Impedancja Zs [Ω]</label>
+                                <label className="block text-sm font-bold mb-2">{t('calc_zs_label')}</label>
                                 <Input
                                     type="number"
                                     step="0.01"
@@ -1055,7 +1055,7 @@ const ToolsView = ({ onBack, t, lang }) => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold mb-2">Napięcie Uo [V]</label>
+                                <label className="block text-sm font-bold mb-2">{t('calc_voltage_label')}</label>
                                 <Input
                                     type="number"
                                     value={voltageInput}
@@ -1070,7 +1070,7 @@ const ToolsView = ({ onBack, t, lang }) => {
                                     className="bg-green-500 text-white w-full"
                                     data-testid="calculate-btn"
                                 >
-                                    Oblicz Ik
+                                    {t('calc_calculate')}
                                 </Button>
                             </div>
                         </div>
