@@ -136,7 +136,7 @@
     }
 
     .step-completed {
-        @apply border-l-4 border-success opacity-70;
+        @apply border-l-4 border-green-500 opacity-70;
     }
 
     .step-pending {
@@ -144,11 +144,11 @@
     }
 
     .warning-box {
-        @apply bg-destructive/10 border-l-4 border-destructive p-4 text-sm;
+        @apply bg-red-500/10 border-l-4 border-red-500 p-4 text-sm;
     }
 
     .tip-box {
-        @apply bg-accent/10 border-l-4 border-accent p-4 text-sm;
+        @apply bg-blue-500/10 border-l-4 border-blue-500 p-4 text-sm;
     }
 
     .glass-panel {
