@@ -284,13 +284,13 @@ const StepComponent = ({ step, stepIndex, currentStep, totalSteps }) => {
 };
 
 // LCD Display Component
-const LCDDisplay = ({ func }) => {
+const LCDDisplay = ({ func, t }) => {
     return (
         <div className="lcd-result p-6 rounded-sm" data-testid="lcd-display">
-            <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Oczekiwany Wynik</div>
+            <div className="text-xs uppercase tracking-wider opacity-70 mb-2">{t('expected_result')}</div>
             <div className="text-2xl font-mono font-bold mb-4">{func.expected_results}</div>
             <div className="border-t border-green-900/50 pt-4 mt-4">
-                <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Parametry</div>
+                <div className="text-xs uppercase tracking-wider opacity-70 mb-2">{t('parameters')}</div>
                 <div className="grid grid-cols-1 gap-2 text-sm">
                     {func.parameters.map((param, idx) => (
                         <div key={idx} className="opacity-80">{param}</div>
@@ -302,12 +302,12 @@ const LCDDisplay = ({ func }) => {
 };
 
 // Safety Notes Component
-const SafetyNotes = ({ notes }) => {
+const SafetyNotes = ({ notes, t }) => {
     return (
         <div className="bg-red-500/5 border border-red-500/20 p-4 rounded-sm" data-testid="safety-notes">
             <h4 className="font-bold uppercase tracking-wider text-sm mb-3 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-500" />
-                Zasady Bezpieczeństwa
+                {t('safety_rules')}
             </h4>
             <ul className="space-y-2">
                 {notes.map((note, idx) => (
