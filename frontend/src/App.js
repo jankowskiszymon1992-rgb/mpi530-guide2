@@ -846,7 +846,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                     <div>
                         <h3 className="font-bold text-xl mb-2">Sonel Reports Plus</h3>
                         <p className="text-muted-foreground mb-3">
-                            Bezpłatne oprogramowanie do tworzenia dokumentacji pomiarowej. Współpracuje z miernikami Sonel MPI-530, MPI-540 i innymi.
+                            {t('protocols_reports_desc')}
                         </p>
                         <div className="flex gap-4 text-sm">
                             <span className="text-muted-foreground">System: Windows 10/11</span>
@@ -856,7 +856,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                                 rel="noopener noreferrer"
                                 className="text-blue-500 hover:underline"
                             >
-                                Pobierz ze strony Sonel →
+                                {t('protocols_download_link')} →
                             </a>
                         </div>
                     </div>
