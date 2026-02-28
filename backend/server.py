@@ -1803,16 +1803,17 @@ async def get_cable_sections():
     return CABLE_SECTIONS
 
 @api_router.get("/tools/checklists")
-async def get_all_checklists():
-    """Pobierz wszystkie checklisty bezpieczeństwa"""
-    return SAFETY_CHECKLISTS
+async def get_all_checklists(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_checklists_translations(lang)
+    return tr if tr else SAFETY_CHECKLISTS
 
 @api_router.get("/tools/checklists/{checklist_id}")
-async def get_checklist(checklist_id: str):
-    """Pobierz konkretną checklistę"""
-    if checklist_id in SAFETY_CHECKLISTS:
-        return SAFETY_CHECKLISTS[checklist_id]
-    raise HTTPException(status_code=404, detail=f"Checklista '{checklist_id}' nie znaleziona")
+async def get_checklist(checklist_id: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
+    tr = get_checklists_translations(lang)
+    data = tr if tr else SAFETY_CHECKLISTS
+    if checklist_id in data:
+        return data[checklist_id]
+    raise HTTPException(status_code=404, detail=f"Checklist '{checklist_id}' not found")
 
 @api_router.get("/quiz/questions")
 async def get_quiz_questions():
