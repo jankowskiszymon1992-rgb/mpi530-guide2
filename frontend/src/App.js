@@ -469,7 +469,7 @@ const SearchResults = ({ results, onSelect, onClose }) => {
 };
 
 // Home View Component
-const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch, onShowProtocols, onShowTools }) => {
+const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch, onShowProtocols, onShowTools, t }) => {
     const [showResults, setShowResults] = useState(false);
 
     return (
@@ -477,10 +477,10 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
             {/* Hero Section */}
             <div className="mb-12">
                 <h2 className="text-4xl lg:text-5xl font-black mb-4 tracking-tight">
-                    <span className="gradient-text">Interaktywna Instrukcja</span>
+                    <span className="gradient-text">{t('hero_title')}</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl">
-                    Wybierz funkcję pomiarową, aby zobaczyć szczegółową instrukcję krok po kroku dla miernika Sonel MPI-530.
+                    {t('hero_desc')}
                 </p>
             </div>
 
@@ -490,7 +490,7 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input
                         type="text"
-                        placeholder="Szukaj instrukcji, procedur, FAQ..."
+                        placeholder={t('search_placeholder')}
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
