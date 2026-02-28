@@ -1027,6 +1027,269 @@ EXAMPLE_PROTOCOLS: List[ExampleProtocol] = [
     )
 ]
 
+# ============================================
+# NARZĘDZIA - Kalkulator, Tabele Norm, Błędy, Schematy
+# ============================================
+
+# Tabele maksymalnych impedancji pętli zwarcia dla różnych zabezpieczeń
+# Zgodnie z PN-HD 60364-4-41 dla Uo=230V, czas 0.4s (obwody końcowe)
+ZS_MAX_TABLES = {
+    "B": {
+        "6": {"Ia": 30, "Zs_max": 7.67, "time": "0.4s"},
+        "10": {"Ia": 50, "Zs_max": 4.60, "time": "0.4s"},
+        "13": {"Ia": 65, "Zs_max": 3.54, "time": "0.4s"},
+        "16": {"Ia": 80, "Zs_max": 2.88, "time": "0.4s"},
+        "20": {"Ia": 100, "Zs_max": 2.30, "time": "0.4s"},
+        "25": {"Ia": 125, "Zs_max": 1.84, "time": "0.4s"},
+        "32": {"Ia": 160, "Zs_max": 1.44, "time": "0.4s"},
+        "40": {"Ia": 200, "Zs_max": 1.15, "time": "0.4s"},
+        "50": {"Ia": 250, "Zs_max": 0.92, "time": "0.4s"},
+        "63": {"Ia": 315, "Zs_max": 0.73, "time": "0.4s"},
+    },
+    "C": {
+        "6": {"Ia": 60, "Zs_max": 3.83, "time": "0.4s"},
+        "10": {"Ia": 100, "Zs_max": 2.30, "time": "0.4s"},
+        "13": {"Ia": 130, "Zs_max": 1.77, "time": "0.4s"},
+        "16": {"Ia": 160, "Zs_max": 1.44, "time": "0.4s"},
+        "20": {"Ia": 200, "Zs_max": 1.15, "time": "0.4s"},
+        "25": {"Ia": 250, "Zs_max": 0.92, "time": "0.4s"},
+        "32": {"Ia": 320, "Zs_max": 0.72, "time": "0.4s"},
+        "40": {"Ia": 400, "Zs_max": 0.58, "time": "0.4s"},
+        "50": {"Ia": 500, "Zs_max": 0.46, "time": "0.4s"},
+        "63": {"Ia": 630, "Zs_max": 0.37, "time": "0.4s"},
+    },
+    "D": {
+        "6": {"Ia": 120, "Zs_max": 1.92, "time": "0.4s"},
+        "10": {"Ia": 200, "Zs_max": 1.15, "time": "0.4s"},
+        "16": {"Ia": 320, "Zs_max": 0.72, "time": "0.4s"},
+        "20": {"Ia": 400, "Zs_max": 0.58, "time": "0.4s"},
+        "25": {"Ia": 500, "Zs_max": 0.46, "time": "0.4s"},
+        "32": {"Ia": 640, "Zs_max": 0.36, "time": "0.4s"},
+    }
+}
+
+# Tabele norm - rezystancja izolacji
+INSULATION_NORMS = [
+    {"voltage_range": "SELV/PELV", "test_voltage": 250, "min_resistance": 0.5, "unit": "MΩ"},
+    {"voltage_range": "do 500V", "test_voltage": 500, "min_resistance": 1.0, "unit": "MΩ"},
+    {"voltage_range": "powyżej 500V", "test_voltage": 1000, "min_resistance": 1.0, "unit": "MΩ"},
+    {"voltage_range": "instalacja eksploatowana", "test_voltage": 500, "min_resistance": 0.5, "unit": "MΩ"},
+]
+
+# Tabele norm - czasy zadziałania RCD
+RCD_TIMES = [
+    {"type": "AC/A", "multiplier": "0.5x", "max_time_ms": None, "description": "Nie powinien zadziałać"},
+    {"type": "AC/A", "multiplier": "1x", "max_time_ms": 300, "description": "Standardowy test"},
+    {"type": "AC/A", "multiplier": "2x", "max_time_ms": 150, "description": "Podwójny prąd"},
+    {"type": "AC/A", "multiplier": "5x", "max_time_ms": 40, "description": "Pięciokrotny prąd"},
+    {"type": "S (selektywny)", "multiplier": "1x", "max_time_ms": 500, "description": "RCD selektywny"},
+    {"type": "S (selektywny)", "multiplier": "2x", "max_time_ms": 200, "description": "RCD selektywny"},
+    {"type": "S (selektywny)", "multiplier": "5x", "max_time_ms": 150, "description": "RCD selektywny"},
+]
+
+# Tabele norm - oświetlenie PN-EN 12464-1
+LIGHTING_NORMS = [
+    {"area": "Biuro - praca przy komputerze", "min_lux": 500, "ugr_max": 19},
+    {"area": "Biuro - pisanie, czytanie", "min_lux": 500, "ugr_max": 19},
+    {"area": "Sala konferencyjna", "min_lux": 300, "ugr_max": 22},
+    {"area": "Recepcja", "min_lux": 300, "ugr_max": 22},
+    {"area": "Archiwum", "min_lux": 200, "ugr_max": 25},
+    {"area": "Korytarz, komunikacja", "min_lux": 100, "ugr_max": 28},
+    {"area": "Schody", "min_lux": 150, "ugr_max": 25},
+    {"area": "Toalety", "min_lux": 200, "ugr_max": 25},
+    {"area": "Magazyn", "min_lux": 100, "ugr_max": 25},
+    {"area": "Hala produkcyjna - prace zgrubne", "min_lux": 200, "ugr_max": 25},
+    {"area": "Hala produkcyjna - prace precyzyjne", "min_lux": 500, "ugr_max": 19},
+    {"area": "Kontrola jakości", "min_lux": 1000, "ugr_max": 16},
+    {"area": "Warsztat mechaniczny", "min_lux": 300, "ugr_max": 22},
+    {"area": "Sklep - strefa sprzedaży", "min_lux": 300, "ugr_max": 22},
+    {"area": "Kuchnia", "min_lux": 500, "ugr_max": 22},
+    {"area": "Garaż", "min_lux": 75, "ugr_max": 25},
+]
+
+# Kody błędów miernika MPI-530
+ERROR_CODES = [
+    {
+        "code": "PE!",
+        "name": "Brak PE",
+        "description": "Brak połączenia z przewodem ochronnym PE lub zbyt wysoka rezystancja",
+        "causes": ["Uszkodzony przewód PE", "Brak ciągłości PE", "Zły kontakt w gnieździe", "Niepodłączony przewód ochronny"],
+        "solutions": ["Sprawdź ciągłość przewodu PE", "Sprawdź połączenia w rozdzielnicy", "Wyczyść styki gniazda", "Wykonaj pomiar ciągłości PE"]
+    },
+    {
+        "code": "Hi",
+        "name": "Wartość powyżej zakresu",
+        "description": "Zmierzona wartość przekracza zakres pomiarowy miernika",
+        "causes": ["Zbyt wysoka impedancja", "Brak połączenia", "Przerwa w obwodzie"],
+        "solutions": ["Sprawdź połączenia pomiarowe", "Sprawdź czy obwód jest zamknięty", "Użyj wyższego zakresu pomiarowego"]
+    },
+    {
+        "code": "Lo",
+        "name": "Wartość poniżej zakresu",
+        "description": "Zmierzona wartość jest poniżej dolnej granicy zakresu",
+        "causes": ["Zwarcie w obwodzie", "Zbyt niska rezystancja", "Błąd podłączenia"],
+        "solutions": ["Sprawdź czy nie ma zwarcia", "Użyj niższego zakresu", "Sprawdź poprawność podłączenia"]
+    },
+    {
+        "code": "OFL",
+        "name": "Przepełnienie (Overflow)",
+        "description": "Przekroczenie maksymalnego zakresu pomiarowego",
+        "causes": ["Bardzo wysoka rezystancja/impedancja", "Obwód otwarty", "Uszkodzona izolacja przewodów pomiarowych"],
+        "solutions": ["Sprawdź ciągłość obwodu", "Sprawdź przewody pomiarowe", "Zmień zakres pomiarowy"]
+    },
+    {
+        "code": "U>",
+        "name": "Napięcie zbyt wysokie",
+        "description": "Napięcie w obwodzie przekracza dopuszczalną wartość dla danego pomiaru",
+        "causes": ["Napięcie >253V", "Zakłócenia w sieci", "Błędne podłączenie"],
+        "solutions": ["Sprawdź napięcie w instalacji", "Poczekaj na stabilizację sieci", "Sprawdź podłączenie"]
+    },
+    {
+        "code": "U<",
+        "name": "Napięcie zbyt niskie",
+        "description": "Napięcie w obwodzie jest zbyt niskie do wykonania pomiaru",
+        "causes": ["Napięcie <180V", "Zanik fazy", "Przeciążenie sieci"],
+        "solutions": ["Sprawdź napięcie zasilania", "Sprawdź bezpieczniki", "Poczekaj na przywrócenie napięcia"]
+    },
+    {
+        "code": "f?",
+        "name": "Błędna częstotliwość",
+        "description": "Częstotliwość sieci poza zakresem 45-65 Hz",
+        "causes": ["Praca z generatora", "Zakłócenia sieci", "Niestabilne źródło"],
+        "solutions": ["Sprawdź źródło zasilania", "Podłącz do stabilnej sieci", "Użyj UPS"]
+    },
+    {
+        "code": "RCD!",
+        "name": "RCD zadziałał",
+        "description": "Wyłącznik różnicowoprądowy zadziałał podczas pomiaru",
+        "causes": ["Pomiar impedancji pętli wyzwolił RCD", "RCD bardzo czuły", "Normalny efekt pomiaru"],
+        "solutions": ["Załącz ponownie RCD", "Użyj funkcji pomiaru bez wyzwalania RCD", "Wykonaj pomiar L-L"]
+    },
+    {
+        "code": "CAL",
+        "name": "Wymagana kalibracja",
+        "description": "Upłynął termin kalibracji lub miernik wymaga sprawdzenia",
+        "causes": ["Przekroczony termin kalibracji", "Uszkodzenie mechaniczne", "Błąd wewnętrzny"],
+        "solutions": ["Wyślij miernik do kalibracji", "Sprawdź datę ostatniej kalibracji", "Skontaktuj się z serwisem Sonel"]
+    },
+    {
+        "code": "bAt",
+        "name": "Słaba bateria",
+        "description": "Niski poziom naładowania akumulatora",
+        "causes": ["Rozładowany akumulator", "Zużyty akumulator", "Długa praca bez ładowania"],
+        "solutions": ["Naładuj akumulator", "Wymień akumulator na nowy", "Podłącz zasilacz"]
+    },
+    {
+        "code": "Err",
+        "name": "Błąd ogólny",
+        "description": "Wystąpił nieoczekiwany błąd podczas pomiaru",
+        "causes": ["Zakłócenia elektromagnetyczne", "Błąd wewnętrzny", "Niestabilne warunki pomiaru"],
+        "solutions": ["Powtórz pomiar", "Odsuń miernik od źródeł zakłóceń", "Zrestartuj miernik"]
+    },
+    {
+        "code": "L-PE",
+        "name": "Pomiar L-PE niemożliwy",
+        "description": "Nie można wykonać pomiaru impedancji L-PE",
+        "causes": ["Brak PE", "Za wysoka rezystancja PE", "Błędne podłączenie"],
+        "solutions": ["Sprawdź ciągłość PE", "Wykonaj najpierw test ciągłości", "Sprawdź podłączenia"]
+    },
+]
+
+# Schematy podłączeń
+CONNECTION_DIAGRAMS = [
+    {
+        "id": "rcd_test",
+        "name": "Test RCD",
+        "description": "Podłączenie do pomiaru czasu zadziałania wyłącznika różnicowoprądowego",
+        "connections": [
+            {"terminal": "L/L1", "color": "#FF0000", "connect_to": "Faza (L)", "cable": "Czerwony"},
+            {"terminal": "N", "color": "#0000FF", "connect_to": "Neutralny (N)", "cable": "Niebieski"},
+            {"terminal": "PE", "color": "#00FF00", "connect_to": "Ochronny (PE)", "cable": "Zielono-żółty"},
+        ],
+        "notes": ["Można użyć adaptera WS-03 do gniazda", "Instalacja musi być pod napięciem", "RCD zadziała podczas testu"],
+        "image": "adapter_ws03"
+    },
+    {
+        "id": "loop_impedance",
+        "name": "Impedancja pętli zwarcia",
+        "description": "Podłączenie do pomiaru impedancji pętli zwarcia L-PE lub L-N",
+        "connections": [
+            {"terminal": "L/L1", "color": "#FF0000", "connect_to": "Faza (L)", "cable": "Czerwony"},
+            {"terminal": "N", "color": "#0000FF", "connect_to": "Neutralny (N)", "cable": "Niebieski"},
+            {"terminal": "PE", "color": "#00FF00", "connect_to": "Ochronny (PE)", "cable": "Zielono-żółty"},
+        ],
+        "notes": ["Dla L-PE: wymagane połączenie z PE", "Dla L-N: pomiar impedancji faza-neutral", "Może wyzwolić RCD"],
+        "image": "adapter_ws03"
+    },
+    {
+        "id": "insulation",
+        "name": "Rezystancja izolacji",
+        "description": "Podłączenie do pomiaru rezystancji izolacji między przewodami",
+        "connections": [
+            {"terminal": "L/L1", "color": "#FF0000", "connect_to": "Przewód badany (L)", "cable": "Czerwony"},
+            {"terminal": "PE", "color": "#00FF00", "connect_to": "Przewód odniesienia (PE/N)", "cable": "Zielono-żółty"},
+        ],
+        "notes": ["WYŁĄCZ NAPIĘCIE przed pomiarem!", "Odłącz odbiorniki wrażliwe", "Napięcie pomiarowe do 1000V DC"],
+        "image": "crocodile"
+    },
+    {
+        "id": "continuity",
+        "name": "Ciągłość PE",
+        "description": "Podłączenie do pomiaru ciągłości przewodu ochronnego",
+        "connections": [
+            {"terminal": "L/L1", "color": "#FF0000", "connect_to": "Szyna PE w rozdzielnicy", "cable": "Czerwony"},
+            {"terminal": "PE", "color": "#00FF00", "connect_to": "Badany punkt (gniazdko)", "cable": "Zielono-żółty"},
+        ],
+        "notes": ["WYŁĄCZ NAPIĘCIE!", "Wykonaj kompensację przewodów (ZERO)", "Prąd pomiarowy 200mA"],
+        "image": "test_lead"
+    },
+    {
+        "id": "earthing_3p",
+        "name": "Uziemienie metodą 3-przewodową",
+        "description": "Podłączenie do pomiaru rezystancji uziemienia metodą techniczną",
+        "connections": [
+            {"terminal": "E", "color": "#00FF00", "connect_to": "Badany uziom", "cable": "Zielono-żółty"},
+            {"terminal": "S", "color": "#FFFF00", "connect_to": "Elektroda napięciowa (62% odległości)", "cable": "Żółty"},
+            {"terminal": "H", "color": "#FF0000", "connect_to": "Elektroda prądowa (min. 40m)", "cable": "Czerwony"},
+        ],
+        "notes": ["Odłącz uziom od instalacji!", "Elektrody w linii prostej", "Wbij elektrody w wilgotny grunt"],
+        "image": "earth_probe"
+    },
+    {
+        "id": "earthing_clamp",
+        "name": "Uziemienie metodą cęgową",
+        "description": "Podłączenie do pomiaru uziemienia bez elektrod pomocniczych",
+        "connections": [
+            {"terminal": "C3", "color": "#FF0000", "connect_to": "Cęgi pomiarowe na przewód PE", "cable": "C-3"},
+            {"terminal": "N1", "color": "#0000FF", "connect_to": "Cęgi nadawcze na przewód PE (min. 30cm od C3)", "cable": "N-1"},
+        ],
+        "notes": ["Uziemienie musi być w zamkniętym obwodzie", "Min. 30cm między cęgami", "Wynik może być zaniżony"],
+        "image": "clamp_set"
+    },
+    {
+        "id": "phase_sequence",
+        "name": "Kolejność faz",
+        "description": "Podłączenie do sprawdzenia kolejności faz L1-L2-L3",
+        "connections": [
+            {"terminal": "L1", "color": "#FFFF00", "connect_to": "Faza L1", "cable": "Żółty"},
+            {"terminal": "L2", "color": "#FF0000", "connect_to": "Faza L2", "cable": "Czerwony"},
+            {"terminal": "L3", "color": "#0000FF", "connect_to": "Faza L3", "cable": "Niebieski"},
+        ],
+        "notes": ["Pomiar pod napięciem 3x400V!", "Wynik: ZGODNA lub NIEZGODNA", "Zamień 2 fazy aby naprawić"],
+        "image": "probes"
+    },
+    {
+        "id": "lux",
+        "name": "Pomiar oświetlenia",
+        "description": "Podłączenie sondy luksomierza LP-1/LP-10",
+        "connections": [
+            {"terminal": "miniDIN-4P", "color": "#FFFF00", "connect_to": "Sonda LP-1 lub LP-10", "cable": "Kabel sondy"},
+        ],
+        "notes": ["Odczekaj 1 min na stabilizację", "Sondę ustaw na wysokości blatu (85cm)", "Kieruj fotokomórkę w stronę światła"],
+        "image": "lux_probe"
+    },
+]
+
 # API Routes
 @api_router.get("/")
 async def root():
