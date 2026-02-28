@@ -14,7 +14,8 @@ import copy
 from translations import (
     get_functions_translations, get_faq_translations,
     get_error_codes_translations, get_quiz_translations,
-    get_checklists_translations
+    get_checklists_translations, get_guides_translations,
+    get_templates_translations, get_examples_translations
 )
 
 ROOT_DIR = Path(__file__).parent
