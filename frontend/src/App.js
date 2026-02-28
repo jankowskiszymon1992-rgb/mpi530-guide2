@@ -783,7 +783,7 @@ const ProtocolGuideDetailView = ({ guide, onBack }) => {
 };
 
 // Protocols View Component
-const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack }) => {
+const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
     const [guides, setGuides] = useState([]);
     const [templates, setTemplates] = useState([]);
     const [examples, setExamples] = useState([]);
