@@ -194,5 +194,9 @@
     "protocols_reports_desc": "Kostenlose Software zur Erstellung von Messdokumentation.",
     "protocols_measurement_count": "Messungen",
     "legal_disclaimer": "Diese Anwendung ist ein unabhängiges Bildungswerk. Sie ist kein offizielles Produkt und keine Bedienungsanleitung des Messgeräteherstellers. Handelsnamen, einschließlich Sonel und MPI-530, sind Marken ihrer jeweiligen Inhaber und werden hierin ausschließlich zu Informationszwecken verwendet.",
-    "legal_title": "Rechtlicher Hinweis"
+    "legal_title": "Rechtlicher Hinweis",
+    "quick_tips": "Schnelle Tipps",
+    "tip_1": "Prüfen Sie vor Arbeitsbeginn immer den Zustand der Messleitungen",
+    "tip_2": "Beachten Sie die Messkategorie CAT III/IV für die Sicherheit",
+    "tip_3": "Kalibrieren Sie Ihr Messgerät alle 12 Monate gemäß Herstellerempfehlung"
 }

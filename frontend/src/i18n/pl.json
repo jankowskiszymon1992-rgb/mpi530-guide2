@@ -194,5 +194,9 @@
     "protocols_reports_desc": "Bezpłatne oprogramowanie do tworzenia dokumentacji pomiarowej.",
     "protocols_measurement_count": "Pomiary",
     "legal_disclaimer": "Niniejsza aplikacja stanowi niezależne opracowanie edukacyjne. Nie jest oficjalnym produktem ani instrukcją producenta miernika. Nazwy handlowe, w tym Sonel oraz MPI-530, są znakami towarowymi ich właścicieli i zostały użyte wyłącznie w celach informacyjnych.",
-    "legal_title": "Informacja prawna"
+    "legal_title": "Informacja prawna",
+    "quick_tips": "Szybkie porady",
+    "tip_1": "Zawsze sprawdź stan przewodów pomiarowych przed rozpoczęciem pracy",
+    "tip_2": "Przestrzegaj kategorii pomiarowej CAT III/IV dla bezpieczeństwa",
+    "tip_3": "Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami producenta"
 }

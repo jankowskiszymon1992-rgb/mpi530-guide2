@@ -194,5 +194,9 @@
     "protocols_reports_desc": "Free software for creating measurement documentation.",
     "protocols_measurement_count": "Measurements",
     "legal_disclaimer": "This application is an independent educational resource. It is not an official product or instruction manual of the meter manufacturer. Trade names, including Sonel and MPI-530, are trademarks of their respective owners and are used herein solely for informational purposes.",
-    "legal_title": "Legal notice"
+    "legal_title": "Legal notice",
+    "quick_tips": "Quick tips",
+    "tip_1": "Always check test lead condition before starting work",
+    "tip_2": "Follow CAT III/IV measurement category for safety",
+    "tip_3": "Calibrate your meter every 12 months as recommended by the manufacturer"
 }
