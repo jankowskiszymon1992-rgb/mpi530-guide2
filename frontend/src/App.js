@@ -908,9 +908,9 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                             </div>
                         </div>
                         <div className="text-xs text-muted-foreground space-y-1">
-                            <p>Data: {example.date}</p>
-                            <p>Pomiary: {example.measurements.length}</p>
-                            <p className={example.conclusion.includes('POZYTYWNA') ? 'text-green-500' : 'text-red-500'}>
+                            <p>{t('protocols_date')}: {example.date}</p>
+                            <p>{t('protocols_measurement_count')}: {example.measurements.length}</p>
+                            <p className={example.conclusion.includes('POZYTYWNA') || example.conclusion.includes('POSITIVE') || example.conclusion.includes('POSITIV') ? 'text-green-500' : 'text-red-500'}>
                                 {example.conclusion.split(' - ')[0]}
                             </p>
                         </div>
