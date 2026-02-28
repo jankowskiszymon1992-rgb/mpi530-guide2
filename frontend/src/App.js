@@ -706,20 +706,23 @@ const ProtocolGuideDetailView = ({ guide, onBack }) => {
 };
 
 // Protocols View Component
-const ProtocolsView = ({ onSelectGuide, onBack }) => {
+const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack }) => {
     const [guides, setGuides] = useState([]);
     const [templates, setTemplates] = useState([]);
+    const [examples, setExamples] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [guidesRes, templatesRes] = await Promise.all([
+                const [guidesRes, templatesRes, examplesRes] = await Promise.all([
                     axios.get(`${API}/protocols/guides`),
-                    axios.get(`${API}/protocols/templates`)
+                    axios.get(`${API}/protocols/templates`),
+                    axios.get(`${API}/protocols/examples`)
                 ]);
                 setGuides(guidesRes.data);
                 setTemplates(templatesRes.data);
+                setExamples(examplesRes.data);
             } catch (error) {
                 console.error("Błąd ładowania protokołów:", error);
                 toast.error("Błąd ładowania danych protokołów");
@@ -798,19 +801,173 @@ const ProtocolsView = ({ onSelectGuide, onBack }) => {
                 ))}
             </div>
 
+            {/* Example Protocols */}
+            <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                <FileText className="h-5 w-5 text-green-500" />
+                Przykładowe wypełnione protokoły
+            </h3>
+            <p className="text-muted-foreground mb-6">
+                Wzory protokołów z rzeczywistymi wynikami pomiarów - zobacz jak prawidłowo dokumentować badania.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+                {examples.map((example) => (
+                    <button
+                        key={example.id}
+                        onClick={() => onSelectExample(example.id)}
+                        className="card-industrial text-left group hover:border-green-500/50"
+                        data-testid={`example-${example.id}`}
+                    >
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className={`w-10 h-10 flex items-center justify-center ${example.conclusion.includes('POZYTYWNA') ? 'bg-green-500' : 'bg-red-500'}`}>
+                                {example.conclusion.includes('POZYTYWNA') ? (
+                                    <CheckCircle2 className="h-5 w-5 text-white" />
+                                ) : (
+                                    <AlertTriangle className="h-5 w-5 text-white" />
+                                )}
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-sm">{example.name}</h4>
+                                <p className="text-xs text-muted-foreground">{example.object_name}</p>
+                            </div>
+                        </div>
+                        <div className="text-xs text-muted-foreground space-y-1">
+                            <p>Data: {example.date}</p>
+                            <p>Pomiary: {example.measurements.length}</p>
+                            <p className={example.conclusion.includes('POZYTYWNA') ? 'text-green-500' : 'text-red-500'}>
+                                {example.conclusion.split(' - ')[0]}
+                            </p>
+                        </div>
+                        <ChevronRight className="h-4 w-4 absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-green-500" />
+                    </button>
+                ))}
+            </div>
+
             {/* Templates */}
             <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-primary" />
                 Szablony protokołów
             </h3>
             <p className="text-muted-foreground mb-6">
-                Przykładowe protokoły i wymagane pomiary dla różnych typów badań instalacji elektrycznych.
+                Wymagane pomiary dla różnych typów badań instalacji elektrycznych.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {templates.map((template) => (
                     <ProtocolTemplateCard key={template.id} template={template} />
                 ))}
             </div>
+        </div>
+    );
+};
+
+// Example Protocol Detail View
+const ExampleProtocolDetailView = ({ example, onBack }) => {
+    const isPositive = example.conclusion.includes('POZYTYWNA');
+    
+    return (
+        <div className="animate-fade-in" data-testid="example-protocol-detail">
+            {/* Header */}
+            <div className="mb-8 pb-6 border-b border-border">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className={`w-16 h-16 flex items-center justify-center ${isPositive ? 'bg-green-500' : 'bg-red-500'}`}>
+                        {isPositive ? (
+                            <CheckCircle2 className="h-8 w-8 text-white" />
+                        ) : (
+                            <AlertTriangle className="h-8 w-8 text-white" />
+                        )}
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold">{example.name}</h2>
+                        <p className={`mt-1 font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                            {example.conclusion}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Protocol Info */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="card-industrial">
+                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">Dane obiektu</h3>
+                    <div className="space-y-2 text-sm">
+                        <p><span className="text-muted-foreground">Obiekt:</span> {example.object_name}</p>
+                        <p><span className="text-muted-foreground">Adres:</span> {example.object_address}</p>
+                        <p><span className="text-muted-foreground">Data pomiaru:</span> {example.date}</p>
+                    </div>
+                </div>
+                <div className="card-industrial">
+                    <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">Dane wykonawcy</h3>
+                    <div className="space-y-2 text-sm">
+                        <p><span className="text-muted-foreground">Wykonawca:</span> {example.inspector}</p>
+                        <p><span className="text-muted-foreground">Uprawnienia:</span> {example.inspector_cert}</p>
+                        <p><span className="text-muted-foreground">Miernik:</span> {example.meter_serial}</p>
+                        <p><span className="text-muted-foreground">Kalibracja:</span> {example.meter_calibration}</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Measurements Table */}
+            <h3 className="font-bold mb-4 uppercase text-sm tracking-wider flex items-center gap-2">
+                <ClipboardList className="h-4 w-4" />
+                Wyniki pomiarów ({example.measurements.length})
+            </h3>
+            <div className="overflow-x-auto mb-8">
+                <table className="w-full text-sm border border-border">
+                    <thead className="bg-muted/50">
+                        <tr>
+                            <th className="text-left p-3 border-b border-border font-bold">Punkt</th>
+                            <th className="text-left p-3 border-b border-border font-bold">Obwód</th>
+                            <th className="text-left p-3 border-b border-border font-bold">Zabezp.</th>
+                            <th className="text-right p-3 border-b border-border font-bold">Wynik</th>
+                            <th className="text-left p-3 border-b border-border font-bold">Limit</th>
+                            <th className="text-center p-3 border-b border-border font-bold">Status</th>
+                            <th className="text-left p-3 border-b border-border font-bold">Uwagi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {example.measurements.map((m, idx) => (
+                            <tr key={idx} className={`${m.status === 'FAIL' ? 'bg-red-500/10' : ''} hover:bg-muted/30`}>
+                                <td className="p-3 border-b border-border">{m.point}</td>
+                                <td className="p-3 border-b border-border font-mono">{m.circuit}</td>
+                                <td className="p-3 border-b border-border">{m.protection}</td>
+                                <td className="p-3 border-b border-border text-right font-mono font-bold">
+                                    {m.value} {m.unit !== '-' && m.unit}
+                                </td>
+                                <td className="p-3 border-b border-border text-muted-foreground">{m.limit}</td>
+                                <td className="p-3 border-b border-border text-center">
+                                    {m.status === 'OK' ? (
+                                        <span className="inline-flex items-center gap-1 text-green-500 font-bold">
+                                            <CheckCircle2 className="h-4 w-4" /> OK
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center gap-1 text-red-500 font-bold">
+                                            <AlertTriangle className="h-4 w-4" /> FAIL
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="p-3 border-b border-border text-muted-foreground text-xs">{m.notes}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Recommendations */}
+            {example.recommendations && example.recommendations.length > 0 && (
+                <div className={`p-4 rounded-sm border ${isPositive ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}>
+                    <h4 className="font-bold mb-3 flex items-center gap-2">
+                        <Lightbulb className={`h-4 w-4 ${isPositive ? 'text-green-500' : 'text-red-500'}`} />
+                        Zalecenia i uwagi
+                    </h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                        {example.recommendations.map((rec, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                                <span className={isPositive ? 'text-green-500' : 'text-red-500'}>•</span>
+                                {rec}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
