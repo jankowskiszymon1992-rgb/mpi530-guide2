@@ -1588,13 +1588,13 @@ function App() {
         
         switch (currentView) {
             case 'protocols':
-                return <ProtocolsView onSelectGuide={handleSelectGuide} onSelectExample={handleSelectExample} onBack={handleBack} />;
+                return <ProtocolsView onSelectGuide={handleSelectGuide} onSelectExample={handleSelectExample} onBack={handleBack} t={t} lang={lang} />;
             case 'protocol-detail':
-                return selectedGuide ? <ProtocolGuideDetailView guide={selectedGuide} onBack={handleBack} /> : null;
+                return selectedGuide ? <ProtocolGuideDetailView guide={selectedGuide} onBack={handleBack} t={t} /> : null;
             case 'example-detail':
-                return selectedExample ? <ExampleProtocolDetailView example={selectedExample} onBack={handleBack} /> : null;
+                return selectedExample ? <ExampleProtocolDetailView example={selectedExample} onBack={handleBack} t={t} /> : null;
             case 'tools':
-                return <ToolsView onBack={handleBack} />;
+                return <ToolsView onBack={handleBack} t={t} lang={lang} />;
             default:
                 return (
                     <HomeView 
@@ -1606,6 +1606,7 @@ function App() {
                         onSearch={handleSearch}
                         onShowProtocols={handleShowProtocols}
                         onShowTools={handleShowTools}
+                        t={t}
                     />
                 );
         }
