@@ -504,24 +504,24 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                     </Button>
                 </div>
                 <p className="text-muted-foreground mb-4">
-                    Kalkulator, tabele norm, kody błędów i schematy podłączeń.
+                    Kalkulator, tabele norm, kody błędów, schematy, quiz, generator PDF i więcej.
                 </p>
                 <div className="grid md:grid-cols-4 gap-4 text-sm">
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Calculator className="h-4 w-4 text-green-500" />
-                        <span>Kalkulator Zs → Ik</span>
+                        <span>Kalkulator Zs / Przewody</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Table2 className="h-4 w-4 text-blue-500" />
-                        <span>Tabele norm</span>
+                        <span>Tabele norm / Generator PDF</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <AlertOctagon className="h-4 w-4 text-red-500" />
-                        <span>Kody błędów</span>
+                        <span>Kody błędów / Checklista</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Cable className="h-4 w-4 text-purple-500" />
-                        <span>Schematy podłączeń</span>
+                        <span>Quiz / Notatki</span>
                     </div>
                 </div>
             </div>
