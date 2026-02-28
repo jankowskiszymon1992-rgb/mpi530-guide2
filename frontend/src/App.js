@@ -866,7 +866,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
             {/* Guides */}
             <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                 <BookOpen className="h-5 w-5 text-primary" />
-                Instrukcje krok po kroku
+                {t('protocols_step_by_step')}
             </h3>
             <div className="bento-grid mb-12">
                 {guides.map((guide) => (
