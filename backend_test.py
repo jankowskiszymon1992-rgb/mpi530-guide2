@@ -140,12 +140,14 @@ class SonelAPITester:
         return success, response
 
     def test_search_api(self):
-        """Test /api/search endpoint"""
+        """Test /api/search endpoint with Polish queries"""
         search_queries = [
             ("rcd", "RCD search"),
-            ("napięcie", "Polish search"),
-            ("impedance", "English search"),
-            ("test", "General search")
+            ("różnicowoprądowy", "Polish RCD search"),
+            ("impedancja", "Polish impedance search"), 
+            ("uziemienie", "Polish earthing search"),
+            ("napięcie", "Polish voltage search"),
+            ("izolacja", "Polish insulation search")
         ]
         
         results = []
