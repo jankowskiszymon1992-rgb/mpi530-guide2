@@ -869,6 +869,163 @@ PROTOCOL_TEMPLATES: List[ProtocolTemplate] = [
     )
 ]
 
+# Przykładowe wypełnione protokoły
+EXAMPLE_PROTOCOLS: List[ExampleProtocol] = [
+    ExampleProtocol(
+        id="example_reception",
+        name="Przykład: Protokół odbioru mieszkania",
+        object_name="Mieszkanie nr 15",
+        object_address="ul. Kwiatowa 10/15, 00-001 Warszawa",
+        date="2024-01-15",
+        inspector="Jan Kowalski",
+        inspector_cert="E-1234/2020",
+        meter_serial="MPI-530 S/N: 123456",
+        meter_calibration="2024-06-15",
+        measurements=[
+            MeasurementResult(point="Kuchnia G1", circuit="1", protection="B16", value="0.12", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Kuchnia G1", circuit="1", protection="B16", value="245", unit="MΩ", limit=">1 MΩ", status="OK", notes="Izolacja 500V"),
+            MeasurementResult(point="Kuchnia G1", circuit="1", protection="B16", value="0.38", unit="Ω", limit="<1.15 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="Salon G2", circuit="2", protection="B16", value="0.15", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Salon G2", circuit="2", protection="B16", value="312", unit="MΩ", limit=">1 MΩ", status="OK", notes="Izolacja 500V"),
+            MeasurementResult(point="Salon G2", circuit="2", protection="B16", value="0.42", unit="Ω", limit="<1.15 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="Łazienka G3", circuit="3", protection="B16", value="0.18", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Łazienka G3", circuit="3", protection="B16", value="198", unit="MΩ", limit=">1 MΩ", status="OK", notes="Izolacja 500V"),
+            MeasurementResult(point="Łazienka G3", circuit="3", protection="B16", value="0.51", unit="Ω", limit="<1.15 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="RCD Łazienka", circuit="3", protection="30mA AC", value="18.5", unit="ms", limit="<300 ms", status="OK", notes="RCD 1xIΔn"),
+            MeasurementResult(point="RCD Łazienka", circuit="3", protection="30mA AC", value="12.1", unit="ms", limit="<40 ms", status="OK", notes="RCD 5xIΔn"),
+            MeasurementResult(point="Sypialnia G4", circuit="4", protection="B10", value="0.14", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Sypialnia G4", circuit="4", protection="B10", value="289", unit="MΩ", limit=">1 MΩ", status="OK", notes="Izolacja 500V"),
+            MeasurementResult(point="Sypialnia G4", circuit="4", protection="B10", value="0.45", unit="Ω", limit="<1.84 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="Rozdzielnica", circuit="-", protection="-", value="ZGODNA", unit="-", limit="1-2-3", status="OK", notes="Kolejność faz"),
+        ],
+        conclusion="POZYTYWNA - Instalacja elektryczna spełnia wymagania normy PN-HD 60364",
+        recommendations=[
+            "Zaleca się wykonanie przeglądu okresowego za 5 lat",
+            "Zachować protokół w dokumentacji budynku"
+        ]
+    ),
+    ExampleProtocol(
+        id="example_periodic",
+        name="Przykład: Protokół przeglądu okresowego",
+        object_name="Lokal usługowy - Sklep ABC",
+        object_address="ul. Handlowa 5, 00-002 Kraków",
+        date="2024-02-20",
+        inspector="Anna Nowak",
+        inspector_cert="E-5678/2019",
+        meter_serial="MPI-530 S/N: 789012",
+        meter_calibration="2023-12-01",
+        measurements=[
+            MeasurementResult(point="Oświetlenie sala", circuit="1", protection="B10", value="0.22", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Oświetlenie sala", circuit="1", protection="B10", value="85", unit="MΩ", limit=">0.5 MΩ", status="OK", notes="Izolacja - instalacja eksploatowana"),
+            MeasurementResult(point="Oświetlenie sala", circuit="1", protection="B10", value="0.68", unit="Ω", limit="<1.84 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="Gniazdka lada", circuit="2", protection="B16", value="0.19", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Gniazdka lada", circuit="2", protection="B16", value="0.42", unit="MΩ", limit=">0.5 MΩ", status="FAIL", notes="Izolacja - PONIŻEJ NORMY!"),
+            MeasurementResult(point="Gniazdka lada", circuit="2", protection="B16", value="0.55", unit="Ω", limit="<1.15 Ω", status="OK", notes="Zs L-PE"),
+            MeasurementResult(point="RCD główny", circuit="-", protection="30mA AC", value="22.3", unit="ms", limit="<300 ms", status="OK", notes="RCD 1xIΔn"),
+            MeasurementResult(point="Zaplecze G3", circuit="3", protection="B16", value="0.28", unit="Ω", limit="<1 Ω", status="OK", notes="Ciągłość PE"),
+            MeasurementResult(point="Zaplecze G3", circuit="3", protection="B16", value="156", unit="MΩ", limit=">0.5 MΩ", status="OK", notes="Izolacja 500V"),
+        ],
+        conclusion="NEGATYWNA - Wykryto usterkę wymagającą naprawy",
+        recommendations=[
+            "PILNE: Naprawa izolacji obwodu nr 2 (gniazdka lada) - wartość 0.42 MΩ poniżej wymaganego minimum 0.5 MΩ",
+            "Sprawdzić stan przewodów w obwodzie nr 2",
+            "Po naprawie wykonać ponowny pomiar izolacji",
+            "Kolejny przegląd okresowy za 5 lat po usunięciu usterki"
+        ]
+    ),
+    ExampleProtocol(
+        id="example_rcd",
+        name="Przykład: Protokół badania RCD",
+        object_name="Dom jednorodzinny",
+        object_address="ul. Słoneczna 25, 00-003 Gdańsk",
+        date="2024-03-10",
+        inspector="Piotr Wiśniewski",
+        inspector_cert="E-9012/2021",
+        meter_serial="MPI-530 S/N: 345678",
+        meter_calibration="2024-02-28",
+        measurements=[
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="28.5", unit="V", limit="<50 V", status="OK", notes="Napięcie dotykowe Uc"),
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="NIE", unit="-", limit="-", status="OK", notes="Test 0.5x IΔn - brak zadziałania"),
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="24.2", unit="ms", limit="<300 ms", status="OK", notes="Test 1x IΔn (30mA)"),
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="15.8", unit="ms", limit="<150 ms", status="OK", notes="Test 2x IΔn (60mA)"),
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="11.2", unit="ms", limit="<40 ms", status="OK", notes="Test 5x IΔn (150mA)"),
+            MeasurementResult(point="RCD F1 (łazienki)", circuit="1-3", protection="30mA typ A", value="TAK", unit="-", limit="-", status="OK", notes="Test przycisku TEST"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="31.2", unit="V", limit="<50 V", status="OK", notes="Napięcie dotykowe Uc"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="NIE", unit="-", limit="-", status="OK", notes="Test 0.5x IΔn - brak zadziałania"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="19.8", unit="ms", limit="<300 ms", status="OK", notes="Test 1x IΔn (30mA)"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="12.4", unit="ms", limit="<150 ms", status="OK", notes="Test 2x IΔn (60mA)"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="9.8", unit="ms", limit="<40 ms", status="OK", notes="Test 5x IΔn (150mA)"),
+            MeasurementResult(point="RCD F2 (kuchnia)", circuit="4-5", protection="30mA typ AC", value="TAK", unit="-", limit="-", status="OK", notes="Test przycisku TEST"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="35.8", unit="V", limit="<50 V", status="OK", notes="Napięcie dotykowe Uc"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="NIE", unit="-", limit="-", status="OK", notes="Test 0.5x IΔn - brak zadziałania"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="21.5", unit="ms", limit="<300 ms", status="OK", notes="Test 1x IΔn (30mA)"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="14.2", unit="ms", limit="<150 ms", status="OK", notes="Test 2x IΔn (60mA)"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="10.5", unit="ms", limit="<40 ms", status="OK", notes="Test 5x IΔn (150mA)"),
+            MeasurementResult(point="RCD F3 (garaż)", circuit="6", protection="30mA typ A", value="TAK", unit="-", limit="-", status="OK", notes="Test przycisku TEST"),
+        ],
+        conclusion="POZYTYWNA - Wszystkie wyłączniki różnicowoprądowe działają prawidłowo",
+        recommendations=[
+            "Wszystkie RCD spełniają wymagania normy PN-HD 60364-4-41",
+            "Zaleca się comiesięczne testowanie przyciskiem TEST",
+            "Następne badanie okresowe za 5 lat"
+        ]
+    ),
+    ExampleProtocol(
+        id="example_earthing",
+        name="Przykład: Protokół pomiaru uziemień",
+        object_name="Budynek biurowy OMEGA",
+        object_address="ul. Biznesowa 100, 00-004 Poznań",
+        date="2024-04-05",
+        inspector="Marek Zieliński",
+        inspector_cert="E-3456/2018",
+        meter_serial="MPI-530 S/N: 567890",
+        meter_calibration="2024-01-20",
+        measurements=[
+            MeasurementResult(point="Uziom główny U1", circuit="-", protection="-", value="2.8", unit="Ω", limit="<10 Ω", status="OK", notes="Metoda techniczna 3p"),
+            MeasurementResult(point="Uziom główny U1", circuit="-", protection="-", value="85", unit="Ωm", limit="-", status="OK", notes="Rezystywność gruntu"),
+            MeasurementResult(point="Uziom odgromowy U2", circuit="-", protection="-", value="4.2", unit="Ω", limit="<10 Ω", status="OK", notes="Metoda techniczna 3p"),
+            MeasurementResult(point="Uziom odgromowy U3", circuit="-", protection="-", value="3.9", unit="Ω", limit="<10 Ω", status="OK", notes="Metoda techniczna 3p"),
+            MeasurementResult(point="Połączenie wyrównawcze PW1", circuit="-", protection="-", value="0.05", unit="Ω", limit="<0.1 Ω", status="OK", notes="Szyna PE - rury wodne"),
+            MeasurementResult(point="Połączenie wyrównawcze PW2", circuit="-", protection="-", value="0.08", unit="Ω", limit="<0.1 Ω", status="OK", notes="Szyna PE - rury gazowe"),
+            MeasurementResult(point="Połączenie wyrównawcze PW3", circuit="-", protection="-", value="0.04", unit="Ω", limit="<0.1 Ω", status="OK", notes="Szyna PE - konstrukcja stalowa"),
+        ],
+        conclusion="POZYTYWNA - Instalacja uziemiająca spełnia wymagania",
+        recommendations=[
+            "Stan techniczny uziomów dobry",
+            "Połączenia wyrównawcze prawidłowe",
+            "Kolejna kontrola za 5 lat lub po modernizacji instalacji"
+        ]
+    ),
+    ExampleProtocol(
+        id="example_lighting",
+        name="Przykład: Protokół pomiaru oświetlenia",
+        object_name="Biuro projektowe XYZ",
+        object_address="ul. Techniczna 50/3, 00-005 Wrocław",
+        date="2024-05-12",
+        inspector="Katarzyna Adamska",
+        inspector_cert="E-7890/2022",
+        meter_serial="MPI-530 S/N: 901234 + LP-10B",
+        meter_calibration="2024-03-15",
+        measurements=[
+            MeasurementResult(point="Stanowisko CAD 1", circuit="-", protection="-", value="620", unit="lx", limit=">500 lx", status="OK", notes="Praca przy monitorze"),
+            MeasurementResult(point="Stanowisko CAD 2", circuit="-", protection="-", value="585", unit="lx", limit=">500 lx", status="OK", notes="Praca przy monitorze"),
+            MeasurementResult(point="Stanowisko CAD 3", circuit="-", protection="-", value="540", unit="lx", limit=">500 lx", status="OK", notes="Praca przy monitorze"),
+            MeasurementResult(point="Biurko kierownika", circuit="-", protection="-", value="510", unit="lx", limit=">500 lx", status="OK", notes="Praca biurowa"),
+            MeasurementResult(point="Sala konferencyjna", circuit="-", protection="-", value="380", unit="lx", limit=">300 lx", status="OK", notes="Spotkania"),
+            MeasurementResult(point="Korytarz", circuit="-", protection="-", value="125", unit="lx", limit=">100 lx", status="OK", notes="Komunikacja"),
+            MeasurementResult(point="Archiwum", circuit="-", protection="-", value="185", unit="lx", limit=">200 lx", status="FAIL", notes="PONIŻEJ NORMY"),
+            MeasurementResult(point="Kuchnia pracownicza", circuit="-", protection="-", value="245", unit="lx", limit=">200 lx", status="OK", notes="Pomieszczenie socjalne"),
+            MeasurementResult(point="WC", circuit="-", protection="-", value="210", unit="lx", limit=">200 lx", status="OK", notes="Sanitariat"),
+        ],
+        conclusion="NEGATYWNA - Wykryto niedobór oświetlenia w archiwum",
+        recommendations=[
+            "Wymiana lub dodanie oprawy oświetleniowej w archiwum (wymagane min. 200 lx, zmierzono 185 lx)",
+            "Po naprawie wykonać ponowny pomiar",
+            "Pozostałe pomieszczenia spełniają wymagania PN-EN 12464-1"
+        ]
+    )
+]
+
 # API Routes
 @api_router.get("/")
 async def root():
