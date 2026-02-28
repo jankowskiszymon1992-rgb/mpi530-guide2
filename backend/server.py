@@ -1099,6 +1099,19 @@ async def get_protocol_template(template_id: str):
             return template
     raise HTTPException(status_code=404, detail=f"Szablon {template_id} nie znaleziony")
 
+@api_router.get("/protocols/examples", response_model=List[ExampleProtocol])
+async def get_example_protocols():
+    """Pobierz przykładowe wypełnione protokoły"""
+    return EXAMPLE_PROTOCOLS
+
+@api_router.get("/protocols/examples/{example_id}", response_model=ExampleProtocol)
+async def get_example_protocol(example_id: str):
+    """Pobierz konkretny przykładowy protokół"""
+    for example in EXAMPLE_PROTOCOLS:
+        if example.id == example_id:
+            return example
+    raise HTTPException(status_code=404, detail=f"Przykład {example_id} nie znaleziony")
+
 @api_router.get("/search")
 async def search_instructions(q: str):
     """Wyszukaj w instrukcjach"""
