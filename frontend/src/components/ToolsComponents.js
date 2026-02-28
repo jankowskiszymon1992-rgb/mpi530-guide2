@@ -164,16 +164,16 @@ export const CableCalculatorTab = ({ lang, t }) => {
 };
 
 // Safety Checklist Component
-export const SafetyChecklistTab = () => {
+export const SafetyChecklistTab = ({ lang, t }) => {
     const [checklists, setChecklists] = useState(null);
     const [selectedChecklist, setSelectedChecklist] = useState(null);
     const [checkedItems, setCheckedItems] = useState({});
 
     useEffect(() => {
-        axios.get(`${API}/tools/checklists`)
+        axios.get(`${API}/tools/checklists`, { params: { lang } })
             .then(res => setChecklists(res.data))
             .catch(() => {});
-    }, []);
+    }, [lang]);
 
     const handleCheck = (itemId) => {
         setCheckedItems(prev => ({
