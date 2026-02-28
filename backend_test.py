@@ -209,7 +209,11 @@ def main():
         print(f"\n📍 Testing Individual Function Endpoints...")
         tester.test_get_specific_functions(function_ids)
     
-    # Test 4: Search API
+    # Test 4: Images API  
+    print("\n📍 Testing Images API...")
+    tester.test_images_api()
+    
+    # Test 5: Search API
     print("\n📍 Testing Search API...")
     tester.test_search_api()
     
