@@ -92,13 +92,29 @@ class SonelAPITester:
             )
             results.append((func_id, success, response))
             if success and response:
-                # Verify function has required fields
-                required_fields = ['id', 'name', 'name_en', 'icon', 'description', 'steps', 'parameters', 'safety_notes']
+                # Verify function has required fields including main_image
+                required_fields = ['id', 'name', 'icon', 'description', 'steps', 'parameters', 'safety_notes', 'main_image']
                 missing_fields = [field for field in required_fields if field not in response]
                 if not missing_fields:
                     print(f"   ✅ All required fields present for {func_id}")
                 else:
                     print(f"   ⚠️ Missing fields in {func_id}: {missing_fields}")
+                
+                # Check if name is in Polish (should contain Polish characters or specific Polish terms)
+                name = response.get('name', '')
+                polish_indicators = ['Test', 'Pomiar', 'Rezystancja', 'Impedancja', 'Ciągłość', 'ść', 'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż']
+                if any(indicator in name for indicator in polish_indicators):
+                    print(f"   ✅ Function name appears to be in Polish: {name}")
+                else:
+                    print(f"   ⚠️ Function name may not be in Polish: {name}")
+                
+                # Check main_image URL (should be from Sonel CDN)
+                main_image = response.get('main_image', '')
+                if 'cdn.sonel.com' in main_image:
+                    print(f"   ✅ Main image from Sonel CDN: {main_image}")
+                else:
+                    print(f"   ⚠️ Main image not from Sonel CDN: {main_image}")
+                    
         return results
 
     def test_search_api(self):
