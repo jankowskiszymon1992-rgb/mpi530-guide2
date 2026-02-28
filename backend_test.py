@@ -117,6 +117,28 @@ class SonelAPITester:
                     
         return results
 
+    def test_images_api(self):
+        """Test /api/images endpoint - should return Sonel meter images"""
+        success, response = self.run_test("Get Meter Images", "GET", "images", 200)
+        if success and isinstance(response, dict):
+            print(f"   ✅ Images API returned dictionary with {len(response)} image URLs")
+            # Check if URLs are from Sonel CDN
+            sonel_urls = [url for url in response.values() if 'cdn.sonel.com' in str(url)]
+            if len(sonel_urls) == len(response):
+                print(f"   ✅ All {len(sonel_urls)} images are from Sonel CDN")
+            else:
+                print(f"   ⚠️ Only {len(sonel_urls)}/{len(response)} images are from Sonel CDN")
+            
+            # Check for expected image keys
+            expected_keys = ['main', 'front', 'side', 'lcd', 'case']
+            found_keys = [key for key in expected_keys if key in response]
+            if found_keys:
+                print(f"   ✅ Found expected image keys: {found_keys}")
+            else:
+                print(f"   ⚠️ Missing expected image keys: {expected_keys}")
+                
+        return success, response
+
     def test_search_api(self):
         """Test /api/search endpoint"""
         search_queries = [
