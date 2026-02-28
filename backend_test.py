@@ -217,7 +217,7 @@ def main():
     print("\n📍 Testing Search API...")
     tester.test_search_api()
     
-    # Test 5: FAQ API
+    # Test 6: FAQ API
     print("\n📍 Testing FAQ API...")
     tester.test_faq_api()
     
