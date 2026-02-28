@@ -3,13 +3,20 @@ import ReactDOM from "react-dom/client";
 import "@/index.css";
 import App from "@/App";
 
-// Register Service Worker for PWA
+// Unregister all service workers and clear caches to fix stale cache issues
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => {})
-      .catch(() => {});
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach((registration) => {
+      registration.unregister();
+    });
   });
+  if ('caches' in window) {
+    caches.keys().then((names) => {
+      names.forEach((name) => {
+        caches.delete(name);
+      });
+    });
+  }
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
