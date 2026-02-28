@@ -997,7 +997,7 @@ const ToolsView = ({ onBack, t, lang }) => {
             {/* Header */}
             <div className="mb-8">
                 <h2 className="text-4xl font-black mb-4 tracking-tight">
-                    <span className="gradient-text">Narzędzia</span>
+                    <span className="gradient-text">{t('section_tools')}</span>
                 </h2>
                 <p className="text-lg text-muted-foreground">
                     Kalkulator, tabele norm, kody błędów i schematy podłączeń dla MPI-530.
