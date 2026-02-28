@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CableCalculatorTab, SafetyChecklistTab, QuizTab, NotesHistoryTab, PDFGeneratorTab } from "@/components/ToolsComponents";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
