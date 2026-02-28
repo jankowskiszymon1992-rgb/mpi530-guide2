@@ -899,6 +899,390 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack }) => {
     );
 };
 
+// Tools View Component
+const ToolsView = ({ onBack }) => {
+    const [activeTab, setActiveTab] = useState('calculator');
+    const [zsInput, setZsInput] = useState('');
+    const [voltageInput, setVoltageInput] = useState('230');
+    const [calcResult, setCalcResult] = useState(null);
+    const [norms, setNorms] = useState(null);
+    const [errorCodes, setErrorCodes] = useState([]);
+    const [diagrams, setDiagrams] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [normsRes, errorsRes, diagramsRes] = await Promise.all([
+                    axios.get(`${API}/tools/norms`),
+                    axios.get(`${API}/tools/error-codes`),
+                    axios.get(`${API}/tools/diagrams`)
+                ]);
+                setNorms(normsRes.data);
+                setErrorCodes(errorsRes.data);
+                setDiagrams(diagramsRes.data);
+            } catch (error) {
+                console.error("Błąd ładowania narzędzi:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const handleCalculate = async () => {
+        if (!zsInput || parseFloat(zsInput) <= 0) {
+            toast.error("Wprowadź poprawną wartość Zs");
+            return;
+        }
+        try {
+            const response = await axios.get(`${API}/tools/calculator`, {
+                params: { zs: parseFloat(zsInput), voltage: parseFloat(voltageInput) }
+            });
+            setCalcResult(response.data);
+        } catch (error) {
+            toast.error("Błąd obliczania");
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <div className="w-12 h-12 bg-green-500 flex items-center justify-center animate-pulse">
+                    <Wrench className="h-6 w-6 text-white" />
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="animate-fade-in" data-testid="tools-view">
+            {/* Header */}
+            <div className="mb-8">
+                <h2 className="text-4xl font-black mb-4 tracking-tight">
+                    <span className="gradient-text">Narzędzia</span>
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                    Kalkulator, tabele norm, kody błędów i schematy podłączeń dla MPI-530.
+                </p>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+                {[
+                    { id: 'calculator', icon: Calculator, label: 'Kalkulator', color: 'green' },
+                    { id: 'norms', icon: Table2, label: 'Tabele norm', color: 'blue' },
+                    { id: 'errors', icon: AlertOctagon, label: 'Kody błędów', color: 'red' },
+                    { id: 'diagrams', icon: Cable, label: 'Schematy', color: 'purple' },
+                ].map(tab => (
+                    <Button
+                        key={tab.id}
+                        variant={activeTab === tab.id ? 'default' : 'outline'}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={activeTab === tab.id ? `bg-${tab.color}-500` : ''}
+                        data-testid={`tab-${tab.id}`}
+                    >
+                        <tab.icon className="h-4 w-4 mr-2" />
+                        {tab.label}
+                    </Button>
+                ))}
+            </div>
+
+            {/* Calculator Tab */}
+            {activeTab === 'calculator' && (
+                <div className="space-y-6">
+                    <div className="card-industrial">
+                        <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                            <Calculator className="h-5 w-5 text-green-500" />
+                            Kalkulator Zs → Ik
+                        </h3>
+                        <p className="text-muted-foreground mb-6">
+                            Oblicz prąd zwarciowy na podstawie impedancji pętli zwarcia.
+                        </p>
+                        
+                        <div className="grid md:grid-cols-3 gap-4 mb-6">
+                            <div>
+                                <label className="block text-sm font-bold mb-2">Impedancja Zs [Ω]</label>
+                                <Input
+                                    type="number"
+                                    step="0.01"
+                                    value={zsInput}
+                                    onChange={(e) => setZsInput(e.target.value)}
+                                    placeholder="np. 0.45"
+                                    data-testid="zs-input"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold mb-2">Napięcie Uo [V]</label>
+                                <Input
+                                    type="number"
+                                    value={voltageInput}
+                                    onChange={(e) => setVoltageInput(e.target.value)}
+                                    placeholder="230"
+                                    data-testid="voltage-input"
+                                />
+                            </div>
+                            <div className="flex items-end">
+                                <Button 
+                                    onClick={handleCalculate}
+                                    className="bg-green-500 text-white w-full"
+                                    data-testid="calculate-btn"
+                                >
+                                    Oblicz Ik
+                                </Button>
+                            </div>
+                        </div>
+
+                        {calcResult && (
+                            <div className="mt-6 space-y-4">
+                                <div className="lcd-result p-6">
+                                    <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Prąd zwarciowy</div>
+                                    <div className="text-4xl font-mono font-bold">
+                                        Ik = {calcResult.result.Ik} A
+                                    </div>
+                                    <div className="text-sm mt-2 opacity-70">
+                                        Wzór: {calcResult.formula} = {calcResult.input.Uo}V / {calcResult.input.Zs}Ω
+                                    </div>
+                                </div>
+
+                                {calcResult.recommendations.length > 0 && (
+                                    <div>
+                                        <h4 className="font-bold mb-3">Pasujące zabezpieczenia:</h4>
+                                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                            {calcResult.recommendations.slice(0, 6).map((rec, idx) => (
+                                                <div key={idx} className="p-3 bg-green-500/10 border border-green-500/20 rounded-sm">
+                                                    <div className="font-bold text-lg">{rec.type}</div>
+                                                    <div className="text-sm text-muted-foreground">
+                                                        Zs max: {rec.Zs_max} Ω
+                                                    </div>
+                                                    <div className="text-sm text-green-500">
+                                                        Margines: {rec.margin}%
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Norms Tab */}
+            {activeTab === 'norms' && norms && (
+                <div className="space-y-8">
+                    {/* Zs Tables */}
+                    <div className="card-industrial">
+                        <h3 className="font-bold text-xl mb-4">Maksymalne impedancje pętli zwarcia</h3>
+                        <p className="text-muted-foreground mb-4">Wg PN-HD 60364-4-41, Uo=230V, czas 0.4s</p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm border border-border">
+                                <thead className="bg-muted/50">
+                                    <tr>
+                                        <th className="p-2 border-b text-left">Typ</th>
+                                        <th className="p-2 border-b text-right">In [A]</th>
+                                        <th className="p-2 border-b text-right">Ia [A]</th>
+                                        <th className="p-2 border-b text-right">Zs max [Ω]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(norms.zs_tables.data).map(([type, values]) => (
+                                        Object.entries(values).map(([rating, data], idx) => (
+                                            <tr key={`${type}${rating}`} className="hover:bg-muted/30">
+                                                <td className="p-2 border-b font-bold">{type}{rating}</td>
+                                                <td className="p-2 border-b text-right">{rating}</td>
+                                                <td className="p-2 border-b text-right">{data.Ia}</td>
+                                                <td className="p-2 border-b text-right font-mono">{data.Zs_max}</td>
+                                            </tr>
+                                        ))
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Insulation */}
+                    <div className="card-industrial">
+                        <h3 className="font-bold text-xl mb-4">Minimalna rezystancja izolacji</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm border border-border">
+                                <thead className="bg-muted/50">
+                                    <tr>
+                                        <th className="p-2 border-b text-left">Napięcie instalacji</th>
+                                        <th className="p-2 border-b text-right">Napięcie pomiarowe [V]</th>
+                                        <th className="p-2 border-b text-right">Min. izolacja [MΩ]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {norms.insulation.data.map((row, idx) => (
+                                        <tr key={idx} className="hover:bg-muted/30">
+                                            <td className="p-2 border-b">{row.voltage_range}</td>
+                                            <td className="p-2 border-b text-right">{row.test_voltage}</td>
+                                            <td className="p-2 border-b text-right font-mono font-bold">{row.min_resistance}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* RCD Times */}
+                    <div className="card-industrial">
+                        <h3 className="font-bold text-xl mb-4">Maksymalne czasy zadziałania RCD</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm border border-border">
+                                <thead className="bg-muted/50">
+                                    <tr>
+                                        <th className="p-2 border-b text-left">Typ RCD</th>
+                                        <th className="p-2 border-b text-left">Mnożnik</th>
+                                        <th className="p-2 border-b text-right">Max czas [ms]</th>
+                                        <th className="p-2 border-b text-left">Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {norms.rcd_times.data.map((row, idx) => (
+                                        <tr key={idx} className="hover:bg-muted/30">
+                                            <td className="p-2 border-b">{row.type}</td>
+                                            <td className="p-2 border-b">{row.multiplier}</td>
+                                            <td className="p-2 border-b text-right font-mono font-bold">
+                                                {row.max_time_ms || '-'}
+                                            </td>
+                                            <td className="p-2 border-b text-muted-foreground">{row.description}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Lighting */}
+                    <div className="card-industrial">
+                        <h3 className="font-bold text-xl mb-4">Minimalne natężenie oświetlenia (PN-EN 12464-1)</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm border border-border">
+                                <thead className="bg-muted/50">
+                                    <tr>
+                                        <th className="p-2 border-b text-left">Pomieszczenie / Czynność</th>
+                                        <th className="p-2 border-b text-right">Min. [lx]</th>
+                                        <th className="p-2 border-b text-right">UGR max</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {norms.lighting.data.map((row, idx) => (
+                                        <tr key={idx} className="hover:bg-muted/30">
+                                            <td className="p-2 border-b">{row.area}</td>
+                                            <td className="p-2 border-b text-right font-mono font-bold">{row.min_lux}</td>
+                                            <td className="p-2 border-b text-right">{row.ugr_max}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Error Codes Tab */}
+            {activeTab === 'errors' && (
+                <div className="space-y-4">
+                    <h3 className="font-bold text-xl mb-4">Kody błędów miernika MPI-530</h3>
+                    {errorCodes.map((error, idx) => (
+                        <div key={idx} className="card-industrial">
+                            <div className="flex items-start gap-4">
+                                <div className="w-16 h-16 bg-red-500 flex items-center justify-center flex-shrink-0">
+                                    <span className="text-white font-mono font-bold text-lg">{error.code}</span>
+                                </div>
+                                <div className="flex-1">
+                                    <h4 className="font-bold text-lg">{error.name}</h4>
+                                    <p className="text-muted-foreground mb-3">{error.description}</p>
+                                    
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="font-bold text-sm mb-2">Przyczyny:</p>
+                                            <ul className="text-sm text-muted-foreground space-y-1">
+                                                {error.causes.map((cause, i) => (
+                                                    <li key={i} className="flex items-start gap-2">
+                                                        <span className="text-red-500">•</span>
+                                                        {cause}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-sm mb-2">Rozwiązania:</p>
+                                            <ul className="text-sm text-muted-foreground space-y-1">
+                                                {error.solutions.map((solution, i) => (
+                                                    <li key={i} className="flex items-start gap-2">
+                                                        <span className="text-green-500">•</span>
+                                                        {solution}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {/* Diagrams Tab */}
+            {activeTab === 'diagrams' && (
+                <div className="space-y-6">
+                    <h3 className="font-bold text-xl mb-4">Schematy podłączeń</h3>
+                    {diagrams.map((diagram, idx) => (
+                        <div key={idx} className="card-industrial">
+                            <h4 className="font-bold text-lg mb-2">{diagram.name}</h4>
+                            <p className="text-muted-foreground mb-4">{diagram.description}</p>
+                            
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Connections */}
+                                <div>
+                                    <p className="font-bold text-sm mb-3 uppercase tracking-wider">Podłączenia:</p>
+                                    <div className="space-y-2">
+                                        {diagram.connections.map((conn, i) => (
+                                            <div key={i} className="flex items-center gap-3 p-2 bg-muted/30 rounded-sm">
+                                                <div 
+                                                    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                                                    style={{ backgroundColor: conn.color }}
+                                                >
+                                                    {conn.terminal.substring(0, 2)}
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold text-sm">{conn.terminal}</p>
+                                                    <p className="text-xs text-muted-foreground">{conn.connect_to}</p>
+                                                </div>
+                                                <span className="text-xs text-muted-foreground ml-auto">
+                                                    {conn.cable}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Notes */}
+                                <div>
+                                    <p className="font-bold text-sm mb-3 uppercase tracking-wider">Uwagi:</p>
+                                    <ul className="space-y-2 text-sm">
+                                        {diagram.notes.map((note, i) => (
+                                            <li key={i} className={`flex items-start gap-2 ${note.includes('WYŁĄCZ') || note.includes('napięciem') ? 'text-red-500 font-bold' : 'text-muted-foreground'}`}>
+                                                <AlertTriangle className={`h-4 w-4 flex-shrink-0 mt-0.5 ${note.includes('WYŁĄCZ') || note.includes('napięciem') ? 'text-red-500' : 'text-yellow-500'}`} />
+                                                {note}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
 // Example Protocol Detail View
 const ExampleProtocolDetailView = ({ example, onBack }) => {
     const isPositive = example.conclusion.includes('POZYTYWNA');
