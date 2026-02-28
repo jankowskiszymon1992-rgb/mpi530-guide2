@@ -1,65 +1,61 @@
-# Sonel MPI-530 Interactive Guide - PRD
+# Sonel MPI-530 Interaktywna Instrukcja - PRD
 
-## Original Problem Statement
-Użytkownik wrócił do rozmowy gdzie tworzył aplikację dotyczącą instrukcji miernika Sonel MPI-530 - w środowisku były zapisane wytyczne projektowe (design_guidelines.json) ale kod nie był zaimplementowany.
+## Problem Statement
+Użytkownik potrzebował aplikacji instrukcji dla miernika Sonel MPI-530. Aplikacja została zaimplementowana na podstawie zapisanych wytycznych projektowych.
+
+## Poprawki (2026-02-28)
+- Wszystkie nazwy i opisy przetłumaczone na polski
+- Dodane oficjalne zdjęcia miernika Sonel MPI-530 z CDN producenta (cdn.sonel.com)
+- Każdy krok instrukcji ma odpowiednie zdjęcie (miernik, adapter WS-03, sondy, krokodylki)
 
 ## Architecture
-- **Backend**: FastAPI (Python) - static data API dla funkcji pomiarowych
-- **Frontend**: React.js z Tailwind CSS - industrialny styl UI
-- **Database**: MongoDB (obecnie nieużywana - dane statyczne)
+- **Backend**: FastAPI (Python) - static data API
+- **Frontend**: React.js z Tailwind CSS
+- **Database**: MongoDB (obecnie nieużywana)
 
-## Core Features Implemented (2026-02-28)
+## Core Features
 
 ### Backend API
-- `GET /api/functions` - wszystkie 6 funkcji pomiarowych
-- `GET /api/functions/{id}` - szczegóły konkretnej funkcji
-- `GET /api/search?q=query` - wyszukiwanie w instrukcjach
-- `GET /api/faq` - często zadawane pytania
+- `GET /api/functions` - 6 funkcji pomiarowych (PO POLSKU)
+- `GET /api/functions/{id}` - szczegóły funkcji z obrazkami
+- `GET /api/images` - wszystkie zdjęcia miernika MPI-530
+- `GET /api/search?q=query` - wyszukiwanie
+- `GET /api/faq` - FAQ (8 pytań)
 
-### Frontend
-- **Strona główna**: Bento grid z kartami funkcji
-- **Widok szczegółowy**: Split view (instrukcje + wyniki LCD)
-- **Dark mode**: Przełącznik trybu jasnego/ciemnego
-- **Sidebar**: Nawigacja po funkcjach
-- **Wyszukiwarka**: Wyszukiwanie instrukcji i FAQ
+### Frontend (wszystko PO POLSKU)
+- Strona główna z Bento grid
+- Widok szczegółowy z oficjalnymi zdjęciami Sonel
+- Zdjęcia zmieniają się przy każdym kroku
+- Dark mode
+- Wyszukiwarka
 
-### Funkcje pomiarowe
-1. RCD Testing - test wyłączników różnicowoprądowych
-2. Loop Impedance - impedancja pętli zwarciowej
-3. Insulation Resistance - rezystancja izolacji
-4. Earth Resistance - rezystancja uziemienia
-5. Voltage Measurement - pomiar napięcia
-6. Continuity Test - ciągłość przewodów
+### Zdjęcia miernika (oficjalne z cdn.sonel.com)
+- Miernik główny (front, side, LCD)
+- Adapter WS-03
+- Sondy pomiarowe
+- Krokodylki
+- Elektrody uziemienia
+- Przewody na szpulach
 
-## User Personas
-- **Elektrycy instalatorzy** - wykonujący pomiary odbiorcze
-- **Serwisanci** - przeglądy okresowe instalacji
-- **Uczniowie/studenci** - nauka obsługi miernika
-
-## Design System (design_guidelines.json)
-- Kolor główny: Sonel Orange (#F39200)
-- Fonty: Oswald (nagłówki), Inter (body), JetBrains Mono (wartości)
-- Styl: Industrial Technical
+### Funkcje pomiarowe (PO POLSKU)
+1. Test Wyłączników Różnicowoprądowych (RCD)
+2. Impedancja Pętli Zwarciowej
+3. Rezystancja Izolacji
+4. Rezystancja Uziemienia
+5. Pomiar Napięcia
+6. Ciągłość Przewodów Ochronnych
 
 ## Testing Status
-- Backend: 100% (11/11 testów)
-- Frontend: 100% (14/14 testów)
+- Backend: 100% (14 testów)
+- Frontend: 100% (15 testów)
 
-## Backlog (P0/P1/P2)
-
-### P0 - Critical (done)
-- [x] API funkcji pomiarowych
-- [x] Instrukcje krok po kroku
-- [x] Nawigacja i wyszukiwarka
-- [x] Dark mode
+## Backlog
 
 ### P1 - High Priority
-- [ ] Zapisywanie wyników pomiarów
 - [ ] Eksport protokołów do PDF
-- [ ] Zdjęcia/diagramy podłączeń
+- [ ] Zapisywanie wyników pomiarów
 
 ### P2 - Nice to have
+- [ ] Filmy instruktażowe (YouTube embed)
 - [ ] Offline PWA mode
-- [ ] Animacje kroków instrukcji
-- [ ] Calculator pomiarów (np. Zs -> Ik)
-- [ ] Historia wyszukiwań
+- [ ] Calculator pomiarów
