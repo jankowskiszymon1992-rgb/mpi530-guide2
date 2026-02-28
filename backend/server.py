@@ -580,6 +580,9 @@ FAQ_DATA: List[FAQ] = [
     FAQ(id="8", question="Jak rozładować pojemność kabla po pomiarze izolacji?", answer="Miernik MPI-530 automatycznie rozładowuje pojemność po zwolnieniu przycisku START. Poczekaj na sygnał zakończenia.", category="insulation"),
     FAQ(id="9", question="Jak naprawić nieprawidłową kolejność faz?", answer="Zamień dowolne dwie fazy miejscami (np. L1 z L2 lub L2 z L3). Po zamianie ponownie sprawdź kolejność miernikiem.", category="phase_sequence"),
     FAQ(id="10", question="Jak zmienić kierunek obrotów silnika trójfazowego?", answer="Zamień dowolne dwie fazy zasilania silnika miejscami. Spowoduje to zmianę kierunku obrotów na przeciwny.", category="motor_rotation"),
+    FAQ(id="11", question="Jakie natężenie oświetlenia jest wymagane w biurze?", answer="Zgodnie z normą PN-EN 12464-1, stanowiska biurowe wymagają min. 500 lx. Korytarze 100 lx, archiwa 200 lx.", category="lux"),
+    FAQ(id="12", question="Kiedy stosować metodę cęgową pomiaru uziemienia?", answer="Metodę cęgową stosuj gdy nie można wbić elektrod pomocniczych (beton, asfalt) lub gdy uziomy są połączone w zamknięty obwód.", category="earthing_clamp"),
+    FAQ(id="13", question="Dlaczego metoda cęgowa daje zaniżony wynik?", answer="Metoda 2-cęgowa mierzy rezystancję uziomu w połączeniu równoległym z innymi uziomami. Rzeczywista rezystancja pojedynczego uziomu jest wyższa.", category="earthing_clamp"),
 ]
 
 # API Routes
