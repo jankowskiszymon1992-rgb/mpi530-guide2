@@ -1,26 +1,9 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = 'sonel-mpi530-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
-];
+const CACHE_NAME = 'sonel-mpi530-v2';
 
-// Install event - cache core assets
+// Install event - skip waiting immediately
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-      .catch((err) => {
-        console.log('Cache install error:', err);
-      })
-  );
   self.skipWaiting();
 });
 
