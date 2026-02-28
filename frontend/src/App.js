@@ -661,13 +661,13 @@ const ProtocolGuideCard = ({ guide, onClick, t }) => {
 };
 
 // Protocol Template Card
-const ProtocolTemplateCard = ({ template }) => {
+const ProtocolTemplateCard = ({ template, t }) => {
     return (
         <div className="card-industrial" data-testid={`template-${template.id}`}>
             <h4 className="font-bold mb-2">{template.name}</h4>
             <p className="text-sm text-muted-foreground mb-4">{template.description}</p>
             <div className="space-y-2">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Wymagane pomiary:</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold">{t('protocols_required_measurements')}:</p>
                 <ul className="text-sm space-y-1">
                     {template.measurements.map((m, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-muted-foreground">
