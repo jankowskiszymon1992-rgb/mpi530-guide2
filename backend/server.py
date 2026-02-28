@@ -373,6 +373,93 @@ MEASUREMENT_FUNCTIONS: List[MeasurementFunction] = [
             "Prąd 200mA jest wymagany przez normę"
         ],
         expected_results="<1 Ω dla przewodów ochronnych, <0.1 Ω dla połączeń wyrównawczych głównych"
+    ),
+    MeasurementFunction(
+        id="phase_sequence",
+        name="Kolejność Faz",
+        icon="RotateCw",
+        description="Sprawdzenie prawidłowej kolejności faz L1-L2-L3 w instalacji trójfazowej",
+        category="podstawowe",
+        color="#8B5CF6",
+        main_image=METER_IMAGES["main"],
+        steps=[
+            InstructionStep(
+                step_number=1,
+                title="Wybór funkcji",
+                description="Ustaw pokrętło na pozycję oznaczoną symbolem kolejności faz (1-2-3). Funkcja służy do sprawdzenia zgodności kolejności faz.",
+                tip="Prawidłowa kolejność faz jest niezbędna dla poprawnej pracy silników trójfazowych.",
+                image=METER_IMAGES["main"]
+            ),
+            InstructionStep(
+                step_number=2,
+                title="Podłączenie przewodów",
+                description="Podłącz trzy przewody pomiarowe do trzech faz: L1 (żółty), L2 (czerwony), L3 (niebieski). Użyj sond lub krokodylków.",
+                warning="Pomiar wykonywany pod napięciem trójfazowym 400V! Zachowaj szczególną ostrożność.",
+                image=METER_IMAGES["probes"]
+            ),
+            InstructionStep(
+                step_number=3,
+                title="Odczyt wyniku",
+                description="Miernik wskaże kolejność faz: ZGODNA (1-2-3) lub NIEZGODNA (3-2-1). Wyświetli też napięcia międzyfazowe.",
+                tip="Przy niezgodnej kolejności zamień dowolne dwie fazy miejscami.",
+                image=METER_IMAGES["lcd"]
+            )
+        ],
+        parameters=["Napięcie L-L: 95-500 V", "Częstotliwość: 45-65 Hz", "Wskazanie: zgodna/niezgodna", "Wyświetlanie napięć UL1-L2, UL2-L3, UL3-L1"],
+        safety_notes=[
+            "Pomiar pod napięciem trójfazowym 400V!",
+            "Używaj przewodów w dobrym stanie izolacji",
+            "Nie dotykaj końcówek sond podczas pomiaru",
+            "Kategoria CAT III 600V"
+        ],
+        expected_results="Kolejność ZGODNA (1-2-3), napięcia międzyfazowe 380-420V"
+    ),
+    MeasurementFunction(
+        id="motor_rotation",
+        name="Kierunek Obrotów Silnika",
+        icon="RefreshCw",
+        description="Określenie kierunku obrotów silnika trójfazowego (prawe/lewe) bez konieczności jego uruchamiania",
+        category="podstawowe",
+        color="#06B6D4",
+        main_image=METER_IMAGES["front"],
+        steps=[
+            InstructionStep(
+                step_number=1,
+                title="Wybór funkcji",
+                description="Ustaw pokrętło na pozycję testu kierunku obrotów silnika (symbol silnika). Ta funkcja pozwala określić kierunek obrotów bez uruchamiania silnika.",
+                tip="Funkcja przydatna przy podłączaniu nowych silników lub po pracach serwisowych.",
+                image=METER_IMAGES["main"]
+            ),
+            InstructionStep(
+                step_number=2,
+                title="Podłączenie do zasilania",
+                description="Podłącz przewody pomiarowe do zacisków zasilania silnika (U, V, W lub L1, L2, L3) w miejscu podłączenia do sieci.",
+                warning="Silnik musi być ODŁĄCZONY od zasilania podczas podłączania przewodów!",
+                image=METER_IMAGES["crocodile"]
+            ),
+            InstructionStep(
+                step_number=3,
+                title="Załączenie zasilania",
+                description="Po bezpiecznym podłączeniu przewodów, załącz zasilanie trójfazowe. NIE uruchamiaj silnika.",
+                warning="Pomiar wykonywany pod napięciem! Upewnij się, że silnik nie zostanie przypadkowo uruchomiony.",
+                image=METER_IMAGES["lcd"]
+            ),
+            InstructionStep(
+                step_number=4,
+                title="Odczyt wyniku",
+                description="Miernik wskaże kierunek obrotów: PRAWE (zgodnie z ruchem wskazówek zegara) lub LEWE (przeciwnie). Dodatkowo wyświetli napięcia faz.",
+                tip="Aby zmienić kierunek obrotów, zamień dowolne dwie fazy zasilania miejscami.",
+                image=METER_IMAGES["lcd"]
+            )
+        ],
+        parameters=["Napięcie L-L: 95-500 V", "Częstotliwość: 45-65 Hz", "Wskazanie: prawe/lewe", "Symulacja bez uruchamiania silnika"],
+        safety_notes=[
+            "Odłącz zasilanie przed podłączeniem przewodów!",
+            "Upewnij się, że silnik nie zostanie uruchomiony podczas testu",
+            "Pomiar wykonywany pod napięciem trójfazowym",
+            "Po teście odłącz zasilanie przed odłączeniem przewodów"
+        ],
+        expected_results="Kierunek PRAWY lub LEWY - zależnie od podłączenia faz"
     )
 ]
 
