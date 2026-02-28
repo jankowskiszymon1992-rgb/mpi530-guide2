@@ -284,7 +284,7 @@ export const SafetyChecklistTab = ({ lang, t }) => {
 };
 
 // Quiz Component
-export const QuizTab = () => {
+export const QuizTab = ({ lang, t }) => {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
     const [results, setResults] = useState(null);
@@ -292,10 +292,10 @@ export const QuizTab = () => {
     const [quizStarted, setQuizStarted] = useState(false);
 
     useEffect(() => {
-        axios.get(`${API}/quiz/questions`)
+        axios.get(`${API}/quiz/questions`, { params: { lang } })
             .then(res => setQuestions(res.data))
             .catch(() => {});
-    }, []);
+    }, [lang]);
 
     const handleAnswer = (questionId, answerIndex) => {
         setAnswers(prev => ({
@@ -306,10 +306,10 @@ export const QuizTab = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`${API}/quiz/check`, answers);
+            const response = await axios.post(`${API}/quiz/check?lang=${lang}`, answers);
             setResults(response.data);
         } catch (error) {
-            toast.error("Błąd sprawdzania odpowiedzi");
+            toast.error(t ? t('quiz_check_error') : "Error checking answers");
         }
     };
 
