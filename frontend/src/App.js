@@ -1421,6 +1421,7 @@ const ExampleProtocolDetailView = ({ example, onBack }) => {
 
 // Main App Component
 function App() {
+    const { lang, switchLang, t } = useLanguage();
     const [functions, setFunctions] = useState([]);
     const [selectedFunction, setSelectedFunction] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -1432,21 +1433,20 @@ function App() {
     const [selectedGuide, setSelectedGuide] = useState(null);
     const [selectedExample, setSelectedExample] = useState(null);
 
-    // Fetch functions on mount
+    // Fetch functions on mount and when language changes
     useEffect(() => {
         const fetchFunctions = async () => {
             try {
-                const response = await axios.get(`${API}/functions`);
+                const response = await axios.get(`${API}/functions`, { params: { lang } });
                 setFunctions(response.data);
             } catch (error) {
-                console.error("Błąd ładowania danych:", error);
-                toast.error("Błąd ładowania danych");
+                toast.error(t('error_loading'));
             } finally {
                 setLoading(false);
             }
         };
         fetchFunctions();
-    }, []);
+    }, [lang, t]);
 
     // Dark mode toggle
     useEffect(() => {
@@ -1464,12 +1464,12 @@ function App() {
             return;
         }
         try {
-            const response = await axios.get(`${API}/search`, { params: { q: query } });
+            const response = await axios.get(`${API}/search`, { params: { q: query, lang } });
             setSearchResults(response.data);
         } catch (error) {
-            console.error("Błąd wyszukiwania:", error);
+            console.error("Search error:", error);
         }
-    }, []);
+    }, [lang]);
 
     // Select function handler
     const handleSelectFunction = (functionId) => {
