@@ -527,14 +527,14 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-xl flex items-center gap-2">
                         <Wrench className="h-6 w-6 text-green-500" />
-                        Narzędzia
+                        {t('section_tools')}
                     </h3>
                     <Button 
                         onClick={onShowTools}
                         className="bg-green-500 text-white hover:bg-green-600"
                         data-testid="show-tools-btn"
                     >
-                        Otwórz narzędzia
+                        {t('open_tools')}
                         <ChevronRight className="h-4 w-4 ml-2" />
                     </Button>
                 </div>
