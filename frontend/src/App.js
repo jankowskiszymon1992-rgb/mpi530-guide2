@@ -895,8 +895,8 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                         data-testid={`example-${example.id}`}
                     >
                         <div className="flex items-center gap-3 mb-3">
-                            <div className={`w-10 h-10 flex items-center justify-center ${example.conclusion.includes('POZYTYWNA') ? 'bg-green-500' : 'bg-red-500'}`}>
-                                {example.conclusion.includes('POZYTYWNA') ? (
+                            <div className={`w-10 h-10 flex items-center justify-center ${example.conclusion.includes('POZYTYWNA') || example.conclusion.includes('POSITIVE') || example.conclusion.includes('POSITIV') ? 'bg-green-500' : 'bg-red-500'}`}>
+                                {example.conclusion.includes('POZYTYWNA') || example.conclusion.includes('POSITIVE') || example.conclusion.includes('POSITIV') ? (
                                     <CheckCircle2 className="h-5 w-5 text-white" />
                                 ) : (
                                     <AlertTriangle className="h-5 w-5 text-white" />
