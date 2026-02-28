@@ -638,7 +638,7 @@ export const NotesHistoryTab = ({ t }) => {
 };
 
 // PDF Generator Component
-export const PDFGeneratorTab = () => {
+export const PDFGeneratorTab = ({ t }) => {
     const [formData, setFormData] = useState({
         objectName: '',
         objectAddress: '',
