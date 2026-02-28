@@ -1,7 +1,7 @@
 {
   "short_name": "MPI-530",
-  "name": "Sonel MPI-530 Interaktywna Instrukcja",
-  "description": "Instrukcje pomiarów, kalkulator, normy i protokoły dla miernika Sonel MPI-530",
+  "name": "MPI-530 - Niezależny Poradnik Użytkownika",
+  "description": "Niezależny poradnik edukacyjny - instrukcje pomiarów, kalkulator, normy i protokoły dla miernika MPI-530",
   "icons": [
     {
       "src": "favicon.ico",
