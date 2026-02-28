@@ -824,6 +824,8 @@ function App() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [currentView, setCurrentView] = useState('home'); // 'home', 'protocols', 'protocol-detail'
+    const [selectedGuide, setSelectedGuide] = useState(null);
 
     // Fetch functions on mount
     useEffect(() => {
@@ -869,15 +871,43 @@ function App() {
         const func = functions.find(f => f.id === functionId);
         if (func) {
             setSelectedFunction(func);
+            setCurrentView('home');
             setSearchQuery("");
             setSearchResults([]);
         }
     };
 
+    // Show protocols
+    const handleShowProtocols = () => {
+        setSelectedFunction(null);
+        setCurrentView('protocols');
+    };
+
+    // Select guide handler
+    const handleSelectGuide = async (guideId) => {
+        try {
+            const response = await axios.get(`${API}/protocols/guides/${guideId}`);
+            setSelectedGuide(response.data);
+            setCurrentView('protocol-detail');
+        } catch (error) {
+            console.error("Błąd ładowania instrukcji:", error);
+            toast.error("Błąd ładowania instrukcji");
+        }
+    };
+
     // Back handler
     const handleBack = () => {
-        setSelectedFunction(null);
+        if (currentView === 'protocol-detail') {
+            setSelectedGuide(null);
+            setCurrentView('protocols');
+        } else if (currentView === 'protocols') {
+            setCurrentView('home');
+        } else {
+            setSelectedFunction(null);
+        }
     };
+
+    const showBackButton = selectedFunction || currentView === 'protocols' || currentView === 'protocol-detail';
 
     if (loading) {
         return (
@@ -892,6 +922,32 @@ function App() {
         );
     }
 
+    // Render current view
+    const renderMainContent = () => {
+        if (selectedFunction) {
+            return <DetailView func={selectedFunction} onBack={handleBack} />;
+        }
+        
+        switch (currentView) {
+            case 'protocols':
+                return <ProtocolsView onSelectGuide={handleSelectGuide} onBack={handleBack} />;
+            case 'protocol-detail':
+                return selectedGuide ? <ProtocolGuideDetailView guide={selectedGuide} onBack={handleBack} /> : null;
+            default:
+                return (
+                    <HomeView 
+                        functions={functions}
+                        onSelectFunction={handleSelectFunction}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        searchResults={searchResults}
+                        onSearch={handleSearch}
+                        onShowProtocols={handleShowProtocols}
+                    />
+                );
+        }
+    };
+
     return (
         <div className={`App ${darkMode ? 'dark' : ''}`}>
             <Toaster position="top-right" />
@@ -900,7 +956,7 @@ function App() {
                 darkMode={darkMode}
                 setDarkMode={setDarkMode}
                 onMenuClick={() => setSidebarOpen(true)}
-                showBackButton={!!selectedFunction}
+                showBackButton={showBackButton}
                 onBack={handleBack}
             />
 
@@ -914,21 +970,7 @@ function App() {
                 />
 
                 <main className="flex-1 p-6 lg:p-10 max-w-5xl" data-testid="main-content">
-                    {selectedFunction ? (
-                        <DetailView 
-                            func={selectedFunction}
-                            onBack={handleBack}
-                        />
-                    ) : (
-                        <HomeView 
-                            functions={functions}
-                            onSelectFunction={handleSelectFunction}
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
-                            searchResults={searchResults}
-                            onSearch={handleSearch}
-                        />
-                    )}
+                    {renderMainContent()}
                 </main>
             </div>
         </div>
