@@ -18,11 +18,9 @@
     "back_to_list": "Powrót do listy",
     "dark_mode": "Tryb ciemny",
     "light_mode": "Tryb jasny",
-
     "nav_home": "Strona główna",
     "nav_tools": "Narzędzia",
     "nav_protocols": "Protokoły",
-
     "section_functions": "Funkcje pomiarowe",
     "section_functions_desc": "10 funkcji pomiarowych z instrukcjami krok po kroku.",
     "section_protocols": "Protokoły pomiarowe",
@@ -31,12 +29,10 @@
     "section_tools_desc": "Kalkulator, tabele norm, kody błędów, schematy, quiz, generator PDF i więcej.",
     "section_faq": "FAQ - Pytania i odpowiedzi",
     "section_faq_desc": "Odpowiedzi na najczęściej zadawane pytania.",
-
     "show_instructions": "Zobacz instrukcje",
     "show_all_functions": "Wszystkie funkcje",
     "open_tools": "Otwórz narzędzia",
     "open_faq": "Zobacz FAQ",
-
     "tools_calc_zs": "Kalkulator Zs",
     "tools_cable": "Dobór przewodu",
     "tools_norms": "Tabele norm",
@@ -46,7 +42,6 @@
     "tools_pdf": "Generator PDF",
     "tools_quiz": "Quiz",
     "tools_notes": "Notatki",
-
     "calc_title": "Kalkulator Zs → Ik",
     "calc_desc": "Oblicz spodziewany prąd zwarciowy na podstawie zmierzonej impedancji pętli.",
     "calc_zs_label": "Impedancja pętli Zs [Ω]",
@@ -58,7 +53,6 @@
     "calc_voltage": "Napięcie nominalne",
     "calc_enter_valid_zs": "Wprowadź poprawną wartość Zs",
     "calc_error": "Błąd obliczania",
-
     "norms_title": "Tabele norm PN-HD 60364",
     "norms_zs_title": "Maksymalne impedancje pętli zwarcia",
     "norms_zs_desc": "Zgodnie z PN-HD 60364-4-41",
@@ -80,18 +74,15 @@
     "norms_area": "Pomieszczenie / Czynność",
     "norms_min_lux": "Min. natężenie [lx]",
     "norms_ugr": "UGR max",
-
     "errors_title": "Kody błędów miernika",
     "errors_causes": "Przyczyny",
     "errors_solutions": "Rozwiązania",
-
     "diagrams_title": "Schematy podłączeń",
     "diagrams_connections": "Podłączenia",
     "diagrams_notes": "Uwagi",
     "diagrams_terminal": "Gniazdo",
     "diagrams_connect_to": "Podłącz do",
     "diagrams_cable": "Przewód",
-
     "protocols_guides_title": "Instrukcje Sonel Reports Plus",
     "protocols_templates_title": "Szablony protokołów",
     "protocols_examples_title": "Przykładowe protokoły",
@@ -115,9 +106,7 @@
     "protocols_limit": "Limit",
     "protocols_status": "Status",
     "protocols_notes": "Uwagi",
-
     "faq_title": "Najczęściej zadawane pytania",
-
     "cable_title": "Kalkulator doboru przewodów",
     "cable_desc": "Oblicz wymagany przekrój przewodu na podstawie mocy, długości i dopuszczalnego spadku napięcia.",
     "cable_power": "Moc [kW]",
@@ -138,14 +127,12 @@
     "cable_voltage_drop": "Spadek napięcia",
     "cable_enter_valid": "Wprowadź poprawną moc",
     "cable_error": "Błąd obliczania",
-
     "checklist_title": "Checklisty bezpieczeństwa",
     "checklist_desc": "Wybierz checklistę do wypełnienia przed pomiarem.",
     "checklist_progress": "Postęp",
     "checklist_required": "WYMAGANE",
     "checklist_reset": "Resetuj",
     "checklist_complete": "Checklista kompletna!",
-
     "quiz_title": "Quiz - Test wiedzy",
     "quiz_desc": "Sprawdź swoją wiedzę z zakresu pomiarów elektrycznych. 15 pytań, minimum 70% do zaliczenia.",
     "quiz_start": "Rozpocznij quiz",
@@ -161,14 +148,12 @@
     "quiz_retry": "Spróbuj ponownie",
     "quiz_download_cert": "Pobierz certyfikat PDF",
     "quiz_check_error": "Błąd sprawdzania odpowiedzi",
-
     "notes_title": "Notatki i historia",
     "notes_desc": "Zapisuj notatki z pomiarów. Dane przechowywane lokalnie w przeglądarce.",
     "notes_add": "Dodaj notatkę",
     "notes_placeholder": "Wpisz treść notatki...",
     "notes_empty": "Brak notatek. Dodaj pierwszą notatkę powyżej.",
     "notes_delete": "Usuń",
-
     "pdf_title": "Generator protokołu PDF",
     "pdf_desc": "Wypełnij formularz i wygeneruj profesjonalny protokół pomiarowy w formacie PDF.",
     "pdf_object_name": "Nazwa obiektu",
@@ -190,16 +175,22 @@
     "pdf_generate": "Generuj PDF",
     "pdf_fill_required": "Wypełnij wszystkie wymagane pola i dodaj pomiary",
     "pdf_fill_point_value": "Wypełnij punkt i wartość",
-
     "loading": "Ładowanie...",
     "error_loading": "Błąd ładowania danych",
     "error_loading_protocols": "Błąd ładowania danych protokołów",
     "error_loading_instructions": "Błąd ładowania instrukcji",
     "error_loading_example": "Błąd ładowania przykładu",
     "error_search": "Błąd wyszukiwania",
-
     "tools_subtitle1": "Kalkulator Zs / Przewody",
     "tools_subtitle2": "Tabele norm / Generator PDF",
     "tools_subtitle3": "Kody błędów / Checklista",
-    "tools_subtitle4": "Quiz / Notatki"
+    "tools_subtitle4": "Quiz / Notatki",
+    "protocols_step_by_step": "Instrukcje krok po kroku",
+    "protocols_example_title": "Przykładowe wypełnione protokoły",
+    "protocols_example_desc": "Wzory protokołów z rzeczywistymi wynikami pomiarów.",
+    "protocols_templates_section": "Szablony protokołów",
+    "protocols_templates_section_desc": "Wymagane pomiary dla różnych typów badań instalacji elektrycznych.",
+    "protocols_download_link": "Pobierz ze strony Sonel",
+    "protocols_reports_desc": "Bezpłatne oprogramowanie do tworzenia dokumentacji pomiarowej.",
+    "protocols_measurement_count": "Pomiary"
 }

@@ -18,11 +18,9 @@
     "back_to_list": "Zurück zur Liste",
     "dark_mode": "Dunkelmodus",
     "light_mode": "Hellmodus",
-
     "nav_home": "Startseite",
     "nav_tools": "Werkzeuge",
     "nav_protocols": "Protokolle",
-
     "section_functions": "Messfunktionen",
     "section_functions_desc": "10 Messfunktionen mit Schritt-für-Schritt-Anleitungen.",
     "section_protocols": "Messprotokolle",
@@ -31,12 +29,10 @@
     "section_tools_desc": "Rechner, Normtabellen, Fehlercodes, Schaltpläne, Quiz, PDF-Generator und mehr.",
     "section_faq": "FAQ - Fragen und Antworten",
     "section_faq_desc": "Antworten auf häufig gestellte Fragen.",
-
     "show_instructions": "Anleitungen anzeigen",
     "show_all_functions": "Alle Funktionen",
     "open_tools": "Werkzeuge öffnen",
     "open_faq": "FAQ anzeigen",
-
     "tools_calc_zs": "Zs-Rechner",
     "tools_cable": "Kabelauswahl",
     "tools_norms": "Normtabellen",
@@ -46,7 +42,6 @@
     "tools_pdf": "PDF-Generator",
     "tools_quiz": "Quiz",
     "tools_notes": "Notizen",
-
     "calc_title": "Zs → Ik Rechner",
     "calc_desc": "Berechnen Sie den erwarteten Kurzschlussstrom basierend auf der gemessenen Schleifenimpedanz.",
     "calc_zs_label": "Schleifenimpedanz Zs [Ω]",
@@ -58,7 +53,6 @@
     "calc_voltage": "Nennspannung",
     "calc_enter_valid_zs": "Geben Sie einen gültigen Zs-Wert ein",
     "calc_error": "Berechnungsfehler",
-
     "norms_title": "PN-HD 60364 Normtabellen",
     "norms_zs_title": "Maximale Schleifenimpedanzwerte",
     "norms_zs_desc": "Gemäß PN-HD 60364-4-41",
@@ -80,18 +74,15 @@
     "norms_area": "Raum / Tätigkeit",
     "norms_min_lux": "Min. Beleuchtung [lx]",
     "norms_ugr": "UGR max",
-
     "errors_title": "Fehlercodes des Messgeräts",
     "errors_causes": "Ursachen",
     "errors_solutions": "Lösungen",
-
     "diagrams_title": "Anschlussschaltpläne",
     "diagrams_connections": "Anschlüsse",
     "diagrams_notes": "Hinweise",
     "diagrams_terminal": "Anschluss",
     "diagrams_connect_to": "Verbinden mit",
     "diagrams_cable": "Kabel",
-
     "protocols_guides_title": "Sonel Reports Plus Anleitungen",
     "protocols_templates_title": "Protokollvorlagen",
     "protocols_examples_title": "Beispielprotokolle",
@@ -115,9 +106,7 @@
     "protocols_limit": "Grenzwert",
     "protocols_status": "Status",
     "protocols_notes": "Anmerkungen",
-
     "faq_title": "Häufig gestellte Fragen",
-
     "cable_title": "Kabelquerschnitt-Rechner",
     "cable_desc": "Berechnen Sie den erforderlichen Kabelquerschnitt basierend auf Leistung, Länge und zulässigem Spannungsabfall.",
     "cable_power": "Leistung [kW]",
@@ -138,14 +127,12 @@
     "cable_voltage_drop": "Spannungsabfall",
     "cable_enter_valid": "Geben Sie einen gültigen Leistungswert ein",
     "cable_error": "Berechnungsfehler",
-
     "checklist_title": "Sicherheitschecklisten",
     "checklist_desc": "Wählen Sie eine Checkliste vor der Messung aus.",
     "checklist_progress": "Fortschritt",
     "checklist_required": "ERFORDERLICH",
     "checklist_reset": "Zurücksetzen",
     "checklist_complete": "Checkliste vollständig!",
-
     "quiz_title": "Quiz - Wissenstest",
     "quiz_desc": "Testen Sie Ihr Wissen über elektrische Messungen. 15 Fragen, mindestens 70% zum Bestehen.",
     "quiz_start": "Quiz starten",
@@ -161,14 +148,12 @@
     "quiz_retry": "Erneut versuchen",
     "quiz_download_cert": "PDF-Zertifikat herunterladen",
     "quiz_check_error": "Fehler beim Überprüfen der Antworten",
-
     "notes_title": "Notizen und Verlauf",
     "notes_desc": "Speichern Sie Messnotizen. Daten werden lokal im Browser gespeichert.",
     "notes_add": "Notiz hinzufügen",
     "notes_placeholder": "Notizinhalt eingeben...",
     "notes_empty": "Keine Notizen vorhanden. Fügen Sie oben Ihre erste Notiz hinzu.",
     "notes_delete": "Löschen",
-
     "pdf_title": "PDF-Protokollgenerator",
     "pdf_desc": "Füllen Sie das Formular aus und erstellen Sie ein professionelles Messprotokoll im PDF-Format.",
     "pdf_object_name": "Objektname",
@@ -190,16 +175,22 @@
     "pdf_generate": "PDF erstellen",
     "pdf_fill_required": "Füllen Sie alle erforderlichen Felder aus und fügen Sie Messungen hinzu",
     "pdf_fill_point_value": "Füllen Sie Punkt und Wert aus",
-
     "loading": "Laden...",
     "error_loading": "Fehler beim Laden der Daten",
     "error_loading_protocols": "Fehler beim Laden der Protokolldaten",
     "error_loading_instructions": "Fehler beim Laden der Anleitungen",
     "error_loading_example": "Fehler beim Laden des Beispiels",
     "error_search": "Suchfehler",
-
     "tools_subtitle1": "Zs-Rechner / Kabel",
     "tools_subtitle2": "Normtabellen / PDF-Generator",
     "tools_subtitle3": "Fehlercodes / Checkliste",
-    "tools_subtitle4": "Quiz / Notizen"
+    "tools_subtitle4": "Quiz / Notizen",
+    "protocols_step_by_step": "Schritt-für-Schritt-Anleitungen",
+    "protocols_example_title": "Beispiel ausgefüllter Protokolle",
+    "protocols_example_desc": "Protokollmuster mit realen Messergebnissen.",
+    "protocols_templates_section": "Protokollvorlagen",
+    "protocols_templates_section_desc": "Erforderliche Messungen für verschiedene Arten von Elektroinstallationsprüfungen.",
+    "protocols_download_link": "Von der Sonel-Website herunterladen",
+    "protocols_reports_desc": "Kostenlose Software zur Erstellung von Messdokumentation.",
+    "protocols_measurement_count": "Messungen"
 }

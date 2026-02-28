@@ -18,11 +18,9 @@
     "back_to_list": "Back to list",
     "dark_mode": "Dark mode",
     "light_mode": "Light mode",
-
     "nav_home": "Home",
     "nav_tools": "Tools",
     "nav_protocols": "Protocols",
-
     "section_functions": "Measurement functions",
     "section_functions_desc": "10 measurement functions with step-by-step instructions.",
     "section_protocols": "Measurement protocols",
@@ -31,12 +29,10 @@
     "section_tools_desc": "Calculator, norm tables, error codes, diagrams, quiz, PDF generator and more.",
     "section_faq": "FAQ - Questions and answers",
     "section_faq_desc": "Answers to frequently asked questions.",
-
     "show_instructions": "View instructions",
     "show_all_functions": "All functions",
     "open_tools": "Open tools",
     "open_faq": "View FAQ",
-
     "tools_calc_zs": "Zs Calculator",
     "tools_cable": "Cable sizing",
     "tools_norms": "Norm tables",
@@ -46,7 +42,6 @@
     "tools_pdf": "PDF Generator",
     "tools_quiz": "Quiz",
     "tools_notes": "Notes",
-
     "calc_title": "Zs → Ik Calculator",
     "calc_desc": "Calculate expected short-circuit current based on measured loop impedance.",
     "calc_zs_label": "Loop impedance Zs [Ω]",
@@ -58,7 +53,6 @@
     "calc_voltage": "Nominal voltage",
     "calc_enter_valid_zs": "Enter a valid Zs value",
     "calc_error": "Calculation error",
-
     "norms_title": "PN-HD 60364 Norm Tables",
     "norms_zs_title": "Maximum loop impedance values",
     "norms_zs_desc": "According to PN-HD 60364-4-41",
@@ -80,18 +74,15 @@
     "norms_area": "Room / Activity",
     "norms_min_lux": "Min. illumination [lx]",
     "norms_ugr": "UGR max",
-
     "errors_title": "Meter error codes",
     "errors_causes": "Causes",
     "errors_solutions": "Solutions",
-
     "diagrams_title": "Connection diagrams",
     "diagrams_connections": "Connections",
     "diagrams_notes": "Notes",
     "diagrams_terminal": "Terminal",
     "diagrams_connect_to": "Connect to",
     "diagrams_cable": "Cable",
-
     "protocols_guides_title": "Sonel Reports Plus Instructions",
     "protocols_templates_title": "Protocol templates",
     "protocols_examples_title": "Example protocols",
@@ -115,9 +106,7 @@
     "protocols_limit": "Limit",
     "protocols_status": "Status",
     "protocols_notes": "Notes",
-
     "faq_title": "Frequently asked questions",
-
     "cable_title": "Cable sizing calculator",
     "cable_desc": "Calculate required cable cross-section based on power, length and permissible voltage drop.",
     "cable_power": "Power [kW]",
@@ -138,14 +127,12 @@
     "cable_voltage_drop": "Voltage drop",
     "cable_enter_valid": "Enter a valid power value",
     "cable_error": "Calculation error",
-
     "checklist_title": "Safety checklists",
     "checklist_desc": "Select a checklist to complete before measurement.",
     "checklist_progress": "Progress",
     "checklist_required": "REQUIRED",
     "checklist_reset": "Reset",
     "checklist_complete": "Checklist complete!",
-
     "quiz_title": "Quiz - Knowledge test",
     "quiz_desc": "Test your knowledge of electrical measurements. 15 questions, minimum 70% to pass.",
     "quiz_start": "Start quiz",
@@ -161,14 +148,12 @@
     "quiz_retry": "Try again",
     "quiz_download_cert": "Download PDF certificate",
     "quiz_check_error": "Error checking answers",
-
     "notes_title": "Notes and history",
     "notes_desc": "Save measurement notes. Data stored locally in the browser.",
     "notes_add": "Add note",
     "notes_placeholder": "Enter note content...",
     "notes_empty": "No notes yet. Add your first note above.",
     "notes_delete": "Delete",
-
     "pdf_title": "PDF protocol generator",
     "pdf_desc": "Fill in the form and generate a professional measurement protocol in PDF format.",
     "pdf_object_name": "Object name",
@@ -190,16 +175,22 @@
     "pdf_generate": "Generate PDF",
     "pdf_fill_required": "Fill in all required fields and add measurements",
     "pdf_fill_point_value": "Fill in point and value",
-
     "loading": "Loading...",
     "error_loading": "Error loading data",
     "error_loading_protocols": "Error loading protocol data",
     "error_loading_instructions": "Error loading instructions",
     "error_loading_example": "Error loading example",
     "error_search": "Search error",
-
     "tools_subtitle1": "Zs Calculator / Cables",
     "tools_subtitle2": "Norm tables / PDF Generator",
     "tools_subtitle3": "Error codes / Checklist",
-    "tools_subtitle4": "Quiz / Notes"
+    "tools_subtitle4": "Quiz / Notes",
+    "protocols_step_by_step": "Step-by-step instructions",
+    "protocols_example_title": "Example filled protocols",
+    "protocols_example_desc": "Protocol samples with real measurement results.",
+    "protocols_templates_section": "Protocol templates",
+    "protocols_templates_section_desc": "Required measurements for various types of electrical installation tests.",
+    "protocols_download_link": "Download from Sonel website",
+    "protocols_reports_desc": "Free software for creating measurement documentation.",
+    "protocols_measurement_count": "Measurements"
 }
