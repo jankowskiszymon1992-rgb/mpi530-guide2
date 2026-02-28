@@ -1323,19 +1323,19 @@ const ToolsView = ({ onBack, t, lang }) => {
             )}
 
             {/* Cable Calculator Tab */}
-            {activeTab === 'cable' && <CableCalculatorTab />}
+            {activeTab === 'cable' && <CableCalculatorTab lang={lang} t={t} />}
 
             {/* Safety Checklist Tab */}
-            {activeTab === 'checklist' && <SafetyChecklistTab />}
+            {activeTab === 'checklist' && <SafetyChecklistTab lang={lang} t={t} />}
 
             {/* PDF Generator Tab */}
-            {activeTab === 'pdf' && <PDFGeneratorTab />}
+            {activeTab === 'pdf' && <PDFGeneratorTab t={t} />}
 
             {/* Quiz Tab */}
-            {activeTab === 'quiz' && <QuizTab />}
+            {activeTab === 'quiz' && <QuizTab lang={lang} t={t} />}
 
             {/* Notes Tab */}
-            {activeTab === 'notes' && <NotesHistoryTab />}
+            {activeTab === 'notes' && <NotesHistoryTab t={t} />}
         </div>
     );
 };
