@@ -952,24 +952,24 @@ const ToolsView = ({ onBack, t, lang }) => {
             try {
                 const [normsRes, errorsRes, diagramsRes] = await Promise.all([
                     axios.get(`${API}/tools/norms`),
-                    axios.get(`${API}/tools/error-codes`),
+                    axios.get(`${API}/tools/error-codes`, { params: { lang } }),
                     axios.get(`${API}/tools/diagrams`)
                 ]);
                 setNorms(normsRes.data);
                 setErrorCodes(errorsRes.data);
                 setDiagrams(diagramsRes.data);
             } catch (error) {
-                console.error("Błąd ładowania narzędzi:", error);
+                console.error("Error loading tools:", error);
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [lang]);
 
     const handleCalculate = async () => {
         if (!zsInput || parseFloat(zsInput) <= 0) {
-            toast.error("Wprowadź poprawną wartość Zs");
+            toast.error(t('calc_enter_valid_zs'));
             return;
         }
         try {
@@ -978,7 +978,7 @@ const ToolsView = ({ onBack, t, lang }) => {
             });
             setCalcResult(response.data);
         } catch (error) {
-            toast.error("Błąd obliczania");
+            toast.error(t('calc_error'));
         }
     };
 
