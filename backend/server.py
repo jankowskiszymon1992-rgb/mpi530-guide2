@@ -1508,22 +1508,46 @@ QUIZ_QUESTIONS = [
 ]
 
 # API Routes
+
+def translate_function(func, lang):
+    """Apply translation to a measurement function if available."""
+    if lang == "pl":
+        return func
+    translations = get_functions_translations(lang)
+    if not translations or func.id not in translations:
+        return func
+    tr = translations[func.id]
+    d = func.model_dump()
+    d["name"] = tr["name"]
+    d["description"] = tr["description"]
+    d["parameters"] = tr["parameters"]
+    d["safety_notes"] = tr["safety_notes"]
+    d["expected_results"] = tr["expected_results"]
+    for i, step in enumerate(d["steps"]):
+        if i < len(tr["steps"]):
+            ts = tr["steps"][i]
+            step["title"] = ts.get("title", step["title"])
+            step["description"] = ts.get("description", step["description"])
+            if "warning" in ts:
+                step["warning"] = ts["warning"]
+            if "tip" in ts:
+                step["tip"] = ts["tip"]
+    return MeasurementFunction(**d)
+
 @api_router.get("/")
 async def root():
-    return {"message": "Sonel MPI-530 Interaktywna Instrukcja API", "version": "1.0"}
+    return {"message": "Sonel MPI-530 Interactive Guide API", "version": "1.1"}
 
 @api_router.get("/functions", response_model=List[MeasurementFunction])
-async def get_all_functions():
-    """Pobierz wszystkie funkcje pomiarowe z instrukcjami"""
-    return MEASUREMENT_FUNCTIONS
+async def get_all_functions(lang: str = Query("pl", regex="^(pl|en|de)$")):
+    return [translate_function(f, lang) for f in MEASUREMENT_FUNCTIONS]
 
 @api_router.get("/functions/{function_id}", response_model=MeasurementFunction)
-async def get_function(function_id: str):
-    """Pobierz konkretną funkcję pomiarową po ID"""
+async def get_function(function_id: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
     for func in MEASUREMENT_FUNCTIONS:
         if func.id == function_id:
-            return func
-    raise HTTPException(status_code=404, detail=f"Funkcja {function_id} nie znaleziona")
+            return translate_function(func, lang)
+    raise HTTPException(status_code=404, detail=f"Function {function_id} not found")
 
 @api_router.get("/images")
 async def get_meter_images():
