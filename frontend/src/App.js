@@ -344,7 +344,7 @@ const MeterImageGallery = ({ mainImage, funcName }) => {
 };
 
 // Detail View Component
-const DetailView = ({ func, onBack }) => {
+const DetailView = ({ func, onBack, t }) => {
     const [currentStep, setCurrentStep] = useState(0);
 
     const handleNextStep = () => {
