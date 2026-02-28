@@ -1,41 +1,27 @@
 # Sonel MPI-530 Interaktywna Instrukcja - PRD
 
-## Problem Statement
-Aplikacja instrukcji dla miernika Sonel MPI-530 z wszystkimi funkcjami pomiarowymi.
+## Funkcje pomiarowe (10)
 
-## Aktualizacja (2026-02-28)
-- Dodano: **Kolejność Faz** (L1-L2-L3)
-- Dodano: **Kierunek Obrotów Silnika** (prawe/lewe)
-- Łącznie: **8 funkcji pomiarowych**
-
-## Architecture
-- **Backend**: FastAPI (Python)
-- **Frontend**: React.js z Tailwind CSS
-- **Database**: MongoDB (nieużywana)
-
-## Funkcje pomiarowe (8)
-1. Test Wyłączników Różnicowoprądowych (RCD)
-2. Impedancja Pętli Zwarciowej
-3. Rezystancja Izolacji
-4. Rezystancja Uziemienia
-5. Pomiar Napięcia
-6. Ciągłość Przewodów Ochronnych
-7. **Kolejność Faz** - sprawdzenie 1-2-3 / 3-2-1
+1. **Test Wyłączników Różnicowoprądowych (RCD)** - czas i prąd zadziałania
+2. **Impedancja Pętli Zwarciowej** - L-PE, L-N, L-L
+3. **Rezystancja Izolacji** - do 1000V DC
+4. **Rezystancja Uziemienia** - metoda 3/4-przewodowa
+5. **Pomiar Napięcia** - AC/DC TRMS
+6. **Ciągłość Przewodów Ochronnych** - prąd 200mA
+7. **Kolejność Faz** - sprawdzenie L1-L2-L3
 8. **Kierunek Obrotów Silnika** - prawe/lewe
+9. **Pomiar Natężenia Oświetlenia** - sonda LP-1/LP-10
+10. **Uziemienie Metodą Cęgową** - cęgi C-3 + N-1
 
-## Features
-- Wszystko po polsku
-- Oficjalne zdjęcia miernika z cdn.sonel.com
-- Instrukcje krok po kroku z obrazkami
-- Dark mode
-- Wyszukiwarka
-- FAQ (10 pytań)
+## Akcesoria z instrukcjami
+- Adapter WS-03 (gniazdo)
+- Sonda luksomierza LP-1, LP-10A, LP-10B
+- Cęgi pomiarowe C-3
+- Cęgi nadawcze N-1
+- Elektrody uziemienia 30cm
+- Przewody na szpulach
+- Krokodylki, sondy
 
-## Testing Status
-- Backend: 8 funkcji działa
-- Frontend: wszystkie widoki działają
+## FAQ: 13 pytań
 
-## Backlog
-- [ ] Eksport protokołów PDF
-- [ ] Filmy z YouTube Sonel
-- [ ] Zapisywanie wyników
+## Status: Kompletna aplikacja
