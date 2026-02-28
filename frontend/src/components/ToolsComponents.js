@@ -15,7 +15,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 // Cable Calculator Component
-export const CableCalculatorTab = () => {
+export const CableCalculatorTab = ({ lang, t }) => {
     const [powerInput, setPowerInput] = useState('');
     const [voltageInput, setVoltageInput] = useState('230');
     const [lengthInput, setLengthInput] = useState('10');
@@ -25,7 +25,7 @@ export const CableCalculatorTab = () => {
 
     const handleCalculate = async () => {
         if (!powerInput || parseFloat(powerInput) <= 0) {
-            toast.error("Wprowadź poprawną moc");
+            toast.error(t ? t('cable_enter_valid') : "Enter valid power");
             return;
         }
         try {
@@ -41,7 +41,7 @@ export const CableCalculatorTab = () => {
             });
             setCalcResult(response.data);
         } catch (error) {
-            toast.error("Błąd obliczania");
+            toast.error(t ? t('cable_error') : "Calculation error");
         }
     };
 
