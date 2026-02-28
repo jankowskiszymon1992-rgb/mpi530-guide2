@@ -9,38 +9,36 @@
 6. Ciągłość Przewodów Ochronnych
 7. Kolejność Faz
 8. Kierunek Obrotów Silnika
-9. Pomiar Natężenia Oświetlenia (sonda LP-1/LP-10)
-10. Uziemienie Metodą Cęgową (cęgi C-3 + N-1)
+9. Pomiar Natężenia Oświetlenia
+10. Uziemienie Metodą Cęgową
 
-## Protokoły - Sonel Reports Plus
+## Narzędzia (NOWE)
 
-### Instrukcje krok po kroku (4)
-1. Sonel Reports Plus - Podstawy
-2. Pobieranie wyników z miernika
-3. Generowanie protokołu
-4. Migracja z Sonel PE6
+### 1. Kalkulator Zs → Ik
+- Wpisz impedancję Zs i napięcie Uo
+- Oblicza prąd zwarciowy Ik = Uo/Zs
+- Pokazuje pasujące zabezpieczenia z marginesem
 
-### Szablony protokołów (5)
-1. Protokół odbioru instalacji
-2. Protokół przeglądu okresowego
-3. Protokół badania RCD
-4. Protokół pomiaru uziemień
-5. Protokół pomiaru oświetlenia
+### 2. Tabele norm PN-HD 60364
+- Maksymalne impedancje pętli (Zs max) dla B, C, D
+- Minimalna rezystancja izolacji
+- Czasy zadziałania RCD
+- Natężenie oświetlenia PN-EN 12464-1
 
-### Przykładowe wypełnione protokoły (5) - NOWE
-1. **Przykład: Protokół odbioru mieszkania** - 15 pomiarów, POZYTYWNA
-2. **Przykład: Protokół przeglądu okresowego** - 9 pomiarów, NEGATYWNA (pokazuje błąd izolacji)
-3. **Przykład: Protokół badania RCD** - 18 pomiarów (3 wyłączniki), POZYTYWNA
-4. **Przykład: Protokół pomiaru uziemień** - 7 pomiarów, POZYTYWNA
-5. **Przykład: Protokół pomiaru oświetlenia** - 9 pomiarów, NEGATYWNA (niedobór w archiwum)
+### 3. Kody błędów (12)
+- PE!, Hi, Lo, OFL, U>, U<, f?, RCD!, CAL, bAt, Err, L-PE
+- Przyczyny i rozwiązania dla każdego błędu
 
-### Każdy przykład zawiera:
-- Dane obiektu i adres
-- Dane wykonawcy i uprawnienia
-- Numer seryjny miernika i data kalibracji
-- Tabelę wyników z: Punkt, Obwód, Zabezp., Wynik, Limit, Status, Uwagi
-- Kolorowe oznaczenie OK/FAIL
-- Zalecenia i wnioski
+### 4. Schematy podłączeń (8)
+- Test RCD, Impedancja pętli, Izolacja, Ciągłość PE
+- Uziemienie 3p, Uziemienie cęgami
+- Kolejność faz, Pomiar oświetlenia
+- Kolorowe oznaczenia przewodów
+
+## Protokoły
+- 4 instrukcje Sonel Reports Plus
+- 5 szablonów protokołów
+- 5 przykładowych wypełnionych protokołów
 
 ## FAQ: 13 pytań
 
