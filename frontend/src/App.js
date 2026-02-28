@@ -539,24 +539,24 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                     </Button>
                 </div>
                 <p className="text-muted-foreground mb-4">
-                    Kalkulator, tabele norm, kody błędów, schematy, quiz, generator PDF i więcej.
+                    {t('section_tools_desc')}
                 </p>
                 <div className="grid md:grid-cols-4 gap-4 text-sm">
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Calculator className="h-4 w-4 text-green-500" />
-                        <span>Kalkulator Zs / Przewody</span>
+                        <span>{t('tools_subtitle1')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Table2 className="h-4 w-4 text-blue-500" />
-                        <span>Tabele norm / Generator PDF</span>
+                        <span>{t('tools_subtitle2')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <AlertOctagon className="h-4 w-4 text-red-500" />
-                        <span>Kody błędów / Checklista</span>
+                        <span>{t('tools_subtitle3')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                         <Cable className="h-4 w-4 text-purple-500" />
-                        <span>Quiz / Notatki</span>
+                        <span>{t('tools_subtitle4')}</span>
                     </div>
                 </div>
             </div>
