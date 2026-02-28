@@ -1345,6 +1345,9 @@ const ToolsView = ({ onBack, t, lang }) => {
 const ExampleProtocolDetailView = ({ example, onBack, t }) => {
     const isPositive = example.conclusion.includes('POZYTYWNA') || example.conclusion.includes('POSITIVE') || example.conclusion.includes('POSITIV');
     
+    // Check for PASS or OK status (supports both EN/DE/PL formats)
+    const isStatusPass = (status) => status === 'OK' || status === 'PASS' || status === 'BESTANDEN';
+    
     return (
         <div className="animate-fade-in" data-testid="example-protocol-detail">
             {/* Header */}
@@ -1379,10 +1382,10 @@ const ExampleProtocolDetailView = ({ example, onBack, t }) => {
                 <div className="card-industrial">
                     <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">{t('protocols_inspector')}</h3>
                     <div className="space-y-2 text-sm">
-                        <p><span className="text-muted-foreground">Wykonawca:</span> {example.inspector}</p>
-                        <p><span className="text-muted-foreground">Uprawnienia:</span> {example.inspector_cert}</p>
-                        <p><span className="text-muted-foreground">Miernik:</span> {example.meter_serial}</p>
-                        <p><span className="text-muted-foreground">Kalibracja:</span> {example.meter_calibration}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_inspector')}:</span> {example.inspector}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_calibration')}:</span> {example.inspector_cert}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_meter')}:</span> {example.meter_serial}</p>
+                        <p><span className="text-muted-foreground">{t('protocols_calibration')}:</span> {example.meter_calibration}</p>
                     </div>
                 </div>
             </div>
@@ -1390,24 +1393,24 @@ const ExampleProtocolDetailView = ({ example, onBack, t }) => {
             {/* Measurements Table */}
             <h3 className="font-bold mb-4 uppercase text-sm tracking-wider flex items-center gap-2">
                 <ClipboardList className="h-4 w-4" />
-                Wyniki pomiarów ({example.measurements.length})
+                {t('protocols_measurements_table')} ({example.measurements.length})
             </h3>
             <div className="overflow-x-auto mb-8">
                 <table className="w-full text-sm border border-border">
                     <thead className="bg-muted/50">
                         <tr>
-                            <th className="text-left p-3 border-b border-border font-bold">Punkt</th>
-                            <th className="text-left p-3 border-b border-border font-bold">Obwód</th>
-                            <th className="text-left p-3 border-b border-border font-bold">Zabezp.</th>
-                            <th className="text-right p-3 border-b border-border font-bold">Wynik</th>
-                            <th className="text-left p-3 border-b border-border font-bold">Limit</th>
-                            <th className="text-center p-3 border-b border-border font-bold">Status</th>
-                            <th className="text-left p-3 border-b border-border font-bold">Uwagi</th>
+                            <th className="text-left p-3 border-b border-border font-bold">{t('protocols_point')}</th>
+                            <th className="text-left p-3 border-b border-border font-bold">{t('protocols_circuit')}</th>
+                            <th className="text-left p-3 border-b border-border font-bold">{t('protocols_protection')}</th>
+                            <th className="text-right p-3 border-b border-border font-bold">{t('protocols_value')}</th>
+                            <th className="text-left p-3 border-b border-border font-bold">{t('protocols_limit')}</th>
+                            <th className="text-center p-3 border-b border-border font-bold">{t('protocols_status')}</th>
+                            <th className="text-left p-3 border-b border-border font-bold">{t('protocols_notes')}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {example.measurements.map((m, idx) => (
-                            <tr key={idx} className={`${m.status === 'FAIL' ? 'bg-red-500/10' : ''} hover:bg-muted/30`}>
+                            <tr key={idx} className={`${!isStatusPass(m.status) ? 'bg-red-500/10' : ''} hover:bg-muted/30`}>
                                 <td className="p-3 border-b border-border">{m.point}</td>
                                 <td className="p-3 border-b border-border font-mono">{m.circuit}</td>
                                 <td className="p-3 border-b border-border">{m.protection}</td>
@@ -1416,13 +1419,13 @@ const ExampleProtocolDetailView = ({ example, onBack, t }) => {
                                 </td>
                                 <td className="p-3 border-b border-border text-muted-foreground">{m.limit}</td>
                                 <td className="p-3 border-b border-border text-center">
-                                    {m.status === 'OK' ? (
+                                    {isStatusPass(m.status) ? (
                                         <span className="inline-flex items-center gap-1 text-green-500 font-bold">
-                                            <CheckCircle2 className="h-4 w-4" /> OK
+                                            <CheckCircle2 className="h-4 w-4" /> {t('pdf_result_pass')}
                                         </span>
                                     ) : (
                                         <span className="inline-flex items-center gap-1 text-red-500 font-bold">
-                                            <AlertTriangle className="h-4 w-4" /> FAIL
+                                            <AlertTriangle className="h-4 w-4" /> {t('pdf_result_fail')}
                                         </span>
                                     )}
                                 </td>
@@ -1438,7 +1441,7 @@ const ExampleProtocolDetailView = ({ example, onBack, t }) => {
                 <div className={`p-4 rounded-sm border ${isPositive ? 'bg-green-500/5 border-green-500/20' : 'bg-red-500/5 border-red-500/20'}`}>
                     <h4 className="font-bold mb-3 flex items-center gap-2">
                         <Lightbulb className={`h-4 w-4 ${isPositive ? 'text-green-500' : 'text-red-500'}`} />
-                        Zalecenia i uwagi
+                        {t('protocols_recommendations')}
                     </h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                         {example.recommendations.map((rec, idx) => (
