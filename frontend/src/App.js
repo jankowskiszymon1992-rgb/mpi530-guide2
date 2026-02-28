@@ -681,7 +681,7 @@ const ProtocolTemplateCard = ({ template }) => {
 };
 
 // Protocol Guide Detail View
-const ProtocolGuideDetailView = ({ guide, onBack }) => {
+const ProtocolGuideDetailView = ({ guide, onBack, t }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const IconComponent = iconMap[guide.icon] || FileText;
 
