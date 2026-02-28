@@ -431,7 +431,7 @@ const SearchResults = ({ results, onSelect, onClose }) => {
 };
 
 // Home View Component
-const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch }) => {
+const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch, onShowProtocols }) => {
     const [showResults, setShowResults] = useState(false);
 
     return (
@@ -484,8 +484,47 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                 ))}
             </div>
 
+            {/* Protocols Section */}
+            <div className="mt-12 p-6 bg-blue-500/5 border border-blue-500/20 rounded-sm">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-xl flex items-center gap-2">
+                        <ClipboardList className="h-6 w-6 text-blue-500" />
+                        Protokoły Pomiarowe
+                    </h3>
+                    <Button 
+                        onClick={onShowProtocols}
+                        className="bg-blue-500 text-white hover:bg-blue-600"
+                        data-testid="show-protocols-btn"
+                    >
+                        Zobacz instrukcje
+                        <ChevronRight className="h-4 w-4 ml-2" />
+                    </Button>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                    Jak tworzyć protokoły pomiarowe w programie <strong>Sonel Reports Plus</strong> - od projektu po wydruk.
+                </p>
+                <div className="grid md:grid-cols-4 gap-4 text-sm">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <FileText className="h-4 w-4 text-blue-500" />
+                        <span>Tworzenie projektu</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Download className="h-4 w-4 text-green-500" />
+                        <span>Pobieranie wyników</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <Printer className="h-4 w-4 text-primary" />
+                        <span>Generowanie protokołu</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                        <FolderSync className="h-4 w-4 text-purple-500" />
+                        <span>Migracja z PE6</span>
+                    </div>
+                </div>
+            </div>
+
             {/* Quick Tips */}
-            <div className="mt-12 p-6 bg-secondary/5 border border-secondary/20 rounded-sm">
+            <div className="mt-8 p-6 bg-secondary/5 border border-secondary/20 rounded-sm">
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                     <Lightbulb className="h-5 w-5 text-primary" />
                     Szybkie Porady
@@ -504,6 +543,273 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
                         <p>Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami Sonel</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    );
+};
+
+// Protocol Guide Card
+const ProtocolGuideCard = ({ guide, onClick }) => {
+    const IconComponent = iconMap[guide.icon] || FileText;
+    
+    return (
+        <button
+            onClick={() => onClick(guide.id)}
+            className="function-card card-industrial text-left group"
+            data-testid={`protocol-card-${guide.id}`}
+        >
+            <div className="flex items-start gap-4">
+                <div 
+                    className="w-14 h-14 flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: guide.color }}
+                >
+                    <IconComponent className="h-7 w-7 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors duration-150">
+                        {guide.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                        {guide.description}
+                    </p>
+                </div>
+            </div>
+            <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                <span className="uppercase tracking-wider">{guide.steps.length} kroków</span>
+                <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-150" style={{ color: guide.color }} />
+            </div>
+        </button>
+    );
+};
+
+// Protocol Template Card
+const ProtocolTemplateCard = ({ template }) => {
+    return (
+        <div className="card-industrial" data-testid={`template-${template.id}`}>
+            <h4 className="font-bold mb-2">{template.name}</h4>
+            <p className="text-sm text-muted-foreground mb-4">{template.description}</p>
+            <div className="space-y-2">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Wymagane pomiary:</p>
+                <ul className="text-sm space-y-1">
+                    {template.measurements.map((m, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-muted-foreground">
+                            <CheckCircle2 className="h-3 w-3 text-green-500 flex-shrink-0" />
+                            {m}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+// Protocol Guide Detail View
+const ProtocolGuideDetailView = ({ guide, onBack }) => {
+    const [currentStep, setCurrentStep] = useState(0);
+    const IconComponent = iconMap[guide.icon] || FileText;
+
+    return (
+        <div className="animate-fade-in" data-testid="protocol-detail-view">
+            {/* Header */}
+            <div className="mb-8 pb-6 border-b border-border">
+                <div className="flex items-center gap-4 mb-4">
+                    <div 
+                        className="w-16 h-16 flex items-center justify-center"
+                        style={{ backgroundColor: guide.color }}
+                    >
+                        <IconComponent className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-bold gradient-text">{guide.name}</h2>
+                        <p className="text-muted-foreground mt-1">{guide.description}</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Steps */}
+            <div className="space-y-4 mb-8">
+                {guide.steps.map((step, idx) => (
+                    <div 
+                        key={step.step_number}
+                        className={`p-4 transition-opacity duration-200 ${idx === currentStep ? 'step-active' : idx < currentStep ? 'step-completed' : 'step-pending'}`}
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className={`step-indicator rounded-sm ${idx === currentStep ? 'bg-primary text-primary-foreground' : idx < currentStep ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'}`}>
+                                {idx < currentStep ? <CheckCircle2 className="h-5 w-5" /> : step.step_number}
+                            </div>
+                            <div className="flex-1">
+                                <h4 className="font-bold text-lg mb-2">{step.title}</h4>
+                                <p className="text-muted-foreground mb-3">{step.description}</p>
+                                
+                                {step.image && idx === currentStep && (
+                                    <div className="my-4 rounded-sm overflow-hidden border border-border bg-muted/30">
+                                        <img 
+                                            src={step.image} 
+                                            alt={step.title}
+                                            className="w-full h-auto max-h-64 object-contain"
+                                        />
+                                    </div>
+                                )}
+                                
+                                {step.tip && (
+                                    <div className="tip-box flex items-start gap-3">
+                                        <Lightbulb className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                                        <p>{step.tip}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between pt-6 border-t border-border">
+                <Button
+                    variant="outline"
+                    onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+                    disabled={currentStep === 0}
+                >
+                    Poprzedni
+                </Button>
+                <span className="text-sm text-muted-foreground font-mono">
+                    {currentStep + 1} / {guide.steps.length}
+                </span>
+                <Button
+                    onClick={() => setCurrentStep(Math.min(guide.steps.length - 1, currentStep + 1))}
+                    disabled={currentStep === guide.steps.length - 1}
+                    className="bg-primary text-primary-foreground"
+                >
+                    Następny
+                </Button>
+            </div>
+
+            {/* Tips */}
+            {guide.tips && guide.tips.length > 0 && (
+                <div className="mt-8 p-4 bg-blue-500/5 border border-blue-500/20 rounded-sm">
+                    <h4 className="font-bold mb-3 flex items-center gap-2">
+                        <Lightbulb className="h-4 w-4 text-blue-500" />
+                        Wskazówki
+                    </h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                        {guide.tips.map((tip, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                                <span className="text-blue-500">•</span>
+                                {tip}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+};
+
+// Protocols View Component
+const ProtocolsView = ({ onSelectGuide, onBack }) => {
+    const [guides, setGuides] = useState([]);
+    const [templates, setTemplates] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [guidesRes, templatesRes] = await Promise.all([
+                    axios.get(`${API}/protocols/guides`),
+                    axios.get(`${API}/protocols/templates`)
+                ]);
+                setGuides(guidesRes.data);
+                setTemplates(templatesRes.data);
+            } catch (error) {
+                console.error("Błąd ładowania protokołów:", error);
+                toast.error("Błąd ładowania danych protokołów");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-20">
+                <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-500 mx-auto mb-4 flex items-center justify-center animate-pulse">
+                        <FileText className="h-6 w-6 text-white" />
+                    </div>
+                    <p className="text-muted-foreground">Ładowanie...</p>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="animate-fade-in" data-testid="protocols-view">
+            {/* Header */}
+            <div className="mb-10">
+                <h2 className="text-4xl font-black mb-4 tracking-tight">
+                    <span className="gradient-text">Protokoły Pomiarowe</span>
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl">
+                    Instrukcje tworzenia protokołów w programie <strong>Sonel Reports Plus</strong> - od projektu po wydruk dokumentacji.
+                </p>
+            </div>
+
+            {/* Sonel Reports Plus Info */}
+            <div className="mb-10 p-6 bg-card border border-border rounded-sm">
+                <div className="flex items-start gap-4">
+                    <img 
+                        src="https://cdn.sonel.com/Zdjecia/Programy/Programy+komputerowe/Sonel+Reports+PLUS/image-thumb__36489__img-product-thumb/blank-box-reports-plus_mHqcbIA.webp"
+                        alt="Sonel Reports Plus"
+                        className="w-24 h-24 object-contain"
+                    />
+                    <div>
+                        <h3 className="font-bold text-xl mb-2">Sonel Reports Plus</h3>
+                        <p className="text-muted-foreground mb-3">
+                            Bezpłatne oprogramowanie do tworzenia dokumentacji pomiarowej. Współpracuje z miernikami Sonel MPI-530, MPI-540 i innymi.
+                        </p>
+                        <div className="flex gap-4 text-sm">
+                            <span className="text-muted-foreground">System: Windows 10/11</span>
+                            <a 
+                                href="https://sonel.pl/en/product/software-sonel-reports-plus" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:underline"
+                            >
+                                Pobierz ze strony Sonel →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Guides */}
+            <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" />
+                Instrukcje krok po kroku
+            </h3>
+            <div className="bento-grid mb-12">
+                {guides.map((guide) => (
+                    <ProtocolGuideCard 
+                        key={guide.id} 
+                        guide={guide} 
+                        onClick={onSelectGuide}
+                    />
+                ))}
+            </div>
+
+            {/* Templates */}
+            <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                <ClipboardList className="h-5 w-5 text-primary" />
+                Szablony protokołów
+            </h3>
+            <p className="text-muted-foreground mb-6">
+                Przykładowe protokoły i wymagane pomiary dla różnych typów badań instalacji elektrycznych.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {templates.map((template) => (
+                    <ProtocolTemplateCard key={template.id} template={template} />
+                ))}
             </div>
         </div>
     );
