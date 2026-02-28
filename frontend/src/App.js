@@ -8,7 +8,8 @@ import {
     AlertTriangle, Lightbulb, CheckCircle2, ArrowLeft,
     BookOpen, HelpCircle, ImageIcon, RotateCw, RefreshCw, Circle,
     FileText, Download, Printer, FolderSync, ClipboardList,
-    Calculator, Table2, AlertOctagon, Cable, Wrench
+    Calculator, Table2, AlertOctagon, Cable, Wrench,
+    ClipboardCheck, Award, StickyNote
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
