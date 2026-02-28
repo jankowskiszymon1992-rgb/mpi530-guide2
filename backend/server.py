@@ -1376,6 +1376,107 @@ async def get_example_protocol(example_id: str):
             return example
     raise HTTPException(status_code=404, detail=f"Przykład {example_id} nie znaleziony")
 
+# ============================================
+# NARZĘDZIA API
+# ============================================
+
+@api_router.get("/tools/calculator")
+async def calculate_fault_current(zs: float, voltage: float = 230):
+    """Kalkulator prądu zwarciowego Ik = Uo/Zs"""
+    if zs <= 0:
+        raise HTTPException(status_code=400, detail="Impedancja musi być większa od 0")
+    
+    ik = voltage / zs
+    
+    # Znajdź odpowiednie zabezpieczenie
+    recommendations = []
+    for char_type, values in ZS_MAX_TABLES.items():
+        for rating, data in values.items():
+            if zs <= data["Zs_max"]:
+                recommendations.append({
+                    "type": f"{char_type}{rating}",
+                    "Ia": data["Ia"],
+                    "Zs_max": data["Zs_max"],
+                    "margin": round((data["Zs_max"] - zs) / data["Zs_max"] * 100, 1)
+                })
+    
+    # Sortuj po marginesie
+    recommendations.sort(key=lambda x: x["margin"], reverse=True)
+    
+    return {
+        "input": {"Zs": zs, "Uo": voltage},
+        "result": {
+            "Ik": round(ik, 1),
+            "unit": "A",
+            "description": f"Prąd zwarciowy przy Zs={zs}Ω i Uo={voltage}V"
+        },
+        "recommendations": recommendations[:10],
+        "formula": "Ik = Uo / Zs"
+    }
+
+@api_router.get("/tools/zs-tables")
+async def get_zs_tables():
+    """Pobierz tabele maksymalnych impedancji pętli dla zabezpieczeń"""
+    return {
+        "description": "Maksymalne impedancje pętli zwarcia wg PN-HD 60364-4-41",
+        "voltage": "230V",
+        "time": "0.4s (obwody końcowe)",
+        "tables": ZS_MAX_TABLES
+    }
+
+@api_router.get("/tools/norms")
+async def get_all_norms():
+    """Pobierz wszystkie tabele norm"""
+    return {
+        "insulation": {
+            "title": "Minimalna rezystancja izolacji",
+            "standard": "PN-HD 60364-6",
+            "data": INSULATION_NORMS
+        },
+        "rcd_times": {
+            "title": "Maksymalne czasy zadziałania RCD",
+            "standard": "PN-HD 60364-4-41",
+            "data": RCD_TIMES
+        },
+        "lighting": {
+            "title": "Minimalne natężenie oświetlenia",
+            "standard": "PN-EN 12464-1",
+            "data": LIGHTING_NORMS
+        },
+        "zs_tables": {
+            "title": "Maksymalne impedancje pętli zwarcia",
+            "standard": "PN-HD 60364-4-41",
+            "voltage": "230V, czas 0.4s",
+            "data": ZS_MAX_TABLES
+        }
+    }
+
+@api_router.get("/tools/error-codes")
+async def get_error_codes():
+    """Pobierz listę kodów błędów miernika MPI-530"""
+    return ERROR_CODES
+
+@api_router.get("/tools/error-codes/{code}")
+async def get_error_code(code: str):
+    """Pobierz szczegóły konkretnego kodu błędu"""
+    for error in ERROR_CODES:
+        if error["code"].lower() == code.lower():
+            return error
+    raise HTTPException(status_code=404, detail=f"Kod błędu '{code}' nie znaleziony")
+
+@api_router.get("/tools/diagrams")
+async def get_connection_diagrams():
+    """Pobierz schematy podłączeń"""
+    return CONNECTION_DIAGRAMS
+
+@api_router.get("/tools/diagrams/{diagram_id}")
+async def get_connection_diagram(diagram_id: str):
+    """Pobierz konkretny schemat podłączenia"""
+    for diagram in CONNECTION_DIAGRAMS:
+        if diagram["id"] == diagram_id:
+            return diagram
+    raise HTTPException(status_code=404, detail=f"Schemat '{diagram_id}' nie znaleziony")
+
 @api_router.get("/search")
 async def search_instructions(q: str):
     """Wyszukaj w instrukcjach"""
