@@ -294,7 +294,7 @@ export const QuizTab = () => {
     useEffect(() => {
         axios.get(`${API}/quiz/questions`)
             .then(res => setQuestions(res.data))
-            .catch(err => console.error(err));
+            .catch(() => {});
     }, []);
 
     const handleAnswer = (questionId, answerIndex) => {
