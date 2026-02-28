@@ -1290,6 +1290,217 @@ CONNECTION_DIAGRAMS = [
     },
 ]
 
+# ============================================
+# KALKULATOR PRZEWODÓW - tabele przekrojów
+# ============================================
+
+CABLE_SECTIONS = {
+    "cu_pvc": {  # Miedź w izolacji PVC
+        "description": "Przewód miedziany w izolacji PVC",
+        "sections": [
+            {"mm2": 1.5, "Iz_A": 15.5, "R_ohm_km": 12.1},
+            {"mm2": 2.5, "Iz_A": 21, "R_ohm_km": 7.41},
+            {"mm2": 4, "Iz_A": 28, "R_ohm_km": 4.61},
+            {"mm2": 6, "Iz_A": 36, "R_ohm_km": 3.08},
+            {"mm2": 10, "Iz_A": 50, "R_ohm_km": 1.83},
+            {"mm2": 16, "Iz_A": 68, "R_ohm_km": 1.15},
+            {"mm2": 25, "Iz_A": 89, "R_ohm_km": 0.727},
+            {"mm2": 35, "Iz_A": 110, "R_ohm_km": 0.524},
+            {"mm2": 50, "Iz_A": 134, "R_ohm_km": 0.387},
+            {"mm2": 70, "Iz_A": 171, "R_ohm_km": 0.268},
+            {"mm2": 95, "Iz_A": 207, "R_ohm_km": 0.193},
+            {"mm2": 120, "Iz_A": 239, "R_ohm_km": 0.153},
+        ]
+    },
+    "al_pvc": {  # Aluminium w izolacji PVC
+        "description": "Przewód aluminiowy w izolacji PVC",
+        "sections": [
+            {"mm2": 16, "Iz_A": 53, "R_ohm_km": 1.91},
+            {"mm2": 25, "Iz_A": 70, "R_ohm_km": 1.2},
+            {"mm2": 35, "Iz_A": 86, "R_ohm_km": 0.868},
+            {"mm2": 50, "Iz_A": 104, "R_ohm_km": 0.641},
+            {"mm2": 70, "Iz_A": 133, "R_ohm_km": 0.443},
+            {"mm2": 95, "Iz_A": 161, "R_ohm_km": 0.32},
+            {"mm2": 120, "Iz_A": 186, "R_ohm_km": 0.253},
+        ]
+    }
+}
+
+# ============================================
+# CHECKLISTA BEZPIECZEŃSTWA
+# ============================================
+
+SAFETY_CHECKLISTS = {
+    "rcd": {
+        "name": "Test RCD",
+        "items": [
+            {"id": 1, "text": "Sprawdziłem stan przewodów pomiarowych", "critical": True},
+            {"id": 2, "text": "Upewniłem się, że instalacja jest pod napięciem", "critical": True},
+            {"id": 3, "text": "Ostrzegłem użytkowników o możliwym zaniku zasilania", "critical": True},
+            {"id": 4, "text": "Sprawdziłem ciągłość PE przed testem RCD", "critical": False},
+            {"id": 5, "text": "Wybrałem prawidłowy typ RCD (AC/A/B)", "critical": False},
+        ]
+    },
+    "insulation": {
+        "name": "Pomiar izolacji",
+        "items": [
+            {"id": 1, "text": "WYŁĄCZYŁEM zasilanie instalacji", "critical": True},
+            {"id": 2, "text": "Zweryfikowałem brak napięcia miernikiem", "critical": True},
+            {"id": 3, "text": "Odłączyłem odbiorniki wrażliwe na napięcie pomiarowe", "critical": True},
+            {"id": 4, "text": "Zabezpieczyłem miejsce pracy przed przypadkowym załączeniem", "critical": True},
+            {"id": 5, "text": "Wybrałem odpowiednie napięcie pomiarowe (500V/1000V)", "critical": False},
+        ]
+    },
+    "loop": {
+        "name": "Impedancja pętli",
+        "items": [
+            {"id": 1, "text": "Sprawdziłem stan przewodów pomiarowych", "critical": True},
+            {"id": 2, "text": "Upewniłem się, że instalacja jest pod napięciem", "critical": True},
+            {"id": 3, "text": "Sprawdziłem ciągłość PE", "critical": True},
+            {"id": 4, "text": "Uwzględniłem możliwość zadziałania RCD", "critical": False},
+        ]
+    },
+    "continuity": {
+        "name": "Ciągłość PE",
+        "items": [
+            {"id": 1, "text": "WYŁĄCZYŁEM zasilanie instalacji", "critical": True},
+            {"id": 2, "text": "Zweryfikowałem brak napięcia miernikiem", "critical": True},
+            {"id": 3, "text": "Wykonałem kompensację przewodów (ZERO)", "critical": False},
+        ]
+    },
+    "earthing": {
+        "name": "Uziemienie",
+        "items": [
+            {"id": 1, "text": "Odłączyłem badany uziom od instalacji", "critical": True},
+            {"id": 2, "text": "Sprawdziłem bezpieczną odległość od linii WN", "critical": True},
+            {"id": 3, "text": "Wbiłem elektrody pomocnicze w odpowiednich odległościach", "critical": True},
+            {"id": 4, "text": "Sprawdziłem wilgotność gruntu przy elektrodach", "critical": False},
+        ]
+    },
+    "general": {
+        "name": "Ogólna kontrola przed pomiarem",
+        "items": [
+            {"id": 1, "text": "Miernik jest skalibrowany (data ważności)", "critical": True},
+            {"id": 2, "text": "Bateria miernika jest naładowana", "critical": True},
+            {"id": 3, "text": "Przewody pomiarowe są w dobrym stanie", "critical": True},
+            {"id": 4, "text": "Mam odpowiednie uprawnienia SEP", "critical": True},
+            {"id": 5, "text": "Używam środków ochrony osobistej", "critical": True},
+        ]
+    }
+}
+
+# ============================================
+# QUIZ - pytania i odpowiedzi
+# ============================================
+
+QUIZ_QUESTIONS = [
+    {
+        "id": 1,
+        "question": "Jaka jest minimalna rezystancja izolacji dla nowej instalacji przy napięciu pomiarowym 500V?",
+        "options": ["0.5 MΩ", "1 MΩ", "2 MΩ", "0.25 MΩ"],
+        "correct": 1,
+        "explanation": "Zgodnie z PN-HD 60364-6, minimalna rezystancja izolacji dla instalacji o napięciu do 500V wynosi 1 MΩ."
+    },
+    {
+        "id": 2,
+        "question": "Jaki jest maksymalny czas zadziałania RCD 30mA przy prądzie 1x IΔn?",
+        "options": ["40 ms", "150 ms", "300 ms", "500 ms"],
+        "correct": 2,
+        "explanation": "Dla RCD typu AC i A, maksymalny czas zadziałania przy prądzie 1x IΔn wynosi 300 ms."
+    },
+    {
+        "id": 3,
+        "question": "Przy jakim mnożniku prądu RCD NIE powinien zadziałać?",
+        "options": ["0.5x IΔn", "1x IΔn", "2x IΔn", "5x IΔn"],
+        "correct": 0,
+        "explanation": "RCD nie powinien zadziałać przy prądzie 0.5x IΔn - to test sprawdzający, czy RCD nie jest zbyt czuły."
+    },
+    {
+        "id": 4,
+        "question": "Co oznacza błąd 'PE!' na mierniku MPI-530?",
+        "options": ["Przekroczony zakres", "Brak połączenia PE", "Słaba bateria", "Błąd kalibracji"],
+        "correct": 1,
+        "explanation": "Błąd PE! oznacza brak lub zbyt wysoką rezystancję przewodu ochronnego PE."
+    },
+    {
+        "id": 5,
+        "question": "Jakie napięcie pomiarowe należy wybrać do pomiaru izolacji instalacji 400V?",
+        "options": ["250V", "500V", "1000V", "100V"],
+        "correct": 2,
+        "explanation": "Dla instalacji o napięciu powyżej 500V należy stosować napięcie pomiarowe 1000V DC."
+    },
+    {
+        "id": 6,
+        "question": "W jakiej odległości od badanego uziomu należy wbić elektrodę prądową (H)?",
+        "options": ["10 m", "20 m", "Min. 40 m", "5 m"],
+        "correct": 2,
+        "explanation": "Elektroda prądowa powinna być w odległości minimum 40 m od badanego uziomu."
+    },
+    {
+        "id": 7,
+        "question": "Gdzie umieścić elektrodę napięciową (S) przy pomiarze uziemienia metodą 3-przewodową?",
+        "options": ["Przy uziomie", "W połowie odległości", "W 62% odległości do elektrody H", "Przy elektrodzie H"],
+        "correct": 2,
+        "explanation": "Elektroda napięciowa powinna być umieszczona w 62% odległości między uziomem a elektrodą prądową."
+    },
+    {
+        "id": 8,
+        "question": "Jaki prąd pomiarowy jest wymagany przy pomiarze ciągłości PE zgodnie z normą?",
+        "options": ["10 mA", "50 mA", "200 mA", "1 A"],
+        "correct": 2,
+        "explanation": "Zgodnie z EN 61557-4, pomiar ciągłości PE należy wykonywać prądem min. 200 mA."
+    },
+    {
+        "id": 9,
+        "question": "Co należy zrobić PRZED pomiarem rezystancji izolacji?",
+        "options": ["Załączyć napięcie", "Wyłączyć napięcie i odłączyć odbiorniki", "Zmierzyć RCD", "Sprawdzić kolejność faz"],
+        "correct": 1,
+        "explanation": "Przed pomiarem izolacji BEZWZGLĘDNIE należy wyłączyć napięcie i odłączyć wrażliwe odbiorniki."
+    },
+    {
+        "id": 10,
+        "question": "Jakie minimalne natężenie oświetlenia jest wymagane na stanowisku biurowym?",
+        "options": ["200 lx", "300 lx", "500 lx", "750 lx"],
+        "correct": 2,
+        "explanation": "Zgodnie z PN-EN 12464-1, stanowiska biurowe wymagają minimum 500 lx."
+    },
+    {
+        "id": 11,
+        "question": "Jaka jest maksymalna impedancja pętli zwarcia dla zabezpieczenia B16 (czas 0.4s)?",
+        "options": ["1.15 Ω", "2.88 Ω", "4.60 Ω", "0.92 Ω"],
+        "correct": 1,
+        "explanation": "Dla zabezpieczenia B16 przy czasie 0.4s i napięciu 230V, Zs max = 2.88 Ω."
+    },
+    {
+        "id": 12,
+        "question": "Co oznacza 'ZGODNA' kolejność faz?",
+        "options": ["L3-L2-L1", "L1-L2-L3", "L2-L1-L3", "Dowolna"],
+        "correct": 1,
+        "explanation": "Zgodna kolejność faz to L1-L2-L3 (obroty prawe)."
+    },
+    {
+        "id": 13,
+        "question": "Jak często należy kalibrować miernik MPI-530?",
+        "options": ["Co 6 miesięcy", "Co 12 miesięcy", "Co 24 miesiące", "Co 5 lat"],
+        "correct": 1,
+        "explanation": "Producent Sonel zaleca kalibrację miernika co 12 miesięcy."
+    },
+    {
+        "id": 14,
+        "question": "Jaka jest kategoria pomiarowa miernika MPI-530?",
+        "options": ["CAT I", "CAT II", "CAT III 600V / CAT IV 300V", "CAT V"],
+        "correct": 2,
+        "explanation": "MPI-530 spełnia wymagania CAT III 600V i CAT IV 300V."
+    },
+    {
+        "id": 15,
+        "question": "Czy można wykonać pomiar impedancji pętli za wyłącznikiem RCD bez jego wyzwolenia?",
+        "options": ["Nie, RCD zawsze zadziała", "Tak, używając funkcji Zs RCD lub pomiaru L-L", "Nie, trzeba wymontować RCD", "Tylko przy wyłączonym napięciu"],
+        "correct": 1,
+        "explanation": "MPI-530 posiada funkcję pomiaru Zs bez wyzwalania RCD oraz możliwość pomiaru L-L."
+    }
+]
+
 # API Routes
 @api_router.get("/")
 async def root():
