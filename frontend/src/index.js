@@ -3,21 +3,19 @@ import ReactDOM from "react-dom/client";
 import "@/index.css";
 import App from "@/App";
 
-// Unregister all service workers and clear caches to fix stale cache issues
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    registrations.forEach((registration) => {
-      registration.unregister();
-    });
-  });
-  if ('caches' in window) {
-    caches.keys().then((names) => {
-      names.forEach((name) => {
-        caches.delete(name);
-      });
-    });
+// Silently unregister all service workers and clear caches
+try {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(function(regs) { regs.forEach(function(r) { r.unregister().catch(function(){}); }); })
+      .catch(function(){});
   }
-}
+  if ('caches' in window) {
+    caches.keys()
+      .then(function(names) { names.forEach(function(n) { caches.delete(n).catch(function(){}); }); })
+      .catch(function(){});
+  }
+} catch(e) {}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
