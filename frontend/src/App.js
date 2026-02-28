@@ -1606,4 +1606,12 @@ function App() {
     );
 }
 
-export default App;
+function AppWrapper() {
+    return (
+        <LanguageProvider>
+            <App />
+        </LanguageProvider>
+    );
+}
+
+export default AppWrapper;
