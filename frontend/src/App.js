@@ -185,7 +185,7 @@ const Sidebar = ({ functions, selectedId, onSelect, isOpen, onClose }) => {
 };
 
 // Function Card Component
-const FunctionCard = ({ func, onClick }) => {
+const FunctionCard = ({ func, onClick, t }) => {
     const IconComponent = iconMap[func.icon] || Activity;
     
     return (
