@@ -75,6 +75,30 @@ class ProtocolTemplate(BaseModel):
     measurements: List[str]
     image: Optional[str] = None
 
+class MeasurementResult(BaseModel):
+    point: str
+    circuit: str
+    protection: str
+    value: str
+    unit: str
+    limit: str
+    status: str  # "OK" or "FAIL"
+    notes: Optional[str] = None
+
+class ExampleProtocol(BaseModel):
+    id: str
+    name: str
+    object_name: str
+    object_address: str
+    date: str
+    inspector: str
+    inspector_cert: str
+    meter_serial: str
+    meter_calibration: str
+    measurements: List[MeasurementResult]
+    conclusion: str
+    recommendations: List[str]
+
 # Oficjalne zdjęcia Sonel MPI-530 z CDN producenta
 METER_IMAGES = {
     "main": "https://cdn.sonel.com/Zdjecia/Mierniki/MPI/MPI-530/image-thumb__32614__img-product-thumb/MPI-530_L_EN_logger_01_u%20-pim.webp",
