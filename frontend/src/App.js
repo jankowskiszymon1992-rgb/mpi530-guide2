@@ -605,22 +605,33 @@ const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, se
             <div className="mt-8 p-6 bg-secondary/5 border border-secondary/20 rounded-sm">
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                     <Lightbulb className="h-5 w-5 text-primary" />
-                    Szybkie Porady
+                    {t('quick_tips')}
                 </h3>
                 <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground">
                     <div className="flex items-start gap-2">
                         <span className="text-primary font-bold">01</span>
-                        <p>Zawsze sprawdź stan przewodów pomiarowych przed rozpoczęciem pracy</p>
+                        <p>{t('tip_1')}</p>
                     </div>
                     <div className="flex items-start gap-2">
                         <span className="text-primary font-bold">02</span>
-                        <p>Przestrzegaj kategorii pomiarowej CAT III/IV dla bezpieczeństwa</p>
+                        <p>{t('tip_2')}</p>
                     </div>
                     <div className="flex items-start gap-2">
                         <span className="text-primary font-bold">03</span>
-                        <p>Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami Sonel</p>
+                        <p>{t('tip_3')}</p>
                     </div>
                 </div>
+            </div>
+
+            {/* Legal Disclaimer */}
+            <div className="mt-8 p-5 border border-border/50 rounded-sm bg-muted/30" data-testid="legal-disclaimer">
+                <h4 className="font-bold text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-2">
+                    <Shield className="h-3.5 w-3.5" />
+                    {t('legal_title')}
+                </h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                    {t('legal_disclaimer')}
+                </p>
             </div>
         </div>
     );
