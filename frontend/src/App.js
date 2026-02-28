@@ -1526,24 +1526,24 @@ function App() {
     // Select guide handler
     const handleSelectGuide = async (guideId) => {
         try {
-            const response = await axios.get(`${API}/protocols/guides/${guideId}`);
+            const response = await axios.get(`${API}/protocols/guides/${guideId}`, { params: { lang } });
             setSelectedGuide(response.data);
             setCurrentView('protocol-detail');
         } catch (error) {
-            console.error("Błąd ładowania instrukcji:", error);
-            toast.error("Błąd ładowania instrukcji");
+            console.error("Error loading instructions:", error);
+            toast.error(t('error_loading_instructions'));
         }
     };
 
     // Select example handler
     const handleSelectExample = async (exampleId) => {
         try {
-            const response = await axios.get(`${API}/protocols/examples/${exampleId}`);
+            const response = await axios.get(`${API}/protocols/examples/${exampleId}`, { params: { lang } });
             setSelectedExample(response.data);
             setCurrentView('example-detail');
         } catch (error) {
-            console.error("Błąd ładowania przykładu:", error);
-            toast.error("Błąd ładowania przykładu");
+            console.error("Error loading example:", error);
+            toast.error(t('error_loading_example'));
         }
     };
 
