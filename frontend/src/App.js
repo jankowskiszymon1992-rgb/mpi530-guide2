@@ -1,54 +1,590 @@
-import { useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
+import { Toaster, toast } from "sonner";
+import { 
+    Shield, Repeat, Layers, Zap, Activity, Link, 
+    Search, Moon, Sun, Menu, X, ChevronRight, 
+    AlertTriangle, Lightbulb, CheckCircle2, ArrowLeft,
+    BookOpen, HelpCircle, Home
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+// Icon mapping
+const iconMap = {
+    Shield: Shield,
+    Repeat: Repeat,
+    Layers: Layers,
+    Zap: Zap,
+    Activity: Activity,
+    Link: Link
 };
 
+// Header Component
+const Header = ({ darkMode, setDarkMode, onMenuClick, showBackButton, onBack, currentView }) => {
+    return (
+        <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        {showBackButton ? (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={onBack}
+                                data-testid="back-button"
+                                aria-label="Wróć"
+                            >
+                                <ArrowLeft className="h-5 w-5" />
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="lg:hidden"
+                                onClick={onMenuClick}
+                                data-testid="menu-button"
+                                aria-label="Menu"
+                            >
+                                <Menu className="h-5 w-5" />
+                            </Button>
+                        )}
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-primary flex items-center justify-center">
+                                <span className="text-primary-foreground font-bold text-sm font-mono">MPI</span>
+                            </div>
+                            <div>
+                                <h1 className="text-lg font-bold tracking-tight">SONEL MPI-530</h1>
+                                <p className="text-xs text-muted-foreground uppercase tracking-wider">Interaktywny Przewodnik</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setDarkMode(!darkMode)}
+                            data-testid="dark-mode-toggle"
+                            aria-label={darkMode ? "Tryb jasny" : "Tryb ciemny"}
+                        >
+                            {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+};
+
+// Sidebar Navigation
+const Sidebar = ({ functions, selectedId, onSelect, isOpen, onClose }) => {
+    return (
+        <>
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                    onClick={onClose}
+                />
+            )}
+            <aside className={`
+                fixed lg:sticky top-16 left-0 z-50 lg:z-0
+                w-72 h-[calc(100vh-4rem)] 
+                bg-background border-r border-border
+                transform transition-transform duration-200 ease-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            `}>
+                <div className="p-4 border-b border-border flex items-center justify-between lg:hidden">
+                    <span className="font-bold uppercase text-sm">Menu</span>
+                    <Button variant="ghost" size="icon" onClick={onClose}>
+                        <X className="h-5 w-5" />
+                    </Button>
+                </div>
+                <ScrollArea className="h-full p-4">
+                    <nav className="space-y-1" data-testid="sidebar-nav">
+                        {functions.map((func) => {
+                            const IconComponent = iconMap[func.icon] || Activity;
+                            const isActive = selectedId === func.id;
+                            return (
+                                <button
+                                    key={func.id}
+                                    onClick={() => {
+                                        onSelect(func.id);
+                                        onClose();
+                                    }}
+                                    className={`
+                                        nav-item w-full text-left px-4 py-3 flex items-center gap-3
+                                        ${isActive ? 'active' : ''}
+                                    `}
+                                    data-testid={`nav-${func.id}`}
+                                    style={{ '--accent-color': func.color }}
+                                >
+                                    <IconComponent 
+                                        className="h-5 w-5 flex-shrink-0" 
+                                        style={{ color: func.color }}
+                                    />
+                                    <span className="text-sm font-medium truncate">{func.name_en}</span>
+                                </button>
+                            );
+                        })}
+                    </nav>
+                </ScrollArea>
+            </aside>
+        </>
+    );
+};
+
+// Function Card Component
+const FunctionCard = ({ func, onClick }) => {
+    const IconComponent = iconMap[func.icon] || Activity;
+    
+    return (
+        <button
+            onClick={() => onClick(func.id)}
+            className="function-card card-industrial text-left group"
+            data-testid={`function-card-${func.id}`}
+            style={{ '--card-accent': func.color }}
+        >
+            <div className="flex items-start gap-4">
+                <div 
+                    className="w-14 h-14 flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: func.color }}
+                >
+                    <IconComponent className="h-7 w-7 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors duration-150">
+                        {func.name_en}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                        {func.description}
+                    </p>
+                </div>
+            </div>
+            <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                <span className="uppercase tracking-wider">{func.steps.length} kroków</span>
+                <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-150" style={{ color: func.color }} />
+            </div>
+        </button>
+    );
+};
+
+// Step Component
+const StepComponent = ({ step, stepIndex, currentStep, totalSteps }) => {
+    const isActive = stepIndex === currentStep;
+    const isCompleted = stepIndex < currentStep;
+    const isPending = stepIndex > currentStep;
+
+    return (
+        <div 
+            className={`
+                p-4 mb-4 transition-opacity duration-200
+                ${isActive ? 'step-active' : ''}
+                ${isCompleted ? 'step-completed' : ''}
+                ${isPending ? 'step-pending' : ''}
+            `}
+            data-testid={`step-${step.step_number}`}
+        >
+            <div className="flex items-start gap-4">
+                <div className={`
+                    step-indicator rounded-sm
+                    ${isActive ? 'bg-primary text-primary-foreground' : ''}
+                    ${isCompleted ? 'bg-green-500 text-white' : ''}
+                    ${isPending ? 'bg-muted text-muted-foreground' : ''}
+                `}>
+                    {isCompleted ? (
+                        <CheckCircle2 className="h-5 w-5" />
+                    ) : (
+                        step.step_number
+                    )}
+                </div>
+                <div className="flex-1">
+                    <h4 className="font-bold text-lg mb-2">{step.title}</h4>
+                    <p className="text-muted-foreground mb-3">{step.description}</p>
+                    
+                    {step.warning && (
+                        <div className="warning-box flex items-start gap-3 mb-3">
+                            <AlertTriangle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                            <p>{step.warning}</p>
+                        </div>
+                    )}
+                    
+                    {step.tip && (
+                        <div className="tip-box flex items-start gap-3">
+                            <Lightbulb className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
+                            <p>{step.tip}</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// LCD Display Component
+const LCDDisplay = ({ func }) => {
+    return (
+        <div className="lcd-result p-6 rounded-sm" data-testid="lcd-display">
+            <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Oczekiwany Wynik</div>
+            <div className="text-2xl font-mono font-bold mb-4">{func.expected_results}</div>
+            <div className="border-t border-green-900/50 pt-4 mt-4">
+                <div className="text-xs uppercase tracking-wider opacity-70 mb-2">Parametry</div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                    {func.parameters.slice(0, 4).map((param, idx) => (
+                        <div key={idx} className="opacity-80">{param}</div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Safety Notes Component
+const SafetyNotes = ({ notes }) => {
+    return (
+        <div className="bg-destructive/5 border border-destructive/20 p-4 rounded-sm" data-testid="safety-notes">
+            <h4 className="font-bold uppercase tracking-wider text-sm mb-3 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-destructive" />
+                Zasady Bezpieczeństwa
+            </h4>
+            <ul className="space-y-2">
+                {notes.map((note, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-destructive">•</span>
+                        {note}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+// Detail View Component
+const DetailView = ({ func, onBack }) => {
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const handleNextStep = () => {
+        if (currentStep < func.steps.length - 1) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const handlePrevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    const IconComponent = iconMap[func.icon] || Activity;
+
+    return (
+        <div className="animate-fade-in" data-testid="detail-view">
+            {/* Header */}
+            <div className="mb-8 pb-6 border-b border-border">
+                <div className="flex items-center gap-4 mb-4">
+                    <div 
+                        className="w-16 h-16 flex items-center justify-center"
+                        style={{ backgroundColor: func.color }}
+                    >
+                        <IconComponent className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-bold gradient-text">{func.name}</h2>
+                        <p className="text-muted-foreground mt-1">{func.description}</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Split View */}
+            <div className="split-view">
+                {/* Left: Instructions */}
+                <div>
+                    <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                        <BookOpen className="h-5 w-5 text-primary" />
+                        Instrukcja Krok Po Kroku
+                    </h3>
+                    <div className="space-y-2">
+                        {func.steps.map((step, idx) => (
+                            <StepComponent
+                                key={step.step_number}
+                                step={step}
+                                stepIndex={idx}
+                                currentStep={currentStep}
+                                totalSteps={func.steps.length}
+                            />
+                        ))}
+                    </div>
+                    
+                    {/* Navigation */}
+                    <div className="flex items-center justify-between mt-6 pt-6 border-t border-border">
+                        <Button
+                            variant="outline"
+                            onClick={handlePrevStep}
+                            disabled={currentStep === 0}
+                            data-testid="prev-step-btn"
+                        >
+                            Poprzedni
+                        </Button>
+                        <span className="text-sm text-muted-foreground font-mono">
+                            {currentStep + 1} / {func.steps.length}
+                        </span>
+                        <Button
+                            onClick={handleNextStep}
+                            disabled={currentStep === func.steps.length - 1}
+                            className="bg-primary text-primary-foreground"
+                            data-testid="next-step-btn"
+                        >
+                            Następny
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Right: Results & Safety */}
+                <div className="space-y-6">
+                    <LCDDisplay func={func} />
+                    <SafetyNotes notes={func.safety_notes} />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Search Results Component
+const SearchResults = ({ results, onSelect, onClose }) => {
+    if (results.length === 0) return null;
+
+    return (
+        <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border shadow-lg z-50 max-h-80 overflow-auto rounded-sm" data-testid="search-results">
+            <div className="p-2">
+                {results.map((result, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => {
+                            onSelect(result.function_id || result.id);
+                            onClose();
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-muted transition-colors duration-150 flex items-center gap-3"
+                    >
+                        {result.type === 'function' && <BookOpen className="h-4 w-4 text-primary" />}
+                        {result.type === 'step' && <ChevronRight className="h-4 w-4 text-accent" />}
+                        {result.type === 'faq' && <HelpCircle className="h-4 w-4 text-warning" />}
+                        <div>
+                            <p className="font-medium text-sm">
+                                {result.name || result.step_title || result.question}
+                            </p>
+                            {result.function_name && (
+                                <p className="text-xs text-muted-foreground">{result.function_name}</p>
+                            )}
+                        </div>
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// Home View Component
+const HomeView = ({ functions, onSelectFunction, searchQuery, setSearchQuery, searchResults, onSearch }) => {
+    const [showResults, setShowResults] = useState(false);
+
+    return (
+        <div className="animate-fade-in">
+            {/* Hero Section */}
+            <div className="mb-12">
+                <h2 className="text-4xl lg:text-5xl font-black mb-4 tracking-tight">
+                    <span className="gradient-text">Interaktywna Instrukcja</span>
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl">
+                    Wybierz funkcję pomiarową, aby zobaczyć szczegółową instrukcję krok po kroku dla miernika Sonel MPI-530.
+                </p>
+            </div>
+
+            {/* Search */}
+            <div className="relative mb-10 max-w-xl">
+                <div className="relative">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                        type="text"
+                        placeholder="Szukaj instrukcji, procedur, FAQ..."
+                        value={searchQuery}
+                        onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            onSearch(e.target.value);
+                            setShowResults(true);
+                        }}
+                        onFocus={() => setShowResults(true)}
+                        className="search-input pl-12 h-12 text-base"
+                        data-testid="search-input"
+                    />
+                </div>
+                {showResults && searchQuery && (
+                    <SearchResults 
+                        results={searchResults} 
+                        onSelect={onSelectFunction}
+                        onClose={() => setShowResults(false)}
+                    />
+                )}
+            </div>
+
+            {/* Function Grid */}
+            <div className="bento-grid" data-testid="functions-grid">
+                {functions.map((func) => (
+                    <FunctionCard 
+                        key={func.id} 
+                        func={func} 
+                        onClick={onSelectFunction}
+                    />
+                ))}
+            </div>
+
+            {/* Quick Tips */}
+            <div className="mt-12 p-6 bg-secondary/5 border border-secondary/20 rounded-sm">
+                <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-primary" />
+                    Szybkie Porady
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-2">
+                        <span className="text-primary font-bold">01</span>
+                        <p>Zawsze sprawdź stan przewodów pomiarowych przed rozpoczęciem pracy</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                        <span className="text-primary font-bold">02</span>
+                        <p>Przestrzegaj kategorii pomiarowej CAT III/IV dla bezpieczeństwa</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                        <span className="text-primary font-bold">03</span>
+                        <p>Kalibruj miernik co 12 miesięcy zgodnie z zaleceniami producenta</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Main App Component
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    const [functions, setFunctions] = useState([]);
+    const [selectedFunction, setSelectedFunction] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [darkMode, setDarkMode] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+
+    // Fetch functions on mount
+    useEffect(() => {
+        const fetchFunctions = async () => {
+            try {
+                const response = await axios.get(`${API}/functions`);
+                setFunctions(response.data);
+            } catch (error) {
+                console.error("Error fetching functions:", error);
+                toast.error("Błąd ładowania danych");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFunctions();
+    }, []);
+
+    // Dark mode toggle
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
+
+    // Search handler
+    const handleSearch = useCallback(async (query) => {
+        if (!query || query.length < 2) {
+            setSearchResults([]);
+            return;
+        }
+        try {
+            const response = await axios.get(`${API}/search`, { params: { q: query } });
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error("Search error:", error);
+        }
+    }, []);
+
+    // Select function handler
+    const handleSelectFunction = (functionId) => {
+        const func = functions.find(f => f.id === functionId);
+        if (func) {
+            setSelectedFunction(func);
+            setSearchQuery("");
+            setSearchResults([]);
+        }
+    };
+
+    // Back handler
+    const handleBack = () => {
+        setSelectedFunction(null);
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background">
+                <div className="text-center">
+                    <div className="w-16 h-16 bg-primary mx-auto mb-4 flex items-center justify-center animate-pulse">
+                        <span className="text-primary-foreground font-bold font-mono">MPI</span>
+                    </div>
+                    <p className="text-muted-foreground uppercase tracking-wider text-sm">Ładowanie...</p>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className={`App ${darkMode ? 'dark' : ''}`}>
+            <Toaster position="top-right" />
+            
+            <Header 
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                onMenuClick={() => setSidebarOpen(true)}
+                showBackButton={!!selectedFunction}
+                onBack={handleBack}
+                currentView={selectedFunction ? 'detail' : 'home'}
+            />
+
+            <div className="flex flex-1">
+                <Sidebar 
+                    functions={functions}
+                    selectedId={selectedFunction?.id}
+                    onSelect={handleSelectFunction}
+                    isOpen={sidebarOpen}
+                    onClose={() => setSidebarOpen(false)}
+                />
+
+                <main className="flex-1 p-6 lg:p-10 max-w-5xl" data-testid="main-content">
+                    {selectedFunction ? (
+                        <DetailView 
+                            func={selectedFunction}
+                            onBack={handleBack}
+                        />
+                    ) : (
+                        <HomeView 
+                            functions={functions}
+                            onSelectFunction={handleSelectFunction}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                            searchResults={searchResults}
+                            onSearch={handleSearch}
+                        />
+                    )}
+                </main>
+            </div>
+        </div>
+    );
 }
 
 export default App;
