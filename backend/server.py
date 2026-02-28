@@ -1852,39 +1852,24 @@ async def check_quiz_answers(answers: Dict[int, int], lang: str = Query("pl", re
     }
 
 @api_router.get("/search")
-async def search_instructions(q: str):
-    """Wyszukaj w instrukcjach"""
+async def search_instructions(q: str, lang: str = Query("pl", regex="^(pl|en|de)$")):
     results = []
     query = q.lower()
-    for func in MEASUREMENT_FUNCTIONS:
-        # Szukaj w nazwie i opisie funkcji
+    functions = [translate_function(f, lang) for f in MEASUREMENT_FUNCTIONS]
+    for func in functions:
         if query in func.name.lower() or query in func.description.lower():
-            results.append({
-                "type": "function",
-                "id": func.id,
-                "name": func.name,
-                "match": "function"
-            })
-        # Szukaj w krokach
+            results.append({"type": "function", "id": func.id, "name": func.name, "match": "function"})
         for step in func.steps:
             if query in step.title.lower() or query in step.description.lower():
-                results.append({
-                    "type": "step",
-                    "function_id": func.id,
-                    "function_name": func.name,
-                    "step_number": step.step_number,
-                    "step_title": step.title,
-                    "match": "step"
-                })
-    # Szukaj w FAQ
-    for faq in FAQ_DATA:
-        if query in faq.question.lower() or query in faq.answer.lower():
-            results.append({
-                "type": "faq",
-                "id": faq.id,
-                "question": faq.question,
-                "match": "faq"
-            })
+                results.append({"type": "step", "function_id": func.id, "function_name": func.name, "step_number": step.step_number, "step_title": step.title, "match": "step"})
+    tr_faq = get_faq_translations(lang)
+    faq_source = tr_faq if tr_faq else FAQ_DATA
+    for faq in faq_source:
+        q_text = faq["question"] if isinstance(faq, dict) else faq.question
+        a_text = faq["answer"] if isinstance(faq, dict) else faq.answer
+        faq_id = faq["id"] if isinstance(faq, dict) else faq.id
+        if query in q_text.lower() or query in a_text.lower():
+            results.append({"type": "faq", "id": faq_id, "question": q_text, "match": "faq"})
     return results
 
 # Include the router in the main app
