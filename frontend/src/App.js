@@ -874,6 +874,7 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
                         key={guide.id} 
                         guide={guide} 
                         onClick={onSelectGuide}
+                        t={t}
                     />
                 ))}
             </div>
