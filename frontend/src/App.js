@@ -881,10 +881,10 @@ const ProtocolsView = ({ onSelectGuide, onSelectExample, onBack, t, lang }) => {
             {/* Example Protocols */}
             <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
                 <FileText className="h-5 w-5 text-green-500" />
-                Przykładowe wypełnione protokoły
+                {t('protocols_example_title')}
             </h3>
             <p className="text-muted-foreground mb-6">
-                Wzory protokołów z rzeczywistymi wynikami pomiarów - zobacz jak prawidłowo dokumentować badania.
+                {t('protocols_example_desc')}
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
                 {examples.map((example) => (
