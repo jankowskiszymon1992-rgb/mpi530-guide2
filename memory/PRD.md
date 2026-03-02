@@ -59,4 +59,10 @@ Zs Calculator, Cable Sizing, Norm Tables, Error Codes, Diagrams, Safety Checklis
 - Iteration 5: Backend 17/17, Frontend 100% (i18n - protocols fully translated)
 - Deployment: Verified live at https://mpi530.elektryk.cloud
 
+### Bug Fix: Frontend API URL (March 2, 2026)
+- Fixed frontend hardcoding Emergent preview URL in production build
+- Changed `BACKEND_URL` to use `process.env.REACT_APP_BACKEND_URL || ''` (relative URLs in production)
+- Files changed: `App.js`, `ToolsComponents.js`
+- User rebuilt on VPS — confirmed working on phone (browser + installed PWA)
+
 ## Status: COMPLETE - All features implemented, translated, and deployed to production
