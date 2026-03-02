@@ -1539,6 +1539,10 @@ def translate_function(func, lang):
 async def root():
     return {"message": "MPI-530 Independent User Guide API", "version": "1.1"}
 
+@api_router.get("/health")
+async def health_check():
+    return {"status": "ok", "version": "1.1"}
+
 @api_router.get("/functions", response_model=List[MeasurementFunction])
 async def get_all_functions(lang: str = Query("pl", regex="^(pl|en|de)$")):
     return [translate_function(f, lang) for f in MEASUREMENT_FUNCTIONS]
